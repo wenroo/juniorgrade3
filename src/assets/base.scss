@@ -1,0 +1,38 @@
+/* color palette from <https://github.com/vuejs/theme> */
+@font-face {
+  font-family: "notosans";
+  src: url('/src/assets/notosans-fonts/NotoSans-Regular.woff') format('truetype');
+}
+
+@font-face {
+  font-family: "notosans";
+  src: url('/src/assets/notosans-fonts/NotoSans-Bold.woff') format('truetype');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "notosans";
+  src: url('/src/assets/notosans-fonts/NotoSans-Medium.woff') format('truetype');
+  font-weight: 500;
+}
+
+/* sc */
+@font-face {
+  font-family: "notosanssc";
+  src: url('/src/assets/notosans-fonts/NotoSansSC-Regular.woff') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "notosanssc";
+  src: url('/src/assets/notosans-fonts/NotoSansSC-Bold.woff') format('truetype');
+  font-display: swap;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "notosanssc";
+  src: url('/src/assets/notosans-fonts/NotoSansSC-Medium.woff') format('truetype');
+  font-display: swap;
+  font-weight: 500;
+}

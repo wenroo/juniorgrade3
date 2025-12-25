@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "word": "a (an)",
+    "translation": "art. 一（个、件……）",
+    "learned": false,
+    "recite": false,
+    "last_review": "2025-12-25",
+    "error_count": 0,
+    "next_review_ts": 1766592000
+  },
+  {
+    "id": 2,
+    "word": "ability",
+    "translation": "n. 能力;才能",
+    "learned": false,
+    "recite": false,
+    "last_review": "2025-12-25",
+    "error_count": 0,
+    "next_review_ts": 1766592000
+  }
+]
