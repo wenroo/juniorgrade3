@@ -1,38 +1,247 @@
-# juniorgrade3
+# Junior Grade 3 English Vocabulary Learning App
 
-This template should help get you started developing with Vue 3 in Vite.
+一个专为小学三年级学生设计的英语单词学习应用，提供背单词、听写练习和错题复习等多种学习模式。
 
-## Recommended IDE Setup
+## ✨ 主要功能
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+### 📚 背单词模式
+- 浏览完整单词库，支持音标、翻译和例句显示
+- 智能过滤：按首字母、词性、重要程度筛选
+- 分页浏览，每页 10 个单词
+- 实时搜索单词和翻译
 
-## Recommended Browser Setup
+### ✍️ 听写模式
+- **英译中模式**：看英文单词，输入中文翻译
+- **中译英模式**：看中文翻译，输入英文单词
+- 实时答案验证和错误提示
+- 自动记录错题到错题本
+- 支持跳过和重新开始
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+### 📝 错题本
+- 自动收集听写中的错误单词
+- 重点复习薄弱环节
+- 追踪错误次数和正确次数
 
-## Customize configuration
+### 🎯 智能过滤系统
+- **首字母过滤**：A-Z 字母分类
+- **词性过滤**：名词、动词、形容词等 10 种词性
+- **重要单词**：标记高频重要词汇
+- **错题筛选**：快速定位需要复习的单词
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## 🚀 快速开始
 
-## Project Setup
+### 环境要求
 
-```sh
+- Node.js ^20.19.0 或 >=22.12.0
+- npm 或 yarn
+
+### 安装依赖
+
+```bash
+# 安装前端依赖
 npm install
+
+# 安装后端依赖
+cd backend
+npm install
+cd ..
 ```
 
-### Compile and Hot-Reload for Development
+### 启动应用
 
-```sh
+1. **启动后端服务**（在单独的终端窗口）：
+```bash
+cd backend
+node server.js
+```
+后端服务将在 `http://localhost:3123` 启动
+
+2. **启动前端开发服务器**：
+```bash
 npm run dev
 ```
+前端应用将在 `http://localhost:5173` 启动
 
-### Compile and Minify for Production
+3. 在浏览器中打开 `http://localhost:5173`
 
-```sh
+### 生产构建
+
+```bash
 npm run build
 ```
+
+### 预览生产构建
+
+```bash
+npm run preview
+```
+
+## 📦 技术栈
+
+### 前端
+- **Vue 3.5.25** - 渐进式 JavaScript 框架
+- **Vue Router 4.6.4** - 官方路由管理器
+- **Vite 7.2.4** - 下一代前端构建工具
+- **Tailwind CSS 4.1.18** - 实用优先的 CSS 框架
+- **Composition API** - Vue 3 组合式 API
+
+### 后端
+- **Node.js** - JavaScript 运行时
+- **Express 5.2.1** - Web 应用框架
+- **CORS** - 跨域资源共享
+- **Body-Parser** - 请求体解析中间件
+
+## 📁 项目结构
+
+```
+juniorgrade3/
+├── src/                          # 前端源代码
+│   ├── views/                    # 页面组件
+│   │   ├── RecitePage.vue        # 背单词页面
+│   │   ├── DictationPage.vue     # 听写页面
+│   │   └── WrongWordsPage.vue    # 错题本页面
+│   ├── components/               # 可复用组件
+│   │   ├── NavBar.vue            # 导航栏
+│   │   ├── ReciteMode.vue        # 单词卡片
+│   │   ├── DictationMode.vue     # 听写界面
+│   │   ├── FilterSidebar.vue     # 过滤侧边栏
+│   │   └── WordPhonetic.vue      # 音标组件
+│   ├── services/                 # API 服务
+│   │   └── wordService.js        # 单词数据服务
+│   ├── config/                   # 配置文件
+│   │   └── partOfSpeechColors.js # 词性颜色配置
+│   └── router/                   # 路由配置
+│       └── index.js
+├── backend/                      # 后端服务
+│   ├── server.js                 # Express 服务器
+│   ├── words_26.json             # 单词数据库
+│   ├── phonetics.json            # 音标数据
+│   └── user_word_status.json     # 用户学习状态
+└── public/                       # 静态资源
+```
+
+## 🔌 API 端点
+
+后端服务运行在 `http://localhost:3123`，提供以下 API：
+
+### 单词管理
+- `GET /api/words` - 获取所有单词
+- `POST /api/words` - 保存单词列表
+
+### 音标管理
+- `GET /api/phonetics` - 获取音标数据
+- `POST /api/phonetics` - 批量保存音标
+
+### 用户状态
+- `GET /api/user-status` - 获取用户学习状态
+- `PATCH /api/user-status/:id` - 更新单个单词状态
+- `POST /api/batch-update` - 批量更新单词和状态
+
+## 📊 数据结构
+
+### 单词对象
+```json
+{
+  "id": 1,
+  "word": "ability",
+  "translations": [
+    {
+      "type": "n.",
+      "translation": "能力,才能",
+      "used": false
+    }
+  ],
+  "examples": ["He has the ability to learn quickly."],
+  "status": {
+    "learned": false,
+    "recite": false,
+    "important": false,
+    "error_count": 0,
+    "true_count": 0,
+    "last_review": "",
+    "next_review_ts": 0
+  }
+}
+```
+
+### 支持的词性
+- `n.` - 名词 (Noun)
+- `v.` - 动词 (Verb)
+- `adj.` - 形容词 (Adjective)
+- `adv.` - 副词 (Adverb)
+- `prep.` - 介词 (Preposition)
+- `conj.` - 连词 (Conjunction)
+- `pron.` - 代词 (Pronoun)
+- `art.` - 冠词 (Article)
+- `interj.` - 感叹词 (Interjection)
+- `num.` - 数词 (Numeral)
+
+## 🛠️ 开发指南
+
+### 推荐 IDE 设置
+- [VS Code](https://code.visualstudio.com/)
+- [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) 扩展
+- 禁用 Vetur 扩展（与 Vue Official 冲突）
+
+### 推荐浏览器扩展
+- **Chrome/Edge**: [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
+- **Firefox**: [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
+
+### 代码规范
+- 使用 Vue 3 Composition API 和 `<script setup>` 语法
+- 使用 Tailwind CSS 进行样式设计
+- 组件使用 `<style scoped>` 避免样式污染
+- 路径别名：`@/` 指向 `src/` 目录
+
+## 📝 路由说明
+
+- `/` - 重定向到背单词页面
+- `/recite` - 背单词模式
+- `/dictation` - 英译中听写模式
+- `/dictation-chinese` - 中译英听写模式
+- `/wrong-words` - 错题本页面
+
+## 🎨 特色功能
+
+### 词性颜色编码
+每种词性都有独特的颜色标识，帮助学生快速识别：
+- 名词 - 蓝色
+- 动词 - 绿色
+- 形容词 - 紫色
+- 副词 - 粉色
+- 介词 - 紫罗兰色
+- 连词 - 橙色
+- 代词 - 靛蓝色
+- 冠词 - 青色
+- 感叹词 - 红色
+- 数词 - 青柠色
+
+### 学习状态追踪
+- **learned**: 已学习标记
+- **important**: 重要单词标记
+- **recite**: 错题本标记
+- **error_count**: 错误次数统计
+- **true_count**: 正确次数统计
+
+## 📚 后端管理
+
+后端服务需要手动管理。详细说明请参考 [backend/README.md](backend/README.md)
+
+### 快速命令
+```bash
+# 启动后端
+cd backend && node server.js
+
+# 查看后端状态
+ps aux | grep "node server.js" | grep -v grep
+
+# 停止后端（在运行的终端按 Ctrl+C）
+```
+
+## 📄 许可证
+
+本项目仅供学习使用。
+
+## 🤝 贡献
+
+欢迎提交 Issue 和 Pull Request！

@@ -6,7 +6,7 @@
 import { ref, computed } from 'vue'
 
 // Configuration #$ hostname -I
-const API_BASE_URL = 'http://172.28.66.187:3123/api'
+const API_BASE_URL = 'http://localhost:3123/api'
 const CACHE_KEY = 'juniorgrade3_words_cache'
 const CACHE_TIMESTAMP_KEY = 'juniorgrade3_words_cache_timestamp'
 const PHONETIC_CACHE_KEY = 'juniorgrade3_phonetics_cache'

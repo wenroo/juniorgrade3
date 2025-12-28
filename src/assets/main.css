@@ -19,6 +19,9 @@
     scroll-behavior: smooth;
   }
 
+  button{
+    @apply cursor-pointer;
+  }
 }
 
 /* Vue 列表过渡动画 */

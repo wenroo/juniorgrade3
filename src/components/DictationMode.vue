@@ -26,6 +26,10 @@ const props = defineProps({
     type: String,
     default: 'english',
     validator: (value) => ['english', 'chinese'].includes(value)
+  },
+  selectedTranslations: {
+    type: Object,
+    default: () => ({})
   }
 })
 
@@ -35,11 +39,17 @@ const emit = defineEmits(['update:userAnswers', 'submit', 'retry'])
 const checkAnswer = (id) => {
   const item = props.currentBatchList.find(w => w.id === id)
   const userVal = (props.userAnswers[id] || '').trim()
+  const selectedTransIndex = props.selectedTranslations[id]
 
   if (props.mode === 'chinese') {
-    // 中文默写：至少2个字符，indexOf匹配即可
+    // 中文默写：检查选中的翻译
     if (userVal.length < 2) return false
-    return item.translation.indexOf(userVal) !== -1
+    if (selectedTransIndex === null || selectedTransIndex === undefined) return false
+
+    const selectedTrans = item.translations?.[selectedTransIndex]
+    if (!selectedTrans) return false
+
+    return selectedTrans.translation.indexOf(userVal) !== -1
   } else {
     // 英文默写：完全匹配（不区分大小写）
     // 处理多形式单词，如 "a (an)" -> ["a", "an"]
@@ -84,6 +94,15 @@ const currentScore = computed(() => {
   }, 0)
 })
 
+// 获取显示的翻译文本
+const getDisplayTranslation = (item, cat) => {
+  const selectedTransIndex = props.selectedTranslations[item.id]
+  if (selectedTransIndex === null || selectedTransIndex === undefined) {
+    return  item.translations?.[0][cat] || ''
+  }
+  return  item.translations?.[0][cat] || ''
+}
+
 // 更新用户答案
 const updateAnswer = (id, value) => {
   emit('update:userAnswers', { ...props.userAnswers, [id]: value })
@@ -99,7 +118,8 @@ const updateAnswer = (id, value) => {
       </div>
 
       <div class="flex-1 text-slate-600 font-medium">
-        {{ mode === 'chinese' ? item.word : item.translation }}
+        <span class="font-bold pr-1 text-lg text-black"> {{ getDisplayTranslation(item, 'type') }} </span>
+        {{ mode === 'chinese' ? item.word : getDisplayTranslation(item, 'translation') }}
       </div>
 
       <div class="flex-1 w-full relative">
@@ -119,9 +139,9 @@ const updateAnswer = (id, value) => {
           <span v-else class="text-rose-600 text-lg font-bold">✕</span>
         </div>
 
-        <div v-if="isSubmitted" class="text-xs  mt-1 pl-1" 
+        <div v-if="isSubmitted" class="text-xs  mt-1 pl-1"
           :class="checkAnswer(item.id) ? 'text-emerald-500' : 'text-rose-500'">
-          标准答案: <span class="font-bold">{{ mode === 'chinese' ? item.translation : item.word }}</span>
+          标准答案: <span class="font-bold">{{ mode === 'chinese' ? getDisplayTranslation(item) : item.word }}</span>
         </div>
       </div>
     </div>

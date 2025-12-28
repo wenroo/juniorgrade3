@@ -22,19 +22,26 @@
             active-class="menu-item menu-item-active">
             英文默写
           </router-link>
-          <!-- <router-link
+          <router-link
             to="/dictation-chinese"
             class="menu-item"
             disabled
             active-class="menu-item menu-item-active">
             中文默写
-          </router-link> -->
+          </router-link>          
           <router-link
+            to="/dictation-chinese"
+            class="menu-item"
+            disabled
+            active-class="menu-item menu-item-active">
+            首字母填空
+          </router-link>
+          <!-- <router-link
             to="/wrong-words"
             class="menu-item"
             active-class="menu-item menu-item-active">
             错题本
-          </router-link>
+          </router-link> -->
         </div>
       </div>
     </div>

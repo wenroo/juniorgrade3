@@ -5,14 +5,14 @@ import DictationMode from '../components/DictationMode.vue'
 import ProgressBar from '../components/ProgressBar.vue'
 import TimerDisplay from '../components/TimerDisplay.vue'
 import NavigationButtons from '../components/NavigationButtons.vue'
-import { useWordService } from '@/services/wordService'
+import { useWordService } from '@/services/wordServiceSupabase'
 
 // Get route to determine mode
 const route = useRoute()
 const mode = computed(() => route.meta.mode || 'english')
 
 // Use unified word service
-const { words, unlearnedWords, loadWords, saveWords, updateReviewData, checkAndResetLearned, isLoading } = useWordService()
+const { words, unlearnedWords, loadWords, updateReviewData, batchUpdateWordsAndStatus, checkAndResetLearned, isLoading } = useWordService()
 
 // 响应式状态
 const currentIndex = ref(0)
@@ -21,6 +21,7 @@ const userAnswers = ref({})
 const isSubmitted = ref(false)
 const timeLeft = ref(600)
 const currentBatchList = ref([])
+const selectedTranslations = ref({}) // 存储每个单词选中的翻译索引
 let timerInterval = null
 
 // 随机打乱数组的函数
@@ -33,11 +34,39 @@ const shuffleArray = (array) => {
   return shuffled
 }
 
+// 为单词选择一个未使用的翻译
+const selectRandomTranslation = (word) => {
+  if (!word.translations || word.translations.length === 0) {
+    return null
+  }
+
+  // 找出所有未使用的翻译
+  const unusedTranslations = word.translations
+    .map((trans, index) => ({ trans, index }))
+    .filter(({ trans }) => !trans.used)
+
+  // 如果所有翻译都已使用，重置所有翻译的 used 状态
+  if (unusedTranslations.length === 0) {
+    word.translations.forEach(trans => trans.used = false)
+    return Math.floor(Math.random() * word.translations.length)
+  }
+
+  // 随机选择一个未使用的翻译
+  const randomIndex = Math.floor(Math.random() * unusedTranslations.length)
+  return unusedTranslations[randomIndex].index
+}
+
 // 生成随机批次
 const generateRandomBatch = () => {
   const available = unlearnedWords.value.length > 0 ? unlearnedWords.value : words.value
   const shuffled = shuffleArray(available)
   currentBatchList.value = shuffled.slice(0, Math.min(batchSize, shuffled.length))
+
+  // 为每个单词选择一个随机翻译
+  selectedTranslations.value = {}
+  currentBatchList.value.forEach(word => {
+    selectedTranslations.value[word.id] = selectRandomTranslation(word)
+  })
 }
 
 // Load words on mount
@@ -98,15 +127,21 @@ const submitDictation = async () => {
   clearInterval(timerInterval)
   isSubmitted.value = true
 
+  // 收集所有更新数据
+  const wordUpdates = []
+  const statusUpdates = []
+
   // Update review data for each word in current batch
   currentBatchList.value.forEach(item => {
     const userAnswer = userAnswers.value[item.id]?.trim()
+    const selectedTransIndex = selectedTranslations.value[item.id]
     let isCorrect = false
 
     if (mode.value === 'chinese') {
-      // 中文默写：至少2个字符，indexOf匹配即可
-      if (userAnswer && userAnswer.length >= 2) {
-        isCorrect = item.translation.indexOf(userAnswer) !== -1
+      // 中文默写：检查选中的翻译是否匹配
+      if (userAnswer && userAnswer.length >= 2 && selectedTransIndex !== null) {
+        const selectedTrans = item.translations[selectedTransIndex]
+        isCorrect = selectedTrans.translation.indexOf(userAnswer) !== -1
       }
     } else {
       // 英文默写：完全匹配（不区分大小写）
@@ -130,20 +165,28 @@ const submitDictation = async () => {
       }
     }
 
-    updateReviewData(item.id, isCorrect)
+    // 收集更新数据
+    const updateData = updateReviewData(item.id, isCorrect, selectedTransIndex)
+    if (updateData) {
+      if (updateData.wordUpdate) {
+        wordUpdates.push(updateData.wordUpdate)
+      }
+      statusUpdates.push(updateData.statusUpdate)
+    }
   })
 
-  // Check if all words are learned and reset if needed
-  const wasReset = checkAndResetLearned()
-
-  // Save to backend
+  // 批量保存到后端
   try {
-    await saveWords()
-    if (wasReset) {
-      console.log('🎉 恭喜！所有单词已学完一轮，开始新一轮学习')
-    }
-  } catch (e) {
-    console.error('Failed to save progress:', e)
+    await batchUpdateWordsAndStatus(wordUpdates, statusUpdates)
+  } catch (error) {
+    console.error('Failed to save updates:', error)
+  }
+
+  // Check if all words are learned and reset if needed
+  const wasReset = await checkAndResetLearned()
+
+  if (wasReset) {
+    console.log('🎉 恭喜！所有单词已学完一轮，开始新一轮学习')
   }
 }
 
@@ -188,6 +231,7 @@ onUnmounted(() => {
         :is-submitted="isSubmitted"
         :batch-size="batchSize"
         :mode="mode"
+        :selected-translations="selectedTranslations"
         @update:user-answers="userAnswers = $event"
         @submit="submitDictation"
         @retry="retryBatch"
