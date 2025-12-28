@@ -4,7 +4,7 @@
 
 <template>
   <nav class="main-menu">
-    <div class="max-w-4xl mx-auto">
+    <div class="container mx-auto px-4">
       <div class="flex flex-col lg:flex-row justify-between items-center">
         <div class="py-3">
           <img src="../assets/logo.svg" alt="BILL爱背单词" class="w-50 h-auto" />

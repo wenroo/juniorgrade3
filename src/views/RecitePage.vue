@@ -68,7 +68,7 @@ const prevBatch = () => {
 </script>
 
 <template>
-  <div class="container max-w-4xl mx-auto px-4 py-8">
+  <div class="container mx-auto px-4 py-8">
     <!-- Loading State -->
     <div v-if="isLoading" class="flex flex-col items-center justify-center py-20">
       <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mb-4"></div>

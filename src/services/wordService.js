@@ -87,7 +87,7 @@ const loadFromAPI = async () => {
  * 2. Try API
  * 3. Fallback to static JSON import
  */
-const loadWords = async (forceRefresh = false) => {
+const loadWords = async (forceRefresh = true) => {
   if (isLoading.value) return
 
   isLoading.value = true

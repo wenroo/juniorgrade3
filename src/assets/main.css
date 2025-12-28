@@ -52,7 +52,7 @@
 /* block */
 .block-search{
   background-image: url('/src/assets/images/banner.png');
-  @apply bg-no-repeat bg-cover h-50 flex flex-col justify-start items-center rounded-2xl overflow-hidden;
+  @apply bg-no-repeat bg-cover h-70 flex flex-col justify-start items-center rounded-2xl overflow-hidden;
   .inner{
     @apply w-full flex items-center bg-white/95 rounded-t-2xl text-black relative;
   }

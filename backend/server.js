@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = 3123;
-const DATA_FILE = path.join(__dirname, 'words.json'); // 你的数据文件路径
+const DATA_FILE = path.join(__dirname, 'words_26.json'); // 你的数据文件路径
 
 // 中间件
 app.use(cors()); // 允许前端跨域访问
