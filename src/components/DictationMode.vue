@@ -1,5 +1,9 @@
 <script setup>
 import { computed } from 'vue'
+import { useWordService } from '@/services'
+import { validateAnswer, calculateStatusUpdate } from '@/utils/dictationValidator'
+
+const { updateWordStatus } = useWordService()
 
 const props = defineProps({
   currentBatchList: {
@@ -38,38 +42,26 @@ const emit = defineEmits(['update:userAnswers', 'submit', 'retry'])
 // 验证答案
 const checkAnswer = (id) => {
   const item = props.currentBatchList.find(w => w.id === id)
-  const userVal = (props.userAnswers[id] || '').trim()
+  const userAnswer = props.userAnswers[id] || ''
   const selectedTransIndex = props.selectedTranslations[id]
 
-  if (props.mode === 'chinese') {
-    // 中文默写：检查选中的翻译
-    if (userVal.length < 2) return false
-    if (selectedTransIndex === null || selectedTransIndex === undefined) return false
+  return validateAnswer({
+    item,
+    userAnswer,
+    selectedTransIndex,
+    mode: props.mode
+  })
+}
 
-    const selectedTrans = item.translations?.[selectedTransIndex]
-    if (!selectedTrans) return false
+// 更新单词学习状态
+const updateWordLearningStatus = async (id, isCorrect) => {
+  const item = props.currentBatchList.find(w => w.id === id)
+  if (!item || !item.status) return
 
-    return selectedTrans.translation.indexOf(userVal) !== -1
-  } else {
-    // 英文默写：完全匹配（不区分大小写）
-    // 处理多形式单词，如 "a (an)" -> ["a", "an"]
-    const userValLower = userVal.toLowerCase()
-    const correctAnswerLower = item.word.toLowerCase()
+  const statusUpdates = calculateStatusUpdate(item.status, isCorrect)
 
-    // 1. 完全匹配原始格式 "a (an)"
-    if (userValLower === correctAnswerLower) {
-      return true
-    }
-
-    // 2. 匹配无括号格式 "a an"
-    const noBrackets = correctAnswerLower.replace(/[()]/g, '')
-    if (userValLower === noBrackets) {
-      return true
-    }
-
-    // 3. 匹配单个形式 "a" 或 "an"
-    const wordForms = item.word.split(/[\s()]+/).filter(w => w.length > 0)
-    return wordForms.some(form => form.toLowerCase() === userValLower)
+  if (statusUpdates) {
+    await updateWordStatus(id, statusUpdates)
   }
 }
 
@@ -113,12 +105,13 @@ const updateAnswer = (id, value) => {
   <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 space-y-4">
     <div v-for="(item, index) in currentBatchList" :key="item.id"
          class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 pb-4 border-b border-slate-50 last:border-0">
-      <div class="w-8 h-8 flex-shrink-0 flex items-center justify-center bg-slate-100 text-slate-500 rounded-full text-sm font-bold">
-        {{ currentIndex + index + 1 }}
-      </div>
 
-      <div class="flex-1 text-slate-600 font-medium">
-        <span class="font-bold pr-1 text-lg text-black"> {{ getDisplayTranslation(item, 'type') }} </span>
+
+      <div class="flex flex-1 gap-1 text-lg text-slate-600 font-medium items-center">
+        <div class="w-10 h-10 mr-1 flex-shrink-0 flex items-center justify-center bg-slate-100 text-slate-500 rounded-full text-xs font-bold">
+          {{ item.id }}
+        </div>
+        <span class="font-bold text-neutral-400"> {{ getDisplayTranslation(item, 'type') }} </span>
         {{ mode === 'chinese' ? item.word : getDisplayTranslation(item, 'translation') }}
       </div>
 
@@ -134,14 +127,14 @@ const updateAnswer = (id, value) => {
           autocomplete="off"
         >
 
-        <div v-if="isSubmitted" class="absolute right-3 top-3">
+        <div v-if="isSubmitted" class="absolute right-3 top-2.5">
           <span v-if="checkAnswer(item.id)" class="text-emerald-600 text-lg font-bold">✓</span>
           <span v-else class="text-rose-600 text-lg font-bold">✕</span>
         </div>
 
-        <div v-if="isSubmitted" class="text-xs  mt-1 pl-1"
+        <div v-if="isSubmitted" class="text-sm mt-1 pl-1 font-medium"
           :class="checkAnswer(item.id) ? 'text-emerald-500' : 'text-rose-500'">
-          标准答案: <span class="font-bold">{{ mode === 'chinese' ? getDisplayTranslation(item) : item.word }}</span>
+          <span class="opacity-50">标准答案: </span><span class="text-lg">{{ mode === 'chinese' ? getDisplayTranslation(item, 'translation') : item.word  }}</span>
         </div>
       </div>
     </div>

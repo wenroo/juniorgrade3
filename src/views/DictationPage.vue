@@ -4,8 +4,10 @@ import { useRoute } from 'vue-router'
 import DictationMode from '../components/DictationMode.vue'
 import ProgressBar from '../components/ProgressBar.vue'
 import TimerDisplay from '../components/TimerDisplay.vue'
-import NavigationButtons from '../components/NavigationButtons.vue'
+import RefreshButton from '../components/RefreshButton.vue'
+import FilterSidebar from '../components/FilterSidebar.vue'
 import { useWordService } from '@/services'
+import { validateAnswer } from '@/utils/dictationValidator'
 
 // Get route to determine mode
 const route = useRoute()
@@ -23,6 +25,24 @@ const timeLeft = ref(600)
 const currentBatchList = ref([])
 const selectedTranslations = ref({}) // 存储每个单词选中的翻译索引
 let timerInterval = null
+
+// 过滤器状态 - 用于选择默写单词的来源
+const activeFilters = ref({
+  letter: 'all',
+  partOfSpeech: ['all'],
+  recite: false,
+  important: false,
+  irregular: false
+})
+
+// 处理过滤器变化
+const handleFilterChange = (filters) => {
+  activeFilters.value = filters
+  currentIndex.value = 0
+  generateRandomBatch()
+  resetDictation()
+  startTimer()
+}
 
 // 随机打乱数组的函数
 const shuffleArray = (array) => {
@@ -56,10 +76,52 @@ const selectRandomTranslation = (word) => {
   return unusedTranslations[randomIndex].index
 }
 
+// 根据过滤器获取可用单词池
+const getFilteredWordPool = () => {
+  let pool = unlearnedWords.value.length > 0 ? unlearnedWords.value : words.value
+
+  // 错题本过滤
+  if (activeFilters.value.recite === true) {
+    pool = pool.filter(word => word.status?.recite === true)
+  }
+
+  // 重要单词过滤
+  if (activeFilters.value.important === true) {
+    pool = pool.filter(word => word.status?.important === true)
+  }
+
+  // 不规则动词过滤
+  if (activeFilters.value.irregular === true) {
+    const { isIrregularWord } = useWordService()
+    pool = pool.filter(word => isIrregularWord(word.id))
+  }
+
+  // 首字母过滤
+  if (activeFilters.value.letter !== 'all') {
+    pool = pool.filter(word =>
+      word.word.charAt(0).toUpperCase() === activeFilters.value.letter
+    )
+  }
+
+  // 词性过滤
+  if (!activeFilters.value.partOfSpeech.includes('all')) {
+    pool = pool.filter(word =>
+      word.translations?.some(trans =>
+        activeFilters.value.partOfSpeech.includes(trans.type)
+      )
+    )
+  }
+
+  return pool
+}
+
 // 生成随机批次
 const generateRandomBatch = () => {
-  const available = unlearnedWords.value.length > 0 ? unlearnedWords.value : words.value
-  const shuffled = shuffleArray(available)
+  const available = getFilteredWordPool()
+
+  // 如果过滤后没有单词，使用所有单词
+  const finalPool = available.length > 0 ? available : words.value
+  const shuffled = shuffleArray(finalPool)
   currentBatchList.value = shuffled.slice(0, Math.min(batchSize, shuffled.length))
 
   // 为每个单词选择一个随机翻译
@@ -105,6 +167,13 @@ const prevBatch = () => {
   }
 }
 
+// 刷新当前批次
+const refreshBatch = () => {
+  generateRandomBatch()
+  resetDictation()
+  startTimer()
+}
+
 const resetDictation = () => {
   clearInterval(timerInterval)
   userAnswers.value = {}
@@ -135,37 +204,16 @@ const submitDictation = async () => {
   currentBatchList.value.forEach(item => {
     const userAnswer = userAnswers.value[item.id]?.trim()
     const selectedTransIndex = selectedTranslations.value[item.id]
-    let isCorrect = false
 
-    if (mode.value === 'chinese') {
-      // 中文默写：检查选中的翻译是否匹配
-      if (userAnswer && userAnswer.length >= 2 && selectedTransIndex !== null) {
-        const selectedTrans = item.translations[selectedTransIndex]
-        isCorrect = selectedTrans.translation.indexOf(userAnswer) !== -1
-      }
-    } else {
-      // 英文默写：完全匹配（不区分大小写）
-      // 处理多形式单词，如 "a (an)" -> ["a", "an"]
-      const userAnswerLower = userAnswer?.toLowerCase()
-      const correctAnswerLower = item.word.toLowerCase()
+    // 使用共享的验证函数
+    const isCorrect = validateAnswer({
+      item,
+      userAnswer,
+      selectedTransIndex,
+      mode: mode.value
+    })
 
-      // 1. 完全匹配原始格式 "a (an)"
-      if (userAnswerLower === correctAnswerLower) {
-        isCorrect = true
-      } else {
-        // 2. 匹配无括号格式 "a an"
-        const noBrackets = correctAnswerLower.replace(/[()]/g, '')
-        if (userAnswerLower === noBrackets) {
-          isCorrect = true
-        } else {
-          // 3. 匹配单个形式 "a" 或 "an"
-          const wordForms = item.word.split(/[\s()]+/).filter(w => w.length > 0)
-          isCorrect = wordForms.some(form => form.toLowerCase() === userAnswerLower)
-        }
-      }
-    }
-
-    // 收集更新数据
+    // 收集更新数据（updateReviewData 已经包含了完整的状态更新逻辑）
     const updateData = updateReviewData(item.id, isCorrect, selectedTransIndex)
     if (updateData) {
       if (updateData.wordUpdate) {
@@ -202,40 +250,52 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="container max-w-4xl mx-auto px-4 py-8">
+  <div class="container mx-auto px-4 py-8">
     <!-- Loading State -->
     <div v-if="isLoading" class="flex flex-col items-center justify-center py-20">
       <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mb-4"></div>
       <p class="text-slate-600">加载单词数据中...</p>
     </div>
 
-    <!-- Content -->
-    <template v-else>
-      <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-        <ProgressBar :current-batch-num="currentBatchNum" :total-batches="totalBatches" />
+    <!-- Content with Sidebar -->
+    <div v-else class="flex gap-6">
+      <!-- Left Sidebar - Filter -->
+      <aside class="hidden lg:block w-64 flex-shrink-0">
+        <div class="sticky top-24">
+          <FilterSidebar
+            :active-filters="activeFilters"
+            :words="activeWords"
+            @filter-change="handleFilterChange"
+          />
+        </div>
+      </aside>
 
-        <TimerDisplay :time-left="timeLeft" :is-submitted="isSubmitted" />
+      <!-- Main Content -->
+      <main class="flex-1 min-w-0">
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+          <ProgressBar :current-batch-num="currentBatchNum" :total-batches="totalBatches" />
 
-        <NavigationButtons
+          <TimerDisplay :time-left="timeLeft" :is-submitted="isSubmitted" />
+
+          <RefreshButton
+            :disabled="isSubmitted"
+            @refresh="refreshBatch"
+          />
+        </div>
+
+        <DictationMode
+          :current-batch-list="currentBatchList"
           :current-index="currentIndex"
-          :has-next-batch="hasNextBatch"
-          @prev="prevBatch"
-          @next="nextBatch"
+          :user-answers="userAnswers"
+          :is-submitted="isSubmitted"
+          :batch-size="batchSize"
+          :mode="mode"
+          :selected-translations="selectedTranslations"
+          @update:user-answers="userAnswers = $event"
+          @submit="submitDictation"
+          @retry="retryBatch"
         />
-      </div>
-
-      <DictationMode
-        :current-batch-list="currentBatchList"
-        :current-index="currentIndex"
-        :user-answers="userAnswers"
-        :is-submitted="isSubmitted"
-        :batch-size="batchSize"
-        :mode="mode"
-        :selected-translations="selectedTranslations"
-        @update:user-answers="userAnswers = $event"
-        @submit="submitDictation"
-        @retry="retryBatch"
-      />
-    </template>
+      </main>
+    </div>
   </div>
 </template>

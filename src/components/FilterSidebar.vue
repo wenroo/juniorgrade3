@@ -288,13 +288,13 @@ const getPartOfSpeechClasses = (value, isSelected) => {
   if (value === 'all') {
     return isSelected
       ? 'bg-blue-800 text-white font-semibold'
-      : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
+      : 'text-slate-600 hover:bg-slate-100 border-transparent'
   }
 
   const config = getTypeConfig(value)
   return isSelected
     ? `${config.bgActive} ${config.textActive} font-medium`
-    : `${config.bgHover}`
+    : `${config.bgHover} border-transparent`
 }
 
 // 获取通用过滤器按钮样式（用于 recite 和 important）
@@ -307,7 +307,7 @@ const getFilterButtonClasses = (groupId, value, isSelected) => {
   // 'all' 选项的样式
   if (value === 'all') {
     return isSelected
-      ? 'bg-blue-800 text-white font-semibold'
+      ? 'bg-blue-800 text-white'
       : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
   }
 
@@ -315,11 +315,11 @@ const getFilterButtonClasses = (groupId, value, isSelected) => {
   if (groupId === 'important') {
     if (value === 'true') {
       return isSelected
-        ? 'bg-lime-600 text-white font-bold border-2 border-lime-700'
-        : 'bg-lime-50 text-lime-700 hover:bg-lime-100 border border-lime-300'
+        ? 'bg-lime-600 text-white border-lime-700'
+        : 'bg-lime-50 text-lime-700 hover:bg-lime-100 border-lime-300'
     } else {
       return isSelected
-        ? 'bg-slate-600 text-white font-medium'
+        ? 'bg-slate-600 text-white'
         : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
     }
   }
@@ -328,18 +328,31 @@ const getFilterButtonClasses = (groupId, value, isSelected) => {
   if (groupId === 'recite') {
     if (value === 'true') {
       return isSelected
-        ? 'bg-red-600 text-white font-bold border-2 border-red-700'
-        : 'bg-red-50 text-red-700 hover:bg-red-100 border border-red-300'
+        ? 'bg-red-600 text-white border-red-700'
+        : 'bg-red-50 text-red-700 hover:bg-red-100 border-red-300'
     } else {
       return isSelected
-        ? 'bg-slate-600 text-white font-medium'
+        ? 'bg-slate-600 text-white'
+        : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
+    }
+  }
+
+  // Recite 过滤器样式 - 使用蓝色
+  if (groupId === 'irregular') {
+    if (value === 'true') {
+      return isSelected
+        ? 'bg-amber-600 text-white border-amber-700'
+        : 'bg-amber-50 text-amber-700 hover:bg-amber-100 border-amber-300'
+    } else {
+      return isSelected
+        ? 'bg-slate-600 text-white'
         : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
     }
   }
 
   // 默认样式
   return isSelected
-    ? 'bg-blue-600 text-white font-medium'
+    ? 'bg-blue-600 text-white'
     : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
 }
 
@@ -417,7 +430,7 @@ onMounted(() => {
               ? 'bg-gray-100 text-gray-400 cursor-not-allowed border-2 border-gray-200'
               : isSelected(group.id, option.value, group.type)
                 ? 'bg-blue-800 text-white'
-                : 'bg-white-50 border-2 border-blue-900 text-blue-900 hover:bg-slate-100'
+                : 'bg-white-50 border-2 border-blue-900/35 text-blue-900 hover:bg-slate-100'
           ]"
         >
           {{ option.label }}
@@ -432,9 +445,10 @@ onMounted(() => {
           @click="handleFilterChange(group.id, option.value, group.type)"
           :disabled="!hasWordsForOption(group.id, option.value)"
           :class="[
-            'py-2 px-3 text-sm rounded-lg text-left transition-all flex items-center justify-between',
+            (group.id === 'partOfSpeech' && getPartOfSpeechCount(option.value) === 0) ? 'hidden' : 'flex',
+            'btn',
             !hasWordsForOption(group.id, option.value)
-              ? 'bg-gray-100 text-gray-600 cursor-not-allowed opacity-50'
+              ? 'bg-gray-100 text-gray-600 cursor-not-allowed opacity-50 border-gray-200'
               : getFilterButtonClasses(group.id, option.value, isSelected(group.id, option.value, group.type))
           ]"
         >

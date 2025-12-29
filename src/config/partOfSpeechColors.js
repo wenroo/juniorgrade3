@@ -7,7 +7,8 @@ export const partOfSpeechColors = {
     bgHover: 'hover:bg-blue-400',   // 悬停背景
     bgActive: 'bg-blue-800',        // 选中背景
     textActive: 'text-white',       // 选中文字色
-    border: 'border-blue-300',      // 边框色
+    border: 'border-blue-100',      // 边框色 
+    borderActive: 'border-blue-300', 
     label: '名词 (n.)'
   },
   'v.': {
@@ -17,7 +18,8 @@ export const partOfSpeechColors = {
     bgHover: 'hover:bg-green-400',
     bgActive: 'bg-green-800',
     textActive: 'text-white',
-    border: 'border-green-300',
+    border: 'border-green-100',
+    borderActive: 'border-green-300',
     label: '动词 (v.)'
   },
   'adj.': {
@@ -27,7 +29,8 @@ export const partOfSpeechColors = {
     bgHover: 'hover:bg-purple-400',
     bgActive: 'bg-purple-800',
     textActive: 'text-white',
-    border: 'border-purple-300',
+    border: 'border-purple-100',
+    borderActive: 'border-green-300',
     label: '形容词 (adj.)'
   },
   'adv.': {
@@ -37,7 +40,8 @@ export const partOfSpeechColors = {
     bgHover: 'hover:bg-pink-400',
     bgActive: 'bg-pink-800',
     textActive: 'text-white',
-    border: 'border-pink-300',
+    border: 'border-pink-100',
+    borderActive: 'border-green-300',
     label: '副词 (adv.)'
   },
   'prep.': {
@@ -47,7 +51,8 @@ export const partOfSpeechColors = {
     bgHover: 'hover:bg-violet-400',
     bgActive: 'bg-violet-800',
     textActive: 'text-white',
-    border: 'border-violet-300',
+    border: 'border-violet-100',
+    borderActive: 'border-green-300',
     label: '介词 (prep.)'
   },
   'conj.': {
@@ -57,7 +62,8 @@ export const partOfSpeechColors = {
     bgHover: 'hover:bg-orange-400',
     bgActive: 'bg-orange-800',
     textActive: 'text-white',
-    border: 'border-orange-300',
+    border: 'border-orange-100',
+    borderActive: 'border-green-300',
     label: '连词 (conj.)'
   },
   'pron.': {
@@ -67,7 +73,8 @@ export const partOfSpeechColors = {
     bgHover: 'hover:bg-indigo-400',
     bgActive: 'bg-indigo-800',
     textActive: 'text-white',
-    border: 'border-indigo-300',
+    border: 'border-indigo-100',
+    borderActive: 'border-green-300',
     label: '代词 (pron.)'
   },
   'art.': {
@@ -77,7 +84,8 @@ export const partOfSpeechColors = {
     bgHover: 'hover:bg-cyan-400',
     bgActive: 'bg-cyan-800',
     textActive: 'text-white',
-    border: 'border-cyan-300',
+    border: 'border-cyan-100',
+    borderActive: 'border-green-300',
     label: '冠词 (art.)'
   },
   'interj.': {
@@ -87,7 +95,8 @@ export const partOfSpeechColors = {
     bgHover: 'hover:bg-red-400',
     bgActive: 'bg-red-800',
     textActive: 'text-white',
-    border: 'border-red-300',
+    border: 'border-red-100',
+    borderActive: 'border-green-300',
     label: '感叹词 (interj.)'
   },
   'num.': {
@@ -97,7 +106,8 @@ export const partOfSpeechColors = {
     bgHover: 'hover:bg-lime-400',
     bgActive: 'bg-lime-800',
     textActive: 'text-white',
-    border: 'border-lime-300',
+    border: 'border-lime-100',
+    borderActive: 'border-green-300',
     label: '数词 (num.)'
   }
 }
@@ -110,7 +120,8 @@ export const defaultColors = {
   bgHover: 'hover:bg-teal-400',
   bgActive: 'bg-teal-800',
   textActive: 'text-white',
-  border: 'border-teal-300'
+  border: 'border-teal-100',
+  borderActive: 'border-teal-300',
 }
 
 // 获取词性背景色 - 用于ReciteMode

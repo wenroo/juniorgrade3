@@ -36,7 +36,7 @@
             中文默写
           </router-link>          
           <router-link
-            to="/dictation-chinese"
+            to="/"
             class="menu-item"
             disabled
             active-class="menu-item menu-item-active">

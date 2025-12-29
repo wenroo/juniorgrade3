@@ -72,7 +72,7 @@ const filteredWords = computed(() => {
           <div class="card-item-col">
             <span class="card-item-title text-slate-100">不定式</span>
             <div class="card-item-content">
-              <h3 class="text-xl font-medium text-white">{{ item.word }}</h3>
+              <h3 class="text-lg md:text-2xl font-medium text-white">{{ item.word }}</h3>
               <p class="text-sm text-gray-100">{{ item.phonetic }}</p>
             </div>
           </div>
@@ -81,8 +81,8 @@ const filteredWords = computed(() => {
           <div class="card-item-col">
             <span class="card-item-title  text-amber-900 ">过去式</span>
             <div class="card-item-content">
-              <p class="text-base font-medium">{{ item.pasttense.word }}</p>
-              <p class=" text-slate-400">{{ item.pasttense.phonetic }}</p>
+              <p class="text-base md:text-xl font-medium">{{ item.pasttense.word }}</p>
+              <p class="max-md:text-xs text-slate-400">{{ item.pasttense.phonetic }}</p>
             </div>
           </div>
 
@@ -90,8 +90,8 @@ const filteredWords = computed(() => {
           <div class="card-item-col">
             <span class="card-item-title   text-amber-900 ">过去分词</span>
             <div class="card-item-content">
-              <p class="text-base font-medium">{{ item.pastparticiple?.word }}</p>
-              <p class=" text-slate-400">{{ item.pastparticiple?.phonetic }}</p>
+              <p class="text-base md:text-xl font-medium">{{ item.pastparticiple?.word }}</p>
+              <p class="max-md:text-xs text-slate-400">{{ item.pastparticiple?.phonetic }}</p>
             </div>
           </div>
         </div>
