@@ -4,10 +4,10 @@ import ReciteMode from '../components/ReciteMode.vue'
 import ProgressBar from '../components/ProgressBar.vue'
 import NavigationButtons from '../components/NavigationButtons.vue'
 import FilterSidebar from '../components/FilterSidebar.vue'
-import { useWordService } from '@/services/wordServiceSupabase'
+import { useWordService } from '@/services'
 
 // Use unified word service
-const { words, isLoading, loadWords } = useWordService()
+const { words, isLoading, loadWords, isIrregularWord } = useWordService()
 
 // 响应式状态
 const currentIndex = ref(0)
@@ -73,6 +73,11 @@ const filteredWords = computed(() => {
     result = result.filter(word => word.status?.important === true)
   }
 
+  // Irregular 过滤
+  if (activeFilters.value.irregular === true) {
+    result = result.filter(word => isIrregularWord(word.id))
+  }
+
   return result
 })
 
@@ -82,7 +87,8 @@ const totalBatches = computed(() => {
       activeFilters.value.letter !== 'all' ||
       !activeFilters.value.partOfSpeech.includes('all') ||
       activeFilters.value.recite === true ||
-      activeFilters.value.important === true) {
+      activeFilters.value.important === true ||
+      activeFilters.value.irregular === true) {
     return 1
   }
   return Math.ceil(filteredWords.value.length / batchSize)
@@ -97,7 +103,8 @@ const currentBatchList = computed(() => {
       activeFilters.value.letter !== 'all' ||
       !activeFilters.value.partOfSpeech.includes('all') ||
       activeFilters.value.recite === true ||
-      activeFilters.value.important === true) {
+      activeFilters.value.important === true ||
+      activeFilters.value.irregular === true) {
     return filteredWords.value
   }
   // 正常分页

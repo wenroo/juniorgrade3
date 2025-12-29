@@ -5,7 +5,7 @@ import DictationMode from '../components/DictationMode.vue'
 import ProgressBar from '../components/ProgressBar.vue'
 import TimerDisplay from '../components/TimerDisplay.vue'
 import NavigationButtons from '../components/NavigationButtons.vue'
-import { useWordService } from '@/services/wordServiceSupabase'
+import { useWordService } from '@/services'
 
 // Get route to determine mode
 const route = useRoute()

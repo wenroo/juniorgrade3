@@ -16,6 +16,7 @@ const CACHE_DURATION = 5 * 60 * 1000 // 5 minutes
 const words = ref([])
 const phonetics = ref({})
 const userStatus = ref({}) // 用户状态数据 { wordId: status }
+const irregularWords = ref([]) // 不规则动词数据
 const isLoading = ref(false)
 const error = ref(null)
 const isSaving = ref(false)
@@ -155,6 +156,31 @@ const loadUserStatusFromAPI = async () => {
 }
 
 /**
+ * Load irregular words from backend API
+ */
+const loadIrregularWordsFromAPI = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/irregular-words`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data = await response.json()
+    console.log('✅ Irregular words data received:', data.length, 'entries')
+    return data
+  } catch (e) {
+    console.warn('⚠️ Failed to load irregular words:', e.message)
+    return []
+  }
+}
+
+/**
  * Merge phonetics data into words
  */
 const mergePhonetics = (wordsData, phoneticsData) => {
@@ -208,14 +234,16 @@ const loadWords = async (forceRefresh = true) => {
 
     // Try API
     try {
-      const [wordsData, phoneticsData, statusData] = await Promise.all([
+      const [wordsData, phoneticsData, statusData, irregularWordsData] = await Promise.all([
         loadFromAPI(),
         loadPhoneticsFromAPI(),
-        loadUserStatusFromAPI()
+        loadUserStatusFromAPI(),
+        loadIrregularWordsFromAPI()
       ])
 
       phonetics.value = phoneticsData
       userStatus.value = statusData
+      irregularWords.value = irregularWordsData
 
       // 先合并音标，再合并用户状态
       let mergedWords = mergePhonetics(wordsData, phoneticsData)
@@ -548,6 +576,20 @@ const savePhoneticsToBackend = async () => {
 }
 
 /**
+ * Get irregular word info by word_id
+ */
+const getIrregularWord = (wordId) => {
+  return irregularWords.value.find(iw => iw.word_id === wordId) || null
+}
+
+/**
+ * Check if a word is irregular verb
+ */
+const isIrregularWord = (wordId) => {
+  return irregularWords.value.some(iw => iw.word_id === wordId)
+}
+
+/**
  * Clear cache
  */
 const clearCache = () => {
@@ -573,6 +615,7 @@ export function useWordService() {
     error,
     isSaving,
     lastSyncTime,
+    irregularWords,
 
     // Computed
     wrongWords,
@@ -595,6 +638,8 @@ export function useWordService() {
     updateReviewData,
     batchUpdateWordsAndStatus,
     checkAndResetLearned,
+    getIrregularWord,
+    isIrregularWord,
     clearCache
   }
 }

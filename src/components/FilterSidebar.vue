@@ -1,6 +1,9 @@
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue'
 import { partOfSpeechColors, getTypeConfig } from '@/config/partOfSpeechColors'
+import { useWordService } from '@/services'
+
+const { isIrregularWord } = useWordService()
 
 const props = defineProps({
   activeFilters: {
@@ -29,7 +32,8 @@ const loadFiltersFromStorage = () => {
     letter: 'all',
     partOfSpeech: ['all'],
     recite: false,
-    important: false
+    important: false,
+    irregular: false
   }
 }
 
@@ -78,6 +82,15 @@ const getFilteredWords = (excludeGroupId = null) => {
       }
     }
 
+    // Irregular 过滤（如果不排除）
+    if (excludeGroupId !== 'irregular') {
+      if (selectedFilters.value.irregular === true) {
+        if (!isIrregularWord(word.id)) {
+          return false
+        }
+      }
+    }
+
     return true
   })
 }
@@ -118,6 +131,12 @@ const importantWordCount = computed(() => {
   return words.filter(word => word.status?.important).length
 })
 
+// 计算 irregular 状态下的单词数量
+const irregularWordCount = computed(() => {
+  const words = getFilteredWords('irregular')
+  return words.filter(word => isIrregularWord(word.id)).length
+})
+
 // 通用函数：检查过滤器选项是否有对应的单词
 const hasWordsForOption = (groupId, value) => {
   if (value === 'all') return true
@@ -136,6 +155,10 @@ const hasWordsForOption = (groupId, value) => {
 
   if (groupId === 'important') {
     return importantWordCount.value > 0
+  }
+
+  if (groupId === 'irregular') {
+    return irregularWordCount.value > 0
   }
 
   return true
@@ -169,6 +192,14 @@ const filterGroups = ref([
     type: 'toggle',
     options: [
       { value: 'true', label: '错题' }
+    ]
+  },
+  {
+    id: 'irregular',
+    title: '不规则动词',
+    type: 'toggle',
+    options: [
+      { value: 'true', label: '不规则动词' }
     ]
   },
   {
@@ -245,7 +276,8 @@ const resetFilters = () => {
     letter: 'all',
     partOfSpeech: ['all'],
     recite: false,
-    important: false
+    important: false,
+    irregular: false
   }
   saveFiltersToStorage()
   emit('filter-change', selectedFilters.value)
@@ -339,6 +371,11 @@ const getImportantCount = () => {
   return importantWordCount.value
 }
 
+// 获取 irregular 状态单词数量
+const getIrregularCount = () => {
+  return irregularWordCount.value
+}
+
 // 组件挂载时触发初始过滤
 onMounted(() => {
   emit('filter-change', selectedFilters.value)
@@ -408,7 +445,8 @@ onMounted(() => {
           <span class="text-xs opacity-75">
             {{ group.id === 'partOfSpeech' ? getPartOfSpeechCount(option.value) :
                group.id === 'recite' ? getReciteCount() :
-               group.id === 'important' ? getImportantCount() : 0 }}
+               group.id === 'important' ? getImportantCount() :
+               group.id === 'irregular' ? getIrregularCount() : 0 }}
           </span>
         </button>
       </div>

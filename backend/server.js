@@ -6,9 +6,10 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = 3123;
-const DATA_FILE = path.join(__dirname, 'words_26.json'); // 你的数据文件路径
-const PHONETIC_FILE = path.join(__dirname, 'phonetics.json'); // 音标数据文件
-const USER_STATUS_FILE = path.join(__dirname, 'user_word_status.json'); // 用户状态数据文件
+const DATA_FILE = path.join(__dirname, 'data/words_26.json'); // 你的数据文件路径
+const PHONETIC_FILE = path.join(__dirname, 'data/phonetics.json'); // 音标数据文件
+const USER_STATUS_FILE = path.join(__dirname, 'data/user_word_status.json'); // 用户状态数据文件
+const IRREGULAR_WORDS_FILE = path.join(__dirname, 'data/irregular_words.json'); // 不规则动词数据文件
 
 // 中间件
 app.use(cors()); // 允许前端跨域访问
@@ -252,6 +253,25 @@ app.post('/api/batch-update', (req, res) => {
                 });
             });
         });
+    });
+});
+
+// 8. 获取不规则动词数据 (GET)
+app.get('/api/irregular-words', (req, res) => {
+    fs.readFile(IRREGULAR_WORDS_FILE, 'utf8', (err, data) => {
+        if (err) {
+            // 如果文件不存在，返回空数组
+            console.warn('不规则动词文件不存在:', err.message);
+            return res.json([]);
+        }
+        try {
+            const irregularWords = JSON.parse(data);
+            console.log('不规则动词数据已加载，共', irregularWords.length, '条');
+            res.json(irregularWords);
+        } catch (e) {
+            console.error('不规则动词文件格式错误:', e);
+            res.status(500).send('不规则动词文件格式错误');
+        }
     });
 });
 

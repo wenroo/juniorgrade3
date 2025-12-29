@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from 'vue'
-import { useWordService } from '@/services/wordServiceSupabase'
+import { useWordService } from '@/services'
 
 // Use unified word service
 const { wrongWords, loadWords, isLoading } = useWordService()

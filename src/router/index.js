@@ -13,6 +13,11 @@ const router = createRouter({
       component: () => import('../views/RecitePage.vue')
     },
     {
+      path: '/irregular',
+      name: 'irregular',
+      component: () => import('../views/IrregularPage.vue')
+    },
+    {
       path: '/dictation',
       name: 'dictation',
       component: () => import('../views/DictationPage.vue'),

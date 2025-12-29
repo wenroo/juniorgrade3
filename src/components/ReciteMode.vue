@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import WordPhonetic from './WordPhonetic.vue'
 import { getTypeColor } from '@/config/partOfSpeechColors'
-import { useWordService } from '@/services/wordServiceSupabase'
+import { useWordService } from '@/services'
 
 // 使用 word service
 const { updateWordStatus } = useWordService()
@@ -150,8 +150,8 @@ const cancelConfirm = () => {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
             </svg>
           </h3>
-          <WordPhonetic :word="item.word" :word-id="item.id" :cached-phonetic="item.phonetic" />
 
+            <WordPhonetic :word="item.word" :word-id="item.id" :cached-phonetic="item.phonetic" />
           <!-- 状态按钮组 -->
           <div class="flex flex-col items-center gap-3 mt-5.5 flex-wrap absolute right-4 top-0">
 
@@ -313,7 +313,7 @@ const cancelConfirm = () => {
   <!-- 确认对话框 -->
   <div
     v-if="showConfirmDialog"
-    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+    class="fixed inset-0 bg-black bg-black/75 flex items-center justify-center z-50"
     @click.self="cancelConfirm"
   >
     <div class="bg-white rounded-2xl shadow-xl p-6 max-w-md w-full mx-4">

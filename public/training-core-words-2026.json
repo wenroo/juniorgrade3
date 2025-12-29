@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "title": "2026上海中考英语核心词汇专项训练",
+    "version": "1.0"
+  },
+  "initial_filling": [
+    {
+      "id": 1,
+      "sentence": "If you want to a________ your dream, you must work hard.",
+      "hint": "实现",
+      "answer": "achieve",
+      "category": "verb"
+    },
+    {
+      "id": 2,
+      "sentence": "Reading books can help to i________ your writing skills.",
+      "hint": "改善，提高",
+      "answer": "improve",
+      "category": "verb"
+    },
+    {
+      "id": 3,
+      "sentence": "We should have the c________ to face the difficulties in life.",
+      "hint": "勇气",
+      "answer": "courage",
+      "category": "noun"
+    },
+    {
+      "id": 4,
+      "sentence": "It is p________ to wait for others without complaining.",
+      "hint": "有耐心的 (注意词性)",
+      "answer": "patient",
+      "category": "adj"
+    },
+    {
+      "id": 5,
+      "sentence": "He failed many times, but he refused to give up. F________, he succeeded.",
+      "hint": "最后",
+      "answer": "Finally",
+      "category": "adv"
+    }
+  ],
+  "cloze_test": [
+    {
+      "id": 101,
+      "title": "Learning a New Skill",
+      "content": "Learning something new is never easy. Last year, I decided to learn how to swim. At first, I had no __1__ in myself. I was afraid of water. However, my coach __2__ me to try again and again. He said that __3__ is necessary if I want to succeed. I made a great __4__. After two months, I could swim very well. I realized that we should never __5__ giving up easily.",
+      "options": [
+        { "index": 1, "answer": "confidence", "options_list": ["confidence", "silence", "pleasure", "habit"] },
+        { "index": 2, "answer": "encouraged", "options_list": ["forced", "encouraged", "prevented", "refused"] },
+        { "index": 3, "answer": "patience", "options_list": ["culture", "patience", "influence", "method"] },
+        { "index": 4, "answer": "effort", "options_list": ["effort", "failure", "surprise", "doubt"] },
+        { "index": 5, "answer": "consider", "options_list": ["avoid", "consider", "imagine", "suggest"] }
+      ]
+    }
+  ]
+}

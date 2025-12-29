@@ -14,7 +14,13 @@
             to="/recite"
             class="menu-item"
             active-class="menu-item-active">
-            背诵模式
+            单词库
+          </router-link>
+          <router-link
+            to="/irregular"
+            class="menu-item"
+            active-class="menu-item menu-item-active">
+            不规则动词
           </router-link>
           <router-link
             to="/dictation"

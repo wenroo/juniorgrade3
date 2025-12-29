@@ -60,3 +60,24 @@
     @apply w-full flex items-center bg-white/95 rounded-t-2xl text-black relative;
   }
 }
+
+
+/* Cards */
+.cards-normal{
+  @apply grid grid-cols-1 md:grid-cols-2  gap-4;
+  .card-item{
+    @apply bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow flex;
+    .card-item-col{
+      @apply w-full px-2 py-2 flex items-center gap-1;
+      &:first-child{
+        @apply bg-amber-900 rounded-lg;
+      }
+    }
+    .card-item-title{
+      writing-mode:vertical-lr;
+      @apply text-xs uppercase tracking-wide;
+    }
+    .card-item-content{
+    }
+  }
+}

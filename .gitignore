@@ -38,7 +38,5 @@ __screenshots__/
 # Others
 */.claude
 */CLAUDE.md
-*/**/*.json
-*/**/*.sql
-*/**/*.csv
+*/data/*.*
 */**/supabaseClient.js
