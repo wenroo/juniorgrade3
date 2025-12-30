@@ -590,6 +590,56 @@ const isIrregularWord = (wordId) => {
 }
 
 /**
+ * Load question choices from backend API
+ */
+const loadQuestionChoices = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/question-choices`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data = await response.json()
+    console.log('✅ Question choices data received:', data.length, 'questions')
+    return data
+  } catch (e) {
+    console.warn('⚠️ Failed to load question choices:', e.message)
+    return []
+  }
+}
+
+/**
+ * Load filling library from backend API
+ */
+const loadFillingLibrary = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/filling-library`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data = await response.json()
+    console.log('✅ Filling library data received:', data.length, 'questions')
+    return data
+  } catch (e) {
+    console.warn('⚠️ Failed to load filling library:', e.message)
+    return []
+  }
+}
+
+/**
  * Clear cache
  */
 const clearCache = () => {
@@ -640,6 +690,8 @@ export function useWordService() {
     checkAndResetLearned,
     getIrregularWord,
     isIrregularWord,
+    loadQuestionChoices,
+    loadFillingLibrary,
     clearCache
   }
 }

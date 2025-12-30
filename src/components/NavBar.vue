@@ -44,6 +44,12 @@ const isDictationActive = computed(() => {
             :class="{ 'menu-item-active': isDictationActive }">
             单词默写
           </router-link>
+          <router-link
+            to="/quiz"
+            class="menu-item"
+            active-class="menu-item-active">
+            答题练习
+          </router-link>
           <!-- <router-link
             to="/wrong-words"
             class="menu-item"

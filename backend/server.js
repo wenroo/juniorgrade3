@@ -11,6 +11,8 @@ const PHONETIC_FILE = path.join(__dirname, 'data/phonetics.json'); // 音标数�
 const USER_STATUS_FILE = path.join(__dirname, 'data/user_word_status.json'); // 用户状态数据文件
 const IRREGULAR_WORDS_FILE = path.join(__dirname, 'data/irregular_words.json'); // 不规则动词数据文件
 const SETTINGS_FILE = path.join(__dirname, 'settings.json'); // 设置配置文件
+const QUESTION_CHOICES_FILE = path.join(__dirname, 'data/question_choices.json'); // 选择题题库文件
+const FILLING_LIBRARY_FILE = path.join(__dirname, 'data/filling_library.json'); // 完形填空题库文件
 
 // 中间件
 app.use(cors()); // 允许前端跨域访问
@@ -312,6 +314,44 @@ app.post('/api/settings', (req, res) => {
         }
         console.log('设置已保存:', newSettings);
         res.send({ success: true, message: '设置已保存', settings: newSettings });
+    });
+});
+
+// 11. 获取选择题题库 (GET)
+app.get('/api/question-choices', (req, res) => {
+    fs.readFile(QUESTION_CHOICES_FILE, 'utf8', (err, data) => {
+        if (err) {
+            // 如果文件不存在，返回空数组
+            console.warn('选择题题库文件不存在:', err.message);
+            return res.json([]);
+        }
+        try {
+            const questions = JSON.parse(data);
+            console.log('选择题题库已加载，共', questions.length, '题');
+            res.json(questions);
+        } catch (e) {
+            console.error('选择题题库文件格式错误:', e);
+            res.status(500).send('选择题题库文件格式错误');
+        }
+    });
+});
+
+// 12. 获取完形填空题库 (GET)
+app.get('/api/filling-library', (req, res) => {
+    fs.readFile(FILLING_LIBRARY_FILE, 'utf8', (err, data) => {
+        if (err) {
+            // 如果文件不存在，返回空数组
+            console.warn('完形填空题库文件不存在:', err.message);
+            return res.json([]);
+        }
+        try {
+            const questions = JSON.parse(data);
+            console.log('完形填空题库已加载，共', questions.length, '题');
+            res.json(questions);
+        } catch (e) {
+            console.error('完形填空题库文件格式错误:', e);
+            res.status(500).send('完形填空题库文件格式错误');
+        }
     });
 });
 

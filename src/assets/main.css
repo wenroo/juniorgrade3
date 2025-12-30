@@ -47,7 +47,7 @@
   .menu{
     @apply flex justify-center items-center sm:space-x-4 px-4 mb-2 md:mb-0;
     .menu-item{
-      @apply px-5 py-2 rounded-full text-base font-medium transition-colors;
+      @apply w-full md:w-auto px-2 text-center py-2 rounded-full text-base font-medium transition-colors;
     }
     .menu-item-active{
       @apply transition-colors bg-gradient-to-br from-[#5422f3] to-[#f30ce4] text-white;
@@ -84,3 +84,33 @@
     }
   }
 }
+
+
+.card-question{
+  @apply pb-6 bg-white rounded-xl shadow-sm border border-slate-100 hover:shadow-md relative overflow-hidden flex flex-col justify-between;
+  .question-header{
+    @apply flex gap-4 items-center justify-between flex-wrap py-4 px-6 bg-sky-50/30 shadow-sm;
+  }
+}
+
+
+
+.quiz-page {
+  @apply fixed top-0 w-full h-screen overflow-y-auto;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.feedback-message{
+  @apply text-xl font-bold;
+  &.correct{
+    @apply text-green-500;
+  }
+  &.incorrect {
+    @apply text-red-600;
+  }
+} 
+
+
+
+
+
