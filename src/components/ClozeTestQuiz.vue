@@ -1,68 +1,107 @@
 <template>
-  <div class="cloze-test-quiz">
-    <div v-if="!quizFinished" class="quiz-screen">
+  <div class="min-h-[400px]">
+    <!-- Quiz Screen -->
+    <div v-if="currentQuestion && !shouldShowResults" class="space-y-4">
       <!-- Progress -->
-      <div class="progress-info">
-        <span>题目 {{ currentQuestionIndex + 1 }} / {{ questions.length }}</span>
+      <div class="flex justify-between items-center text-lg font-semibold text-indigo-600 mb-4">
+        <span>已答题数: {{ totalAnswered }} / {{ questionsPerSession }}</span>
         <span>得分: {{ score }}</span>
       </div>
 
-      <!-- Question -->
-      <div class="question-card">
-        <h3 class="question-title">请选择正确的单词填入空白处：</h3>
+      <!-- Question Card -->
+      <div class="">
+        <h3 class="text-lg font-semibold text-slate-600 mb-4">
+          Fill in blanks with proper words<br>
+          <span class="text-lg text-neutral-400">选择最恰当的单词或词语完成短文</span>
+        </h3>
 
-        <!-- Sentence with blank -->
-        <div class="sentence-display">
-          <span v-for="(part, index) in currentQuestion.sentenceParts" :key="index">
-            <span v-if="part.type === 'text'">{{ part.content }}</span>
-            <span v-else class="blank-space">______</span>
-          </span>
+        <!-- Question Content -->
+        <div class="bg-black/5 px-6 py-4 text-lg rounded-2xl mb-6 shadow-sm" v-html="currentQuestion.content"></div>
+
+        <!-- Options (shared for all blanks) -->
+        <div class="mb-6">
+          <h4 class="text-base font-semibold text-slate-600 mb-3">选项：</h4>
+          <div class="flex flex-wrap gap-2">
+            <span
+              v-for="(option, index) in currentQuestion.options"
+              :key="index"
+              class="py-2 px-4 text-base font-medium rounded-lg border-2 border-slate-300 bg-slate-50"
+            >
+              <span class="font-bold mr-1">{{ String.fromCharCode(65 + index) }}.</span>
+              {{ option }}
+            </span>
+          </div>
         </div>
 
-        <!-- Translation hint -->
-        <div class="translation-hint">
-          参考翻译: {{ currentQuestion.translation }}
-        </div>
-
-        <!-- Options -->
-        <div class="options-grid">
-          <button
-            v-for="(option, index) in currentQuestion.options"
-            :key="index"
-            :class="['option-button', getOptionClass(option)]"
-            @click="selectAnswer(option)"
-            :disabled="answered"
+        <!-- Blanks to fill -->
+        <div class="space-y-4 mb-6">
+          <div
+            v-for="blank in currentQuestion.blanks"
+            :key="blank.blank_id"
+            class="flex items-center gap-3"
           >
-            {{ option }}
+            <label class="text-base font-semibold text-slate-700 min-w-[60px]">
+              空格 {{ blank.blank_id }}:
+            </label>
+            <select
+              v-model="userAnswers[blank.blank_id]"
+              :disabled="answered"
+              class="flex-1 py-2 px-4 text-base border-2 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              :class="{
+                'border-green-500 bg-green-50': answered && userAnswers[blank.blank_id] === blank.correctAnswer,
+                'border-red-500 bg-red-50': answered && userAnswers[blank.blank_id] && userAnswers[blank.blank_id] !== blank.correctAnswer,
+                'border-slate-300': !answered
+              }"
+            >
+              <option value="">请选择答案</option>
+              <option
+                v-for="(option, index) in currentQuestion.options"
+                :key="index"
+                :value="option"
+              >
+                {{ String.fromCharCode(65 + index) }}. {{ option }}
+              </option>
+            </select>
+            <span v-if="answered" class="min-w-[24px]">
+              <span v-if="userAnswers[blank.blank_id] === blank.correctAnswer" class="text-green-600 text-xl">✓</span>
+              <span v-else-if="userAnswers[blank.blank_id]" class="text-red-600 text-xl">✗</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div v-if="!answered" class="flex justify-center">
+          <button
+            class="py-3 px-8 text-lg font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            @click="submitAnswer"
+            :disabled="!allBlanksAnswered"
+          >
+            提交答案
           </button>
         </div>
 
         <!-- Feedback -->
-        <div v-if="answered" class="feedback">
-          <div :class="['feedback-message', isCorrect ? 'correct' : 'incorrect']">
-            {{ isCorrect ? '✓ 回答正确！' : '✗ 回答错误' }}
+        <div v-if="answered" class="mt-6 space-y-4">
+          <div :class="['text-xl font-bold text-center py-3 rounded-xl', allCorrect ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50']">
+            {{ allCorrect ? '✓ 全部正确！' : `✗ 答对 ${correctCount} / ${currentQuestion.blanks.length} 个空格` }}
           </div>
-          <div class="complete-sentence">
-            完整句子: {{ currentQuestion.completeSentence }}
+
+          <div v-if="!allCorrect && currentQuestion.info" class="bg-amber-50 border-2 border-amber-200 rounded-xl p-4">
+            <div class="text-sm text-amber-900 leading-relaxed" v-html="currentQuestion.info"></div>
           </div>
-          <button class="next-button" @click="nextQuestion">
-            {{ currentQuestionIndex < questions.length - 1 ? '下一题' : '查看结果' }}
-          </button>
         </div>
       </div>
     </div>
 
-    <div v-else class="result-screen">
-      <h2>答题完成！</h2>
-      <div class="score-display">
-        <div class="score-circle">
-          <span class="score-number">{{ score }}</span>
-          <span class="score-total">/ {{ questions.length }}</span>
-        </div>
-        <p class="score-percentage">正确率: {{ Math.round((score / questions.length) * 100) }}%</p>
-      </div>
-      <div class="result-actions">
-        <button class="retry-button" @click="restartQuiz">重新开始</button>
+    <!-- Result Screen -->
+    <div v-if="shouldShowResults" class="text-center py-12">
+      <div class="mb-8">
+        <button
+          class="py-3 px-8 text-lg font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-xl shadow-lg transition-all transform hover:scale-105"
+          @click="restartQuiz"
+        >
+          重新开始
+        </button>
       </div>
     </div>
   </div>
@@ -74,318 +113,123 @@ import { useWordService } from '@/services/wordService'
 
 const { loadFillingLibrary } = useWordService()
 
-const quizFinished = ref(false)
-const questions = ref([])
-const currentQuestionIndex = ref(0)
+const props = defineProps({
+  filters: {
+    type: Object,
+    default: () => ({})
+  }
+})
+
+const allQuestions = ref([])
+const currentQuestion = ref(null)
+const totalAnswered = ref(0)
 const score = ref(0)
 const answered = ref(false)
-const selectedAnswer = ref(null)
-const isCorrect = ref(false)
+const userAnswers = ref({})
+const questionsPerSession = ref(1)
 
-const currentQuestion = computed(() => questions.value[currentQuestionIndex.value])
+const shouldShowResults = computed(() => {
+  return totalAnswered.value >= questionsPerSession.value
+})
+
+const allBlanksAnswered = computed(() => {
+  if (!currentQuestion.value) return false
+  return currentQuestion.value.blanks.every(blank => userAnswers.value[blank.blank_id])
+})
+
+const correctCount = computed(() => {
+  if (!currentQuestion.value || !answered.value) return 0
+  return currentQuestion.value.blanks.filter(blank =>
+    userAnswers.value[blank.blank_id] === blank.correctAnswer
+  ).length
+})
+
+const allCorrect = computed(() => {
+  if (!currentQuestion.value) return false
+  return correctCount.value === currentQuestion.value.blanks.length
+})
 
 onMounted(async () => {
   await loadQuestions()
+  await loadSettings()
+  loadRandomQuestion()
 })
+
+async function loadSettings() {
+  try {
+    const response = await fetch('http://localhost:3123/api/settings')
+    const data = await response.json()
+    if (data.quiz?.questionsPerSession) {
+      questionsPerSession.value = data.quiz.questionsPerSession
+    }
+  } catch (error) {
+    console.error('Failed to load settings:', error)
+  }
+}
 
 async function loadQuestions() {
   try {
     const data = await loadFillingLibrary()
-    // Filter choice type questions and take 10
-    const choiceQuestions = data.filter(q => q.question_type === 'choice')
-    const shuffled = [...choiceQuestions].sort(() => Math.random() - 0.5)
-    questions.value = shuffled.slice(0, Math.min(10, choiceQuestions.length)).map(q =>
-      processFillingQuestion(q)
-    )
+    // Filter complete type questions
+    allQuestions.value = data
+      .filter(q => q.question_type === 'complete')
+      .map(q => processCompleteQuestion(q))
   } catch (error) {
     console.error('Failed to load questions:', error)
   }
 }
 
-function processFillingQuestion(question) {
-  // Pick a random blank from the question
-  const randomBlank = question.blanks[Math.floor(Math.random() * question.blanks.length)]
-  const correctAnswer = randomBlank.correct_word[0]
-
-  // Extract sentence with blank
+function processCompleteQuestion(question) {
+  // Process all blanks, not just one
   const content = question.content.replace(/<br>/g, ' ')
-  const blankPattern = new RegExp(`___${randomBlank.blank_id}___`, 'g')
-  const parts = content.split(blankPattern)
+
+  // Replace all blanks with placeholders
+  let displayContent = content
+  question.blanks.forEach(blank => {
+    const blankPattern = new RegExp(`___${blank.blank_id}___`, 'g')
+    displayContent = displayContent.replace(blankPattern, `<strong>[${blank.blank_id}]</strong>`)
+  })
+
+  // Get all unique options from the first blank (they all share the same alternatives)
+  const options = question.blanks[0]?.alternatives || []
 
   return {
-    sentenceParts: [
-      { type: 'text', content: parts[0] || '' },
-      { type: 'blank' },
-      { type: 'text', content: parts[1] || '' }
-    ],
-    correctAnswer,
-    options: randomBlank.alternatives,
-    completeSentence: content.replace(blankPattern, correctAnswer),
-    translation: ''
+    content: displayContent,
+    blanks: question.blanks.map(blank => ({
+      blank_id: blank.blank_id,
+      correctAnswer: blank.correct_word[0]
+    })),
+    options: options,
+    info: question.info || '',
+    from: question.from || ''
   }
 }
 
-function selectAnswer(option) {
-  if (answered.value) return
+function loadRandomQuestion() {
+  if (allQuestions.value.length === 0) return
 
-  selectedAnswer.value = option
+  const randomIndex = Math.floor(Math.random() * allQuestions.value.length)
+  currentQuestion.value = allQuestions.value[randomIndex]
+  answered.value = false
+  userAnswers.value = {}
+}
+
+function submitAnswer() {
+  if (!allBlanksAnswered.value || answered.value) return
+
   answered.value = true
-  isCorrect.value = option === currentQuestion.value.correctAnswer
 
-  if (isCorrect.value) {
+  // Calculate score based on all correct answers
+  if (allCorrect.value) {
     score.value++
   }
-}
-
-function nextQuestion() {
-  if (currentQuestionIndex.value < questions.value.length - 1) {
-    currentQuestionIndex.value++
-    answered.value = false
-    selectedAnswer.value = null
-    isCorrect.value = false
-  } else {
-    quizFinished.value = true
-  }
+  totalAnswered.value++
 }
 
 function restartQuiz() {
-  quizFinished.value = false
-  currentQuestionIndex.value = 0
+  totalAnswered.value = 0
   score.value = 0
-  answered.value = false
-  selectedAnswer.value = null
-  loadQuestions()
-}
-
-function getOptionClass(option) {
-  if (!answered.value) return ''
-  if (option === currentQuestion.value.correctAnswer) return 'correct'
-  if (option === selectedAnswer.value && !isCorrect.value) return 'incorrect'
-  return 'disabled'
+  loadRandomQuestion()
 }
 </script>
 
-<style scoped>
-.cloze-test-quiz {
-  min-height: 400px;
-}
-
-.start-screen,
-.result-screen {
-  text-align: center;
-  padding: 3rem 1rem;
-}
-
-.start-screen h2,
-.result-screen h2 {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 1rem;
-}
-
-.description {
-  font-size: 1.1rem;
-  color: #666;
-  margin-bottom: 2rem;
-}
-
-.start-button,
-.retry-button {
-  padding: 1rem 3rem;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: white;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.start-button:hover,
-.retry-button:hover {
-  transform: scale(1.05);
-}
-
-.quiz-screen {
-  padding: 1rem;
-}
-
-.progress-info {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 1.5rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #667eea;
-}
-
-.question-card {
-  background: #f8f9fa;
-  border-radius: 12px;
-  padding: 2rem;
-}
-
-.question-title {
-  font-size: 1.2rem;
-  color: #666;
-  margin-bottom: 1.5rem;
-}
-
-.sentence-display {
-  font-size: 1.5rem;
-  line-height: 2;
-  color: #333;
-  margin-bottom: 1rem;
-  padding: 1.5rem;
-  background: white;
-  border-radius: 8px;
-  text-align: center;
-}
-
-.blank-space {
-  display: inline-block;
-  min-width: 100px;
-  border-bottom: 2px solid #667eea;
-  margin: 0 0.5rem;
-  font-weight: bold;
-  color: #667eea;
-}
-
-.translation-hint {
-  font-size: 1rem;
-  color: #888;
-  margin-bottom: 2rem;
-  text-align: center;
-  font-style: italic;
-}
-
-.options-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.option-button {
-  padding: 1.5rem;
-  font-size: 1.1rem;
-  text-align: center;
-  background: white;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-weight: 500;
-}
-
-.option-button:hover:not(:disabled) {
-  border-color: #667eea;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.option-button.correct {
-  background: #d4edda;
-  border-color: #28a745;
-  color: #155724;
-}
-
-.option-button.incorrect {
-  background: #f8d7da;
-  border-color: #dc3545;
-  color: #721c24;
-}
-
-.option-button.disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.feedback {
-  text-align: center;
-  margin-top: 1.5rem;
-}
-
-.feedback-message {
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-
-.feedback-message.correct {
-  color: #28a745;
-}
-
-.feedback-message.incorrect {
-  color: #dc3545;
-}
-
-.complete-sentence {
-  font-size: 1.1rem;
-  color: #333;
-  margin-bottom: 1rem;
-  padding: 1rem;
-  background: white;
-  border-radius: 8px;
-  border-left: 4px solid #667eea;
-}
-
-.next-button {
-  padding: 0.75rem 2rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: white;
-  background: #667eea;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.next-button:hover {
-  background: #5568d3;
-}
-
-.score-display {
-  margin: 2rem 0;
-}
-
-.score-circle {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  margin-bottom: 1rem;
-}
-
-.score-number {
-  font-size: 4rem;
-  font-weight: bold;
-}
-
-.score-total {
-  font-size: 1.5rem;
-}
-
-.score-percentage {
-  font-size: 1.5rem;
-  color: #667eea;
-  font-weight: 600;
-}
-
-@media (max-width: 768px) {
-  .options-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .sentence-display {
-    font-size: 1.2rem;
-  }
-}
-</style>

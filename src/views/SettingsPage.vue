@@ -12,6 +12,9 @@ const settings = ref({
   },
   multipleChoice: {
     questionsPerSession: 1
+  },
+  quiz: {
+    questionsPerSession: 1
   }
 })
 
@@ -70,6 +73,9 @@ const resetToDefaults = () => {
       batchSize: 10
     },
     multipleChoice: {
+      questionsPerSession: 1
+    },
+    quiz: {
       questionsPerSession: 1
     }
   }
@@ -205,6 +211,47 @@ onMounted(() => {
               >
               <div class="w-32 text-right">
                 <span class="text-lg font-bold text-purple-600">{{ settings.multipleChoice.questionsPerSession }} 题</span>
+              </div>
+            </div>
+            <div class="mt-2 flex justify-between text-xs text-slate-500">
+              <span>1题</span>
+              <span>20题</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz Settings -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 mb-6">
+        <div class="flex items-center gap-3 mb-6">
+          <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-slate-800">答题练习设置</h2>
+            <p class="text-sm text-slate-500">配置答题练习的参数</p>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <!-- Questions Per Session Setting -->
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-3">
+              每次答题数量
+            </label>
+            <div class="flex items-center gap-4">
+              <input
+                v-model.number="settings.quiz.questionsPerSession"
+                type="range"
+                min="1"
+                max="20"
+                step="1"
+                class="flex-1 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-600"
+              >
+              <div class="w-32 text-right">
+                <span class="text-lg font-bold text-emerald-600">{{ settings.quiz.questionsPerSession }} 题</span>
               </div>
             </div>
             <div class="mt-2 flex justify-between text-xs text-slate-500">
