@@ -1,6 +1,6 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import DictationMode from '../components/DictationMode.vue'
 import ProgressBar from '../components/ProgressBar.vue'
 import TimerDisplay from '../components/TimerDisplay.vue'
@@ -11,20 +11,55 @@ import { validateAnswer } from '@/utils/dictationValidator'
 
 // Get route to determine mode
 const route = useRoute()
+const router = useRouter()
 const mode = computed(() => route.meta.mode || 'english')
+
+// 保存当前模式到localStorage
+const saveDictationMode = (newMode) => {
+  try {
+    localStorage.setItem('dictationMode', newMode)
+  } catch (e) {
+    console.error('Failed to save dictation mode:', e)
+  }
+}
+
+// 从localStorage加载模式
+const loadDictationMode = () => {
+  try {
+    return localStorage.getItem('dictationMode') || 'english'
+  } catch (e) {
+    console.error('Failed to load dictation mode:', e)
+    return 'english'
+  }
+}
 
 // Use unified word service
 const { words, unlearnedWords, loadWords, updateReviewData, batchUpdateWordsAndStatus, checkAndResetLearned, isLoading } = useWordService()
 
 // 响应式状态
 const currentIndex = ref(0)
-const batchSize = 10
+const batchSize = ref(10) // 改为响应式
 const userAnswers = ref({})
 const isSubmitted = ref(false)
+const isTimeout = ref(false) // 超时标记
 const timeLeft = ref(600)
+const initialTimeLeft = ref(600) // 保存初始时间配置
 const currentBatchList = ref([])
 const selectedTranslations = ref({}) // 存储每个单词选中的翻译索引
 let timerInterval = null
+
+// 加载设置配置
+const loadSettings = async () => {
+  try {
+    const response = await fetch('http://localhost:3123/api/settings')
+    const settings = await response.json()
+    batchSize.value = settings.dictation.batchSize
+    initialTimeLeft.value = settings.dictation.timeLeft
+    timeLeft.value = settings.dictation.timeLeft
+  } catch (error) {
+    console.error('加载设置失败，使用默认值:', error)
+  }
+}
 
 // 过滤器状态 - 用于选择默写单词的来源
 const activeFilters = ref({
@@ -122,7 +157,7 @@ const generateRandomBatch = () => {
   // 如果过滤后没有单词，使用所有单词
   const finalPool = available.length > 0 ? available : words.value
   const shuffled = shuffleArray(finalPool)
-  currentBatchList.value = shuffled.slice(0, Math.min(batchSize, shuffled.length))
+  currentBatchList.value = shuffled.slice(0, Math.min(batchSize.value, shuffled.length))
 
   // 为每个单词选择一个随机翻译
   selectedTranslations.value = {}
@@ -133,6 +168,19 @@ const generateRandomBatch = () => {
 
 // Load words on mount
 onMounted(async () => {
+  // 如果当前路径是 /dictation（没有指定模式），则从localStorage恢复上次的模式
+  if (route.path === '/dictation' && route.meta.mode === undefined) {
+    const savedMode = loadDictationMode()
+    const targetPath = savedMode === 'chinese' ? '/dictation-chinese' : '/dictation'
+    if (route.path !== targetPath) {
+      await router.replace(targetPath)
+    }
+  } else {
+    // 保存当前模式
+    saveDictationMode(mode.value)
+  }
+
+  await loadSettings()
   await loadWords()
   generateRandomBatch()
   startTimer()
@@ -144,29 +192,11 @@ const activeWords = computed(() => {
   return unlearnedWords.value.length > 0 ? unlearnedWords.value : words.value
 })
 
-const totalBatches = computed(() => Math.ceil(activeWords.value.length / batchSize))
+const totalBatches = computed(() => Math.ceil(activeWords.value.length / batchSize.value))
 const currentBatchNum = computed(() => currentIndex.value + 1)
-const hasNextBatch = computed(() => activeWords.value.length >= batchSize)
+const hasNextBatch = computed(() => activeWords.value.length >= batchSize.value)
 
 // 方法
-const nextBatch = () => {
-  if (hasNextBatch.value) {
-    currentIndex.value++
-    generateRandomBatch()
-    resetDictation()
-    startTimer()
-  }
-}
-
-const prevBatch = () => {
-  if (currentIndex.value > 0) {
-    currentIndex.value--
-    generateRandomBatch()
-    resetDictation()
-    startTimer()
-  }
-}
-
 // 刷新当前批次
 const refreshBatch = () => {
   generateRandomBatch()
@@ -178,23 +208,36 @@ const resetDictation = () => {
   clearInterval(timerInterval)
   userAnswers.value = {}
   isSubmitted.value = false
-  timeLeft.value = 600
+  isTimeout.value = false
+  timeLeft.value = initialTimeLeft.value
 }
 
 const startTimer = () => {
   clearInterval(timerInterval)
-  timeLeft.value = 600
+  timeLeft.value = initialTimeLeft.value
   timerInterval = setInterval(() => {
     timeLeft.value--
     if (timeLeft.value <= 0) {
-      submitDictation()
+      handleTimeout()
     }
   }, 1000)
+}
+
+// 处理超时
+const handleTimeout = () => {
+  clearInterval(timerInterval)
+  isTimeout.value = true
+  isSubmitted.value = true
 }
 
 const submitDictation = async () => {
   clearInterval(timerInterval)
   isSubmitted.value = true
+
+  // 如果是超时，不保存数据
+  if (isTimeout.value) {
+    return
+  }
 
   // 收集所有更新数据
   const wordUpdates = []
@@ -239,9 +282,24 @@ const submitDictation = async () => {
 }
 
 const retryBatch = () => {
+  generateRandomBatch()
   resetDictation()
   startTimer()
 }
+
+// 监听路由变化（切换英文/中文默写模式时更换题目）
+watch(() => route.path, (newPath) => {
+  // 保存当前模式到localStorage
+  if (newPath === '/dictation-chinese') {
+    saveDictationMode('chinese')
+  } else if (newPath === '/dictation') {
+    saveDictationMode('english')
+  }
+
+  generateRandomBatch()
+  resetDictation()
+  startTimer()
+})
 
 // 清理定时器
 onUnmounted(() => {
@@ -259,6 +317,7 @@ onUnmounted(() => {
 
     <!-- Content with Sidebar -->
     <div v-else class="flex gap-6">
+
       <!-- Left Sidebar - Filter -->
       <aside class="hidden lg:block w-64 flex-shrink-0">
         <div class="sticky top-24">
@@ -272,6 +331,25 @@ onUnmounted(() => {
 
       <!-- Main Content -->
       <main class="flex-1 min-w-0">
+        
+        <div class="text-sm font-medium text-center border-b border-gray-200 mb-4">
+          <div class="flex flex-wrap -mb-px">
+          <router-link
+            to="/dictation"
+            class="inline-block p-4 border-b-2 border-transparent rounded-t-base hover:text-indigo-500 hover:border-indigo-300"
+            active-class="text-indigo-500 !border-indigo-700">
+            英文默写
+          </router-link>
+          <router-link
+            to="/dictation-chinese"
+            class="inline-block p-4 border-b-2 border-transparent rounded-t-base hover:text-indigo-500 hover:border-indigo-300"
+            active-class="text-indigo-500 !border-indigo-700">
+            中文默写
+          </router-link>
+          </div>
+        </div>
+
+
         <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
           <ProgressBar :current-batch-num="currentBatchNum" :total-batches="totalBatches" />
 
@@ -288,6 +366,7 @@ onUnmounted(() => {
           :current-index="currentIndex"
           :user-answers="userAnswers"
           :is-submitted="isSubmitted"
+          :is-timeout="isTimeout"
           :batch-size="batchSize"
           :mode="mode"
           :selected-translations="selectedTranslations"

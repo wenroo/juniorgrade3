@@ -22,6 +22,10 @@ const props = defineProps({
     type: Boolean,
     required: true
   },
+  isTimeout: {
+    type: Boolean,
+    default: false
+  },
   batchSize: {
     type: Number,
     required: true
@@ -132,19 +136,36 @@ const updateAnswer = (id, value) => {
           <span v-else class="text-rose-600 text-lg font-bold">✕</span>
         </div>
 
-        <div v-if="isSubmitted" class="text-sm mt-1 pl-1 font-medium"
+        <div v-if="isSubmitted && !isTimeout" class="text-sm mt-1 pl-1 font-medium"
           :class="checkAnswer(item.id) ? 'text-emerald-500' : 'text-rose-500'">
+          <span class="opacity-50">标准答案: </span><span class="text-lg">{{ mode === 'chinese' ? getDisplayTranslation(item, 'translation') : item.word  }}</span>
+        </div>
+
+        <div v-if="isTimeout" class="text-sm mt-1 pl-1 font-medium text-amber-600">
           <span class="opacity-50">标准答案: </span><span class="text-lg">{{ mode === 'chinese' ? getDisplayTranslation(item, 'translation') : item.word  }}</span>
         </div>
       </div>
     </div>
 
     <div class="mt-8 text-center">
+      <!-- 超时提示 -->
+      <div v-if="isTimeout" class="mb-4 p-4 bg-amber-50 border border-amber-200 rounded-xl">
+        <p class="text-amber-800 font-semibold text-lg">⏰ 时间到！本次听写未保存</p>
+        <p class="text-amber-600 text-sm mt-1">请查看标准答案后重新开始</p>
+      </div>
+
       <button
         v-if="!isSubmitted"
         @click="$emit('submit')"
         class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-xl shadow-lg shadow-indigo-200 transition-all transform hover:-translate-y-1 active:scale-95">
         提交并检查答案
+      </button>
+
+      <button
+        v-else-if="isTimeout"
+        @click="$emit('retry')"
+        class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-8 rounded-xl shadow-lg transition-all">
+        重新开始听写
       </button>
 
       <button

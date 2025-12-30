@@ -10,6 +10,7 @@ const DATA_FILE = path.join(__dirname, 'data/words_26.json'); // 你的数据文
 const PHONETIC_FILE = path.join(__dirname, 'data/phonetics.json'); // 音标数据文件
 const USER_STATUS_FILE = path.join(__dirname, 'data/user_word_status.json'); // 用户状态数据文件
 const IRREGULAR_WORDS_FILE = path.join(__dirname, 'data/irregular_words.json'); // 不规则动词数据文件
+const SETTINGS_FILE = path.join(__dirname, 'settings.json'); // 设置配置文件
 
 // 中间件
 app.use(cors()); // 允许前端跨域访问
@@ -272,6 +273,45 @@ app.get('/api/irregular-words', (req, res) => {
             console.error('不规则动词文件格式错误:', e);
             res.status(500).send('不规则动词文件格式错误');
         }
+    });
+});
+
+// 9. 获取设置配置 (GET)
+app.get('/api/settings', (req, res) => {
+    fs.readFile(SETTINGS_FILE, 'utf8', (err, data) => {
+        if (err) {
+            // 如果文件不存在，返回默认配置
+            console.warn('设置文件不存在，返回默认配置');
+            const defaultSettings = {
+                dictation: {
+                    timeLeft: 600,
+                    batchSize: 10
+                }
+            };
+            return res.json(defaultSettings);
+        }
+        try {
+            const settings = JSON.parse(data);
+            console.log('设置配置已加载');
+            res.json(settings);
+        } catch (e) {
+            console.error('设置文件格式错误:', e);
+            res.status(500).send('设置文件格式错误');
+        }
+    });
+});
+
+// 10. 保存设置配置 (POST)
+app.post('/api/settings', (req, res) => {
+    const newSettings = req.body;
+
+    fs.writeFile(SETTINGS_FILE, JSON.stringify(newSettings, null, 2), 'utf8', (err) => {
+        if (err) {
+            console.error('保存设置失败:', err);
+            return res.status(500).send('保存设置失败');
+        }
+        console.log('设置已保存:', newSettings);
+        res.send({ success: true, message: '设置已保存', settings: newSettings });
     });
 });
 

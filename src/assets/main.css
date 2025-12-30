@@ -43,9 +43,9 @@
 
 /* Main menu */
 .main-menu{
-  @apply bg-white shadow-xs rounded-b-2xl sticky top-0 z-5 mx-4;
+  @apply bg-white shadow-xs md:rounded-b-2xl sticky top-0 z-5 md:mx-4;
   .menu{
-    @apply flex  items-center space-x-2 sm:space-x-4;
+    @apply flex justify-center items-center sm:space-x-4 px-4 mb-2 md:mb-0;
     .menu-item{
       @apply px-5 py-2 rounded-full text-base font-medium transition-colors;
     }
@@ -58,10 +58,9 @@
 
 /* block */
 .block-search{
-  background-image: url('/src/assets/images/banner.png');
-  @apply bg-no-repeat bg-cover h-70 flex flex-col justify-start items-center rounded-2xl overflow-hidden;
+  @apply bg-no-repeat bg-cover flex flex-col justify-start items-center;
   .inner{
-    @apply w-full flex items-center bg-white/95 rounded-t-2xl text-black relative;
+    @apply w-full flex items-center  text-black relative;
   }
 }
 

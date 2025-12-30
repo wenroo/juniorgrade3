@@ -33,6 +33,11 @@ const router = createRouter({
       path: '/wrong-words',
       name: 'wrongWords',
       component: () => import('../views/WrongWordsPage.vue')
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: () => import('../views/SettingsPage.vue')
     }
   ]
 })
