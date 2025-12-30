@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-[400px]">
     <!-- Quiz Screen -->
-    <div v-if="currentQuestion && !shouldShowResults" class="space-y-4">
+    <div v-if="currentQuestion" class="space-y-4">
       <!-- Progress -->
       <div class="flex justify-between items-center text-lg font-semibold text-indigo-600 mb-4">
         <span>已答题数: {{ totalAnswered }} / {{ questionsPerSession }}</span>
@@ -18,54 +18,48 @@
         <!-- Question Content -->
         <div class="bg-black/5 px-6 py-4 text-lg rounded-2xl mb-6 shadow-sm" v-html="currentQuestion.content"></div>
 
-        <!-- Options (shared for all blanks) -->
-        <div class="mb-6">
-          <h4 class="text-base font-semibold text-slate-600 mb-3">选项：</h4>
-          <div class="flex flex-wrap gap-2">
-            <span
-              v-for="(option, index) in currentQuestion.options"
-              :key="index"
-              class="py-2 px-4 text-base font-medium rounded-lg border-2 border-slate-300 bg-slate-50"
-            >
-              <span class="font-bold mr-1">{{ String.fromCharCode(65 + index) }}.</span>
-              {{ option }}
-            </span>
-          </div>
-        </div>
-
-        <!-- Blanks to fill -->
-        <div class="space-y-4 mb-6">
+        <!-- Blanks to fill (each with its own options) -->
+        <div class="space-y-6 mb-6">
           <div
             v-for="blank in currentQuestion.blanks"
             :key="blank.blank_id"
-            class="flex items-center gap-3"
+            class="border-2 border-slate-200 rounded-xl p-4 bg-white"
           >
-            <label class="text-base font-semibold text-slate-700 min-w-[60px]">
+            <label class="text-base font-semibold text-slate-700 mb-3 block">
               空格 {{ blank.blank_id }}:
             </label>
-            <select
-              v-model="userAnswers[blank.blank_id]"
-              :disabled="answered"
-              class="flex-1 py-2 px-4 text-base border-2 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              :class="{
-                'border-green-500 bg-green-50': answered && userAnswers[blank.blank_id] === blank.correctAnswer,
-                'border-red-500 bg-red-50': answered && userAnswers[blank.blank_id] && userAnswers[blank.blank_id] !== blank.correctAnswer,
-                'border-slate-300': !answered
-              }"
-            >
-              <option value="">请选择答案</option>
-              <option
-                v-for="(option, index) in currentQuestion.options"
+
+            <!-- Options for this specific blank -->
+            <div class="flex flex-wrap gap-2 mb-3">
+              <button
+                v-for="(option, index) in blank.options"
                 :key="index"
-                :value="option"
+                @click="!answered && selectOption(blank.blank_id, option)"
+                :disabled="answered"
+                class="py-2 px-4 text-base font-medium rounded-lg border-2 transition-all"
+                :class="{
+                  'border-indigo-500 bg-indigo-50 text-indigo-700': !answered && userAnswers[blank.blank_id] === option,
+                  'border-green-500 bg-green-50 text-green-700': answered && option === blank.correctAnswer,
+                  'border-red-500 bg-red-50 text-red-700': answered && userAnswers[blank.blank_id] === option && option !== blank.correctAnswer,
+                  'border-slate-300 bg-slate-50 hover:border-slate-400 cursor-pointer': !answered && userAnswers[blank.blank_id] !== option,
+                  'border-slate-300 bg-slate-50': answered && userAnswers[blank.blank_id] !== option && option !== blank.correctAnswer,
+                  'cursor-not-allowed opacity-60': answered
+                }"
               >
-                {{ String.fromCharCode(65 + index) }}. {{ option }}
-              </option>
-            </select>
-            <span v-if="answered" class="min-w-[24px]">
-              <span v-if="userAnswers[blank.blank_id] === blank.correctAnswer" class="text-green-600 text-xl">✓</span>
-              <span v-else-if="userAnswers[blank.blank_id]" class="text-red-600 text-xl">✗</span>
-            </span>
+                <span class="font-bold mr-1">{{ String.fromCharCode(65 + index) }}.</span>
+                {{ option }}
+              </button>
+            </div>
+
+            <!-- Result indicator -->
+            <div v-if="answered" class="flex items-center gap-2 mt-2">
+              <span v-if="userAnswers[blank.blank_id] === blank.correctAnswer" class="text-green-600 font-semibold">
+                ✓ 正确
+              </span>
+              <span v-else class="text-red-600 font-semibold">
+                ✗ 错误 - 正确答案: {{ blank.correctAnswer }}
+              </span>
+            </div>
           </div>
         </div>
 
@@ -86,8 +80,13 @@
             {{ allCorrect ? '✓ 全部正确！' : `✗ 答对 ${correctCount} / ${currentQuestion.blanks.length} 个空格` }}
           </div>
 
-          <div v-if="!allCorrect && currentQuestion.info" class="bg-amber-50 border-2 border-amber-200 rounded-xl p-4">
-            <div class="text-sm text-amber-900 leading-relaxed" v-html="currentQuestion.info"></div>
+          <!-- Show question content and info when wrong -->
+          <div v-if="!allCorrect" class="space-y-4">
+            <!-- Additional info/explanation -->
+            <div v-if="currentQuestion.info" class="bg-amber-50 border-2 border-amber-200 rounded-xl p-4">
+              <h4 class="text-sm font-semibold text-amber-900 mb-2">解析：</h4>
+              <div class="text-base text-amber-900 leading-relaxed" v-html="currentQuestion.info"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -190,16 +189,13 @@ function processCompleteQuestion(question) {
     displayContent = displayContent.replace(blankPattern, `<strong>[${blank.blank_id}]</strong>`)
   })
 
-  // Get all unique options from the first blank (they all share the same alternatives)
-  const options = question.blanks[0]?.alternatives || []
-
   return {
     content: displayContent,
     blanks: question.blanks.map(blank => ({
       blank_id: blank.blank_id,
-      correctAnswer: blank.correct_word[0]
+      correctAnswer: blank.correct_word[0],
+      options: blank.alternatives || [] // Each blank has its own options
     })),
-    options: options,
     info: question.info || '',
     from: question.from || ''
   }
@@ -212,6 +208,11 @@ function loadRandomQuestion() {
   currentQuestion.value = allQuestions.value[randomIndex]
   answered.value = false
   userAnswers.value = {}
+}
+
+function selectOption(blankId, option) {
+  if (answered.value) return
+  userAnswers.value[blankId] = option
 }
 
 function submitAnswer() {

@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-[400px]">
     <!-- Quiz Screen -->
-    <div v-if="currentQuestion && !shouldShowResults" class="space-y-4">
+    <div v-if="currentQuestion" class="space-y-4">
       <!-- Progress -->
       <div class="flex justify-between items-center text-lg font-semibold text-indigo-600 mb-4">
         <span>已答题数: {{ totalAnswered }} / {{ questionsPerSession }}</span>
