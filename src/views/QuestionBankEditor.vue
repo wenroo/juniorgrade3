@@ -256,7 +256,7 @@ const questionTypes = ref([
   { label: '首字母填空', value: 'fill' },
   { label: '单词改写', value: 'word_derivation' },
   { label: '句型转换', value: 'sentence_transformation' },
-
+  { label: '阅读理解', value: 'reading_comprehension' },
 ])
 
 // Form data

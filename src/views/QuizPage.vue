@@ -1,7 +1,6 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
-    <div class="container mx-auto px-4 py-8 pt-20 md:pt-24">
-      <h1 class="text-4xl font-bold text-center text-slate-800 mb-8">答题练习</h1>
+    <div class="container mx-auto px-4 py-8">
 
       <div class="flex flex-col lg:flex-row gap-6">
         <!-- Sidebar -->

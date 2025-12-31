@@ -19,18 +19,29 @@
         <div class="bg-black/5 px-6 py-4 text-lg rounded-2xl mb-6 shadow-sm" v-html="currentQuestion.content"></div>
 
         <!-- Blanks to fill (each with its own options) -->
-        <div class="space-y-6 mb-6">
+        <div class="space-y-1 mb-6 border border-gray-100 rounded">
           <div
             v-for="blank in currentQuestion.blanks"
             :key="blank.blank_id"
-            class="border-2 border-slate-200 rounded-xl p-4 bg-white"
-          >
-            <label class="text-base font-semibold text-slate-700 mb-3 block">
-              空格 {{ blank.blank_id }}:
-            </label>
+            class="odd:bg-gray-50 flex items-center py-2 px-4 rounded gap-2">
+            <div class="flex flex-wrap items-center gap-3">
+              <label class="text-base font-semibold text-slate-700 block">
+                空格 {{ blank.blank_id }}:
+              </label>
+
+                <!-- Result indicator -->
+              <div v-if="answered" class="flex items-center gap-2">
+                <span v-if="userAnswers[blank.blank_id] === blank.correctAnswer" class="text-green-600 font-semibold">
+                  ✓ 正确
+                </span>
+                <span v-else class="text-red-600 font-semibold">
+                  ✗ 错误
+                </span>
+              </div>
+            </div>
 
             <!-- Options for this specific blank -->
-            <div class="flex flex-wrap gap-2 mb-3">
+            <div class="flex flex-wrap gap-2">
               <button
                 v-for="(option, index) in blank.options"
                 :key="index"
@@ -51,15 +62,7 @@
               </button>
             </div>
 
-            <!-- Result indicator -->
-            <div v-if="answered" class="flex items-center gap-2 mt-2">
-              <span v-if="userAnswers[blank.blank_id] === blank.correctAnswer" class="text-green-600 font-semibold">
-                ✓ 正确
-              </span>
-              <span v-else class="text-red-600 font-semibold">
-                ✗ 错误 - 正确答案: {{ blank.correctAnswer }}
-              </span>
-            </div>
+
           </div>
         </div>
 

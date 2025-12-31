@@ -111,18 +111,21 @@ const resetFilters = () => {
 const getQuestionTypeLabel = (type) => {
   const labels = {
     'complete': '完形填空',
-    'fill': '填空题',
-    'choice': '选择题'
+    'fill': '首字母填空',
+    'choice': '阅读五选四'
   }
   return labels[type] || type
 }
 
 // Tab configuration
 const tabs = [
-  { id: 'multiple-choice', label: '选择填空', questionType: null },
+  { id: 'multiple-choice', label: '选择题', questionType: null },
   { id: 'choice', label: '阅读五选四', questionType: 'choice' },
   { id: 'complete', label: '完形填空', questionType: 'complete' },
-  { id: 'fill', label: '首字母填空', questionType: 'fill' }
+  { id: 'fill', label: '首字母填空', questionType: 'fill' },
+  { label: '单词改写', id: 'word_derivation', type: 'word_derivation'  },
+  { label: '句型转换', id: 'sentence_transformation', type: 'sentence_transformation' },
+  { label: '阅读理解', id: 'reading_comprehension', type: 'reading_comprehension' }
 ]
 
 // Handle tab change

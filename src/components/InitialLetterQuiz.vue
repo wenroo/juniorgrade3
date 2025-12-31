@@ -19,21 +19,19 @@
         <div class="bg-black/5 px-6 py-4 text-lg rounded-2xl mb-6 shadow-sm" v-html="currentQuestion.content"></div>
 
         <!-- Blanks to fill -->
-        <div class="space-y-4 mb-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
           <div
             v-for="blank in currentQuestion.blanks"
             :key="blank.blank_id"
-            class="flex items-center gap-3"
+            class="flex items-center gap-3 pr-6 relative"
           >
-            <label class="text-base font-semibold text-slate-700 min-w-[60px]">
-              空格 {{ blank.blank_id }}:
-            </label>
+            <label class="text-base font-semibold text-slate-700 min-w-6">{{ blank.blank_id }}:</label>
             <input
               v-model="userAnswers[blank.blank_id]"
               type="text"
               :placeholder="`首字母: ${blank.initial}`"
               :disabled="answered"
-              class="flex-1 py-2 px-4 text-base border-2 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              class="w-full py-2 px-4 text-base border-2 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500"
               :class="{
                 'border-green-500 bg-green-50': answered && isBlankCorrect(blank.blank_id),
                 'border-red-500 bg-red-50': answered && userAnswers[blank.blank_id] && !isBlankCorrect(blank.blank_id),
@@ -41,7 +39,7 @@
               }"
               @keyup.enter="submitAnswer"
             />
-            <span v-if="answered" class="min-w-[24px]">
+            <span v-if="answered" class="absolute right-0">
               <span v-if="isBlankCorrect(blank.blank_id)" class="text-green-600 text-xl">✓</span>
               <span v-else-if="userAnswers[blank.blank_id]" class="text-red-600 text-xl">✗</span>
             </span>
