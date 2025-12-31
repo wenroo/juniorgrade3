@@ -355,6 +355,85 @@ app.get('/api/filling-library', (req, res) => {
     });
 });
 
+// 13. 添加新题目到完形填空题库 (POST)
+app.post('/api/filling-library', (req, res) => {
+    const newQuestion = req.body;
+
+    // 读取现有题库
+    fs.readFile(FILLING_LIBRARY_FILE, 'utf8', (err, data) => {
+        let questions = [];
+
+        if (!err && data) {
+            try {
+                questions = JSON.parse(data);
+            } catch (e) {
+                console.error('题库文件格式错误:', e);
+                return res.status(500).send('题库文件格式错误');
+            }
+        }
+
+        // 检查是否已存在相同ID的题目
+        const existingIndex = questions.findIndex(q => q.library_id === newQuestion.library_id);
+        if (existingIndex !== -1) {
+            return res.status(400).send({ success: false, message: '题目ID已存在' });
+        }
+
+        // 添加新题目
+        questions.push(newQuestion);
+
+        // 保存回文件
+        fs.writeFile(FILLING_LIBRARY_FILE, JSON.stringify(questions, null, 2), 'utf8', (err) => {
+            if (err) {
+                console.error('保存题库失败:', err);
+                return res.status(500).send('保存题库失败');
+            }
+            console.log('新题目已添加:', newQuestion.library_id);
+            res.send({ success: true, message: '题目已添加', question: newQuestion });
+        });
+    });
+});
+
+// 14. 更新完形填空题库中的题目 (PUT)
+app.put('/api/filling-library/:id', (req, res) => {
+    const libraryId = req.params.id;
+    const updatedQuestion = req.body;
+
+    // 读取现有题库
+    fs.readFile(FILLING_LIBRARY_FILE, 'utf8', (err, data) => {
+        if (err) {
+            console.error('读取题库失败:', err);
+            return res.status(500).send('读取题库失败');
+        }
+
+        let questions = [];
+        try {
+            questions = JSON.parse(data);
+        } catch (e) {
+            console.error('题库文件格式错误:', e);
+            return res.status(500).send('题库文件格式错误');
+        }
+
+        // 查找要更新的题目
+        const index = questions.findIndex(q => q.library_id === libraryId);
+        if (index === -1) {
+            return res.status(404).send({ success: false, message: '题目不存在' });
+        }
+
+        // 更新题目
+        questions[index] = updatedQuestion;
+
+        // 保存回文件
+        fs.writeFile(FILLING_LIBRARY_FILE, JSON.stringify(questions, null, 2), 'utf8', (err) => {
+            if (err) {
+                console.error('保存题库失败:', err);
+                return res.status(500).send('保存题库失败');
+            }
+            console.log('题目已更新:', libraryId);
+            res.send({ success: true, message: '题目已更新', question: updatedQuestion });
+        });
+    });
+});
+
 // 启动服务
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`后端服务已启动!`);

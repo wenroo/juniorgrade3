@@ -17,12 +17,18 @@ const isDictationActive = computed(() => {
         <div class="py-3 col-span-6 md:col-span-3 pl-4 md:pl-0">
           <img src="../assets/logo.svg" alt="BILL爱背单词" class="w-50 h-auto" />
         </div>
-        <div class="tools md:order-last col-span-6 md:col-span-1 flex items-center justify-end pr-4 md:pr-0">
+        <div class="tools md:order-last col-span-6 md:col-span-1 flex items-center justify-end pr-4 md:pr-0 gap-2">
           <router-link
             to="/settings"
             class="menu-item"
             active-class="menu-item menu-item-active">
             设置
+          </router-link>
+          <router-link
+            to="/question-bank-editor"
+            class="menu-item"
+            active-class="menu-item menu-item-active">
+            加题
           </router-link>
         </div>
         <div class="menu  col-span-12  md:col-span-8">

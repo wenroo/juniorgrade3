@@ -27,7 +27,21 @@ const loadSettings = async () => {
   try {
     const response = await fetch('http://localhost:3123/api/settings')
     const data = await response.json()
-    settings.value = data
+    // 合并API数据和默认值，确保所有属性都存在
+    settings.value = {
+      dictation: {
+        ...settings.value.dictation,
+        ...(data.dictation || {})
+      },
+      multipleChoice: {
+        ...settings.value.multipleChoice,
+        ...(data.multipleChoice || {})
+      },
+      quiz: {
+        ...settings.value.quiz,
+        ...(data.quiz || {})
+      }
+    }
     isLoading.value = false
   } catch (error) {
     console.error('加载设置失败:', error)

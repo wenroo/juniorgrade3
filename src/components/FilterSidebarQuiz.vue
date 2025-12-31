@@ -119,8 +119,8 @@ const getQuestionTypeLabel = (type) => {
 
 // Tab configuration
 const tabs = [
-  { id: 'multiple-choice', label: '选择题', questionType: null },
-  { id: 'choice', label: '选择填空', questionType: 'choice' },
+  { id: 'multiple-choice', label: '选择填空', questionType: null },
+  { id: 'choice', label: '阅读五选四', questionType: 'choice' },
   { id: 'complete', label: '完形填空', questionType: 'complete' },
   { id: 'fill', label: '首字母填空', questionType: 'fill' }
 ]

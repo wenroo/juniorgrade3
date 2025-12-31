@@ -43,6 +43,11 @@ const router = createRouter({
       path: '/settings',
       name: 'settings',
       component: () => import('../views/SettingsPage.vue')
+    },
+    {
+      path: '/question-bank-editor',
+      name: 'questionBankEditor',
+      component: () => import('../views/QuestionBankEditor.vue')
     }
   ]
 })
