@@ -63,7 +63,7 @@
             {{ allCorrect ? '✓ 全部正确！' : `✗ 答对 ${correctCount} / ${currentQuestion.blanks.length} 个空格` }}
           </div>
 
-          <div v-if="!allCorrect && currentQuestion.info" class="bg-amber-50 border-2 border-amber-200 rounded-xl p-4">
+          <div v-if="currentQuestion.info" class="bg-amber-50 border-2 border-amber-200 rounded-xl p-4">
             <div class="text-sm text-amber-900 leading-relaxed" v-html="currentQuestion.info"></div>
           </div>
         </div>

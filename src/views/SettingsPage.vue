@@ -14,7 +14,7 @@ const settings = ref({
     questionsPerSession: 1
   },
   quiz: {
-    questionsPerSession: 1
+    questionsPerPage: 1
   }
 })
 

@@ -2,5 +2,17 @@
   "dictation": {
     "timeLeft": 210,
     "batchSize": 10
+  },
+  "quiz": {
+    "questionsPerPage": 1
+  },
+  "readingComprehension": {
+    "questionsPerPage": 1
+  },
+  "sentenceTransformation": {
+    "questionsPerPage": 1
+  },
+  "wordDerivation": {
+    "questionsPerPage": 1
   }
 }

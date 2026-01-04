@@ -84,7 +84,7 @@
             {{ isCorrect ? '✓ 回答正确！' : '✗ 回答错误' }}
           </div>
 
-          <div v-if="!isCorrect && currentQuestion.info" class="bg-amber-50 border-2 border-amber-200 rounded-xl p-4">
+          <div v-if="currentQuestion.info" class="bg-amber-50 border-2 border-amber-200 rounded-xl p-4">
             <div class="text-sm text-amber-900 leading-relaxed" v-html="currentQuestion.info"></div>
           </div>
 

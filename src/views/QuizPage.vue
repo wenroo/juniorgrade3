@@ -8,6 +8,9 @@
           <FilterSidebarQuiz
             :questions="allQuestions"
             :multipleChoiceQuestions="multipleChoiceQuestions"
+            :wordDerivationQuestions="wordDerivationQuestions"
+            :sentenceTransformationQuestions="sentenceTransformationQuestions"
+            :readingComprehensionQuestions="readingComprehensionQuestions"
             :activeTab="activeTab"
             @filter-change="handleFilterChange"
             @tab-change="handleTabChange"
@@ -21,6 +24,9 @@
             <ChoiceQuiz v-if="activeTab === 'choice'" :filters="currentFilters" />
             <ClozeTestQuiz v-if="activeTab === 'complete'" :filters="currentFilters" />
             <InitialLetterQuiz v-if="activeTab === 'fill'" :filters="currentFilters" />
+            <WordDerivationQuiz v-if="activeTab === 'word_derivation'" />
+            <SentenceTransformationQuiz v-if="activeTab === 'sentence_transformation'" />
+            <ReadingComprehensionQuiz v-if="activeTab === 'reading_comprehension'" />
           </div>
         </div>
       </div>
@@ -30,11 +36,15 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import axios from 'axios'
 import { useWordService } from '@/services/wordService'
 import MultipleChoiceQuiz from '@/components/MultipleChoiceQuiz.vue'
 import ChoiceQuiz from '@/components/ChoiceQuiz.vue'
 import ClozeTestQuiz from '@/components/ClozeTestQuiz.vue'
 import InitialLetterQuiz from '@/components/InitialLetterQuiz.vue'
+import WordDerivationQuiz from '@/components/WordDerivationQuiz.vue'
+import SentenceTransformationQuiz from '@/components/SentenceTransformationQuiz.vue'
+import ReadingComprehensionQuiz from '@/components/ReadingComprehensionQuiz.vue'
 import FilterSidebarQuiz from '@/components/FilterSidebarQuiz.vue'
 
 const { loadFillingLibrary, loadQuestionChoices } = useWordService()
@@ -42,6 +52,9 @@ const { loadFillingLibrary, loadQuestionChoices } = useWordService()
 const activeTab = ref('multiple-choice')
 const allQuestions = ref([])
 const multipleChoiceQuestions = ref([])
+const wordDerivationQuestions = ref([])
+const sentenceTransformationQuestions = ref([])
+const readingComprehensionQuestions = ref([])
 const currentFilters = ref({
   questionType: 'all',
   from: 'all'
@@ -53,14 +66,20 @@ onMounted(async () => {
 
 async function loadQuestions() {
   try {
-    // Load both data sources
-    const [fillingData, choiceData] = await Promise.all([
+    // Load all data sources in parallel
+    const [fillingData, choiceData, wordDerivationData, transformationData, readingData] = await Promise.all([
       loadFillingLibrary(),
-      loadQuestionChoices()
+      loadQuestionChoices(),
+      axios.get('http://localhost:3123/api/word-derivation').then(res => res.data),
+      axios.get('http://localhost:3123/api/transformation').then(res => res.data),
+      axios.get('http://localhost:3123/api/reading-comprehension').then(res => res.data)
     ])
 
     allQuestions.value = fillingData
     multipleChoiceQuestions.value = choiceData
+    wordDerivationQuestions.value = wordDerivationData
+    sentenceTransformationQuestions.value = transformationData
+    readingComprehensionQuestions.value = readingData
   } catch (error) {
     console.error('Failed to load questions:', error)
   }
@@ -71,6 +90,7 @@ function handleFilterChange(filters) {
 }
 
 function handleTabChange(tabId) {
+  // All tabs now stay on /quiz route
   activeTab.value = tabId
 }
 </script>

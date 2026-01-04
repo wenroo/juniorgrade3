@@ -11,7 +11,7 @@
       <!-- Question Card -->
       <div class="">
         <h3 class="text-lg font-semibold text-slate-600 mb-4">
-          Fill in blanks with proper words<br>
+          Choose the words or expressions and complete the passage<br>
           <span class="text-lg text-neutral-400">选择最恰当的单词或词语完成短文</span>
         </h3>
 
@@ -84,7 +84,7 @@
           </div>
 
           <!-- Show question content and info when wrong -->
-          <div v-if="!allCorrect" class="space-y-4">
+          <div class="space-y-4">
             <!-- Additional info/explanation -->
             <div v-if="currentQuestion.info" class="bg-amber-50 border-2 border-amber-200 rounded-xl p-4">
               <h4 class="text-sm font-semibold text-amber-900 mb-2">解析：</h4>

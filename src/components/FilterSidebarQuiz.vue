@@ -10,6 +10,18 @@ const props = defineProps({
     type: Array,
     default: () => []
   },
+  wordDerivationQuestions: {
+    type: Array,
+    default: () => []
+  },
+  sentenceTransformationQuestions: {
+    type: Array,
+    default: () => []
+  },
+  readingComprehensionQuestions: {
+    type: Array,
+    default: () => []
+  },
   activeTab: {
     type: String,
     default: 'multiple-choice'
@@ -30,7 +42,6 @@ const loadFiltersFromStorage = () => {
   }
   return {
     questionType: 'all',
-    from: 'all',
     activeTab: 'multiple-choice' // Add default active tab
   }
 }
@@ -49,36 +60,28 @@ const questionTypes = computed(() => {
   return Array.from(types)
 })
 
-// Get unique from values from questions
-const fromValues = computed(() => {
-  const froms = new Set()
-  props.questions.forEach(q => {
-    if (q.from) {
-      froms.add(q.from)
-    }
-  })
-  return Array.from(froms)
-})
-
 // Count questions by tab type
 const getTabQuestionCount = (tabId) => {
   if (tabId === 'multiple-choice') {
-    // For multiple-choice, use separate data source
     return props.multipleChoiceQuestions.length
+  }
+
+  if (tabId === 'word_derivation') {
+    return props.wordDerivationQuestions.length
+  }
+
+  if (tabId === 'sentence_transformation') {
+    return props.sentenceTransformationQuestions.length
+  }
+
+  if (tabId === 'reading_comprehension') {
+    return props.readingComprehensionQuestions.length
   }
 
   const tab = tabs.find(t => t.id === tabId)
   if (!tab || !tab.questionType) return 0
 
   return props.questions.filter(q => q.question_type === tab.questionType).length
-}
-
-// Count questions by from
-const getFromCount = (from) => {
-  if (from === 'all') {
-    return props.questions.length
-  }
-  return props.questions.filter(q => q.from === from).length
 }
 
 // Handle filter change
@@ -100,8 +103,7 @@ const saveFiltersToStorage = () => {
 // Reset filters
 const resetFilters = () => {
   selectedFilters.value = {
-    questionType: 'all',
-    from: 'all'
+    questionType: 'all'
   }
   saveFiltersToStorage()
   emit('filter-change', selectedFilters.value)
@@ -123,20 +125,21 @@ const tabs = [
   { id: 'choice', label: '阅读五选四', questionType: 'choice' },
   { id: 'complete', label: '完形填空', questionType: 'complete' },
   { id: 'fill', label: '首字母填空', questionType: 'fill' },
-  { label: '单词改写', id: 'word_derivation', type: 'word_derivation'  },
-  { label: '句型转换', id: 'sentence_transformation', type: 'sentence_transformation' },
-  { label: '阅读理解', id: 'reading_comprehension', type: 'reading_comprehension' }
+  { id: 'word_derivation', label: '单词改写', questionType: 'word_derivation' },
+  { id: 'sentence_transformation', label: '句型转换', questionType: 'sentence_transformation' },
+  { id: 'reading_comprehension', label: '阅读理解', questionType: 'reading_comprehension' }
 ]
 
 // Handle tab change
 const handleTabChange = (tabId) => {
+  const tab = tabs.find(t => t.id === tabId)
+
   emit('tab-change', tabId)
 
   // Save active tab to localStorage
   selectedFilters.value.activeTab = tabId
 
   // Auto-filter by question type when tab changes
-  const tab = tabs.find(t => t.id === tabId)
   if (tab && tab.questionType) {
     selectedFilters.value.questionType = tab.questionType
     saveFiltersToStorage()
@@ -192,25 +195,6 @@ onMounted(() => {
           <span class="text-xs opacity-75">{{ getTabQuestionCount(tab.id) }}</span>
         </button>
       </div>
-    </div>
-
-    <!-- From Filter (Select) -->
-    <div class="mb-6">
-      <h3 class="text-sm font-semibold text-slate-700 mb-3">题目来源</h3>
-      <select
-        v-model="selectedFilters.from"
-        @change="handleFilterChange('from', selectedFilters.from)"
-        class="w-full py-2 px-4 text-sm font-medium rounded-lg border-2 border-slate-200 focus:border-indigo-500 focus:outline-none transition-colors bg-white"
-      >
-        <option value="all">全部来源 ({{ getFromCount('all') }})</option>
-        <option
-          v-for="from in fromValues"
-          :key="from"
-          :value="from"
-        >
-          {{ from }} ({{ getFromCount(from) }})
-        </option>
-      </select>
     </div>
   </div>
 </template>

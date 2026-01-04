@@ -22,6 +22,13 @@
   button{
     @apply cursor-pointer;
   }
+
+  table{
+    @apply bg-white w-full border border-neutral-400 my-2;
+    td{
+      @apply w-full py-2 px-4 border border-neutral-400;
+    }
+  }
 }
 
 .btn{
@@ -109,8 +116,6 @@
     @apply text-red-600;
   }
 } 
-
-
 
 
 

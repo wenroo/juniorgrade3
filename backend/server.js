@@ -13,6 +13,9 @@ const IRREGULAR_WORDS_FILE = path.join(__dirname, 'data/irregular_words.json'); 
 const SETTINGS_FILE = path.join(__dirname, 'settings.json'); // 设置配置文件
 const QUESTION_CHOICES_FILE = path.join(__dirname, 'data/question_choices.json'); // 选择题题库文件
 const FILLING_LIBRARY_FILE = path.join(__dirname, 'data/filling_library.json'); // 完形填空题库文件
+const WORD_DERIVATION_FILE = path.join(__dirname, 'data/word_derivation_library.json'); // 单词改写题库文件
+const TRANSFORMATION_FILE = path.join(__dirname, 'data/transformation_library.json'); // 句型转换题库文件
+const READING_COMPREHENSION_FILE = path.join(__dirname, 'data/reading_comprehension_library.json'); // 阅读理解题库文件
 
 // 中间件
 app.use(cors()); // 允许前端跨域访问
@@ -434,9 +437,54 @@ app.put('/api/filling-library/:id', (req, res) => {
     });
 });
 
+// ==================== 单词改写题库 API ====================
+// 获取单词改写题库
+app.get('/api/word-derivation', (req, res) => {
+    fs.readFile(WORD_DERIVATION_FILE, 'utf8', (err, data) => {
+        if (err) {
+            return res.json([]);
+        }
+        try {
+            res.json(JSON.parse(data));
+        } catch (e) {
+            res.status(500).send('单词改写题库文件格式错误');
+        }
+    });
+});
+
+// ==================== 句型转换题库 API ====================
+// 获取句型转换题库
+app.get('/api/transformation', (req, res) => {
+    fs.readFile(TRANSFORMATION_FILE, 'utf8', (err, data) => {
+        if (err) {
+            return res.json([]);
+        }
+        try {
+            res.json(JSON.parse(data));
+        } catch (e) {
+            res.status(500).send('句型转换题库文件格式错误');
+        }
+    });
+});
+
+// ==================== 阅读理解题库 API ====================
+// 获取阅读理解题库
+app.get('/api/reading-comprehension', (req, res) => {
+    fs.readFile(READING_COMPREHENSION_FILE, 'utf8', (err, data) => {
+        if (err) {
+            return res.json([]);
+        }
+        try {
+            res.json(JSON.parse(data));
+        } catch (e) {
+            res.status(500).send('阅读理解题库文件格式错误');
+        }
+    });
+});
+
 // 启动服务
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`后端服务已启动!`);
     console.log(`Local (WSL内部): http://localhost:${PORT}`);
-    console.log(`Windows访问:     http://localhost:${PORT}`); 
+    console.log(`Windows访问:     http://localhost:${PORT}`);
 });

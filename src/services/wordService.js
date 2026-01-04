@@ -640,6 +640,81 @@ const loadFillingLibrary = async () => {
 }
 
 /**
+ * Load word derivation library
+ */
+const loadWordDerivation = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/word-derivation`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data = await response.json()
+    console.log('✅ Word derivation data received:', data.length, 'questions')
+    return data
+  } catch (e) {
+    console.warn('⚠️ Failed to load word derivation:', e.message)
+    return []
+  }
+}
+
+/**
+ * Load sentence transformation library
+ */
+const loadTransformation = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/transformation`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data = await response.json()
+    console.log('✅ Transformation data received:', data.length, 'questions')
+    return data
+  } catch (e) {
+    console.warn('⚠️ Failed to load transformation:', e.message)
+    return []
+  }
+}
+
+/**
+ * Load reading comprehension library
+ */
+const loadReadingComprehension = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/reading-comprehension`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`)
+    }
+
+    const data = await response.json()
+    console.log('✅ Reading comprehension data received:', data.length, 'questions')
+    return data
+  } catch (e) {
+    console.warn('⚠️ Failed to load reading comprehension:', e.message)
+    return []
+  }
+}
+
+/**
  * Clear cache
  */
 const clearCache = () => {
@@ -692,6 +767,9 @@ export function useWordService() {
     isIrregularWord,
     loadQuestionChoices,
     loadFillingLibrary,
+    loadWordDerivation,
+    loadTransformation,
+    loadReadingComprehension,
     clearCache
   }
 }

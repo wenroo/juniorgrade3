@@ -30,12 +30,10 @@
           <div :class="['feedback-message', isCorrect ? 'correct' : 'incorrect']">
             {{ isCorrect ? '✓ 回答正确！' : '✗ 回答错误' }}
           </div>
-          <div v-if="!isCorrect">
             <!-- <div class="">
               正确答案: {{ currentQuestion.correctAnswer }}
             </div> -->
             <div v-if="currentQuestion.info" class="info-section" v-html="currentQuestion.info"></div>
-          </div>
         </div>
       </div>
     </div>
