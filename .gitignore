@@ -1,0 +1,22 @@
+# some sql dump file
+*.sql
+*.sql.gz
+*.tgz
+*.tar.gz
+
+# dotenv file
+.env
+docker-compose.yml
+
+# backup files
+*.original
+*.backup
+.idea
+
+# IDE Config
+**/.DS_Store
+.vscode
+.ddev
+.idea
+.lando.yml
+/tmp
