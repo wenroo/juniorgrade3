@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_irregular_verb
+    - node.type.word
+    - paragraphs.paragraphs_type.irregular_verb
+  module:
+    - entity_reference_revisions
+id: node.word.field_irregular_verb
+field_name: field_irregular_verb
+entity_type: node
+bundle: word
+label: '不规则动词'
+description: '如果是不规则动词，填写过去式和过去分词'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      irregular_verb: irregular_verb
+    target_bundles_drag_drop:
+      irregular_verb:
+        enabled: true
+        weight: 0
+field_type: entity_reference_revisions

@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: translation
+label: '释义'
+icon_uuid: null
+icon_default: null
+description: '单词释义（词性+翻译）'
+behavior_plugins: {  }

@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_translations
+    - node.type.word
+    - paragraphs.paragraphs_type.translation
+  module:
+    - entity_reference_revisions
+id: node.word.field_translations
+field_name: field_translations
+entity_type: node
+bundle: word
+label: '释义'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      translation: translation
+    target_bundles_drag_drop:
+      translation:
+        enabled: true
+        weight: 0
+field_type: entity_reference_revisions

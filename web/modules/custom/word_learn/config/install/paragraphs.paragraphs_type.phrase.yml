@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: phrase
+label: '短语'
+icon_uuid: null
+icon_default: null
+description: '英文短语和中文释义'
+behavior_plugins: {  }

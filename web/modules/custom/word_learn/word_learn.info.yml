@@ -1,0 +1,11 @@
+name: Word Learn
+description: '单词学习模块 - 提供单词内容类型、GraphQL API和相关Paragraph类型'
+type: module
+core_version_requirement: ^10 || ^11
+package: Custom
+dependencies:
+  - drupal:node
+  - drupal:text
+  - drupal:options
+  - paragraphs:paragraphs
+  - graphql:graphql

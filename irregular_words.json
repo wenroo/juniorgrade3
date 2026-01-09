@@ -1,0 +1,1806 @@
+[
+  {
+    "id": 11000,
+    "word_id": 0,
+    "word": "awake",
+    "phonetic": "/ə'weɪk/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "awoke",
+      "phonetic": "/ə'wəʊk/"
+    },
+    "pastparticiple": {
+      "word": "awoken",
+      "phonetic": "/ə'wəʊkən/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11001,
+    "word_id": 136,
+    "word": "be",
+    "phonetic": "/bi:/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "was & were",
+      "phonetic": "/wɒz/ & /wɜ:(r)/"
+    },
+    "pastparticiple": {
+      "word": "been",
+      "phonetic": "/bi:n/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11002,
+    "word_id": 138,
+    "word": "bear",
+    "phonetic": "/beə(r)/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "bore",
+      "phonetic": "/bɔ:(r)/"
+    },
+    "pastparticiple": {
+      "word": "born & borne",
+      "phonetic": "/bɔ:n/ & /bɔ:n/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11003,
+    "word_id": 150,
+    "word": "begin",
+    "phonetic": "/bɪ'gɪn/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "began",
+      "phonetic": "/bɪ'gæn/"
+    },
+    "pastparticiple": {
+      "word": "begun",
+      "phonetic": "/bɪ'gʌn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11004,
+    "word_id": 173,
+    "word": "bite",
+    "phonetic": "/baɪt/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "bit",
+      "phonetic": "/bɪt/"
+    },
+    "pastparticiple": {
+      "word": "bitten",
+      "phonetic": "/'bɪtn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11005,
+    "word_id": 180,
+    "word": "blow",
+    "phonetic": "/bləʊ/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "blew",
+      "phonetic": "/blu:/"
+    },
+    "pastparticiple": {
+      "word": "blown",
+      "phonetic": "/bləʊn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11006,
+    "word_id": 201,
+    "word": "break",
+    "phonetic": "/breɪk/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "broke",
+      "phonetic": "/brəʊk/"
+    },
+    "pastparticiple": {
+      "word": "broken",
+      "phonetic": "/'brəʊkən/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11007,
+    "word_id": 289,
+    "word": "choose",
+    "phonetic": "/tʃu:z/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "chose",
+      "phonetic": "/tʃəʊz/"
+    },
+    "pastparticiple": {
+      "word": "chosen",
+      "phonetic": "/'tʃəʊzn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11008,
+    "word_id": 450,
+    "word": "do",
+    "phonetic": "/du:/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "did",
+      "phonetic": "/dɪd/"
+    },
+    "pastparticiple": {
+      "word": "done",
+      "phonetic": "/dʌn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11009,
+    "word_id": 459,
+    "word": "draw",
+    "phonetic": "/drɔ:/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "drew",
+      "phonetic": "/dru:/"
+    },
+    "pastparticiple": {
+      "word": "drawn",
+      "phonetic": "/drɔ:n/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11010,
+    "word_id": 462,
+    "word": "drink",
+    "phonetic": "/drɪŋk/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "drank",
+      "phonetic": "/dræŋk/"
+    },
+    "pastparticiple": {
+      "word": "drunk",
+      "phonetic": "/drʌŋk/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11011,
+    "word_id": 463,
+    "word": "drive",
+    "phonetic": "/draɪv/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "drove",
+      "phonetic": "/drəʊv/"
+    },
+    "pastparticiple": {
+      "word": "driven",
+      "phonetic": "/'drɪvn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11012,
+    "word_id": 480,
+    "word": "eat",
+    "phonetic": "/i:t/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "ate",
+      "phonetic": "/et/"
+    },
+    "pastparticiple": {
+      "word": "eaten",
+      "phonetic": "/'i:tn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11013,
+    "word_id": 560,
+    "word": "fall",
+    "phonetic": "/fɔ:l/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "fell",
+      "phonetic": "/fel/"
+    },
+    "pastparticiple": {
+      "word": "fallen",
+      "phonetic": "/'fɔ:lən/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11014,
+    "word_id": 614,
+    "word": "fly",
+    "phonetic": "/flaɪ/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "flew",
+      "phonetic": "/flu:/"
+    },
+    "pastparticiple": {
+      "word": "flown",
+      "phonetic": "/fləʊn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11015,
+    "word_id": 630,
+    "word": "forget",
+    "phonetic": "/fə'get/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "forgot",
+      "phonetic": "/fə'gɒt/"
+    },
+    "pastparticiple": {
+      "word": "forgotten",
+      "phonetic": "/fə'gɒtn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11016,
+    "word_id": 640,
+    "word": "freeze",
+    "phonetic": "/fri:z/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "froze",
+      "phonetic": "/frəʊz/"
+    },
+    "pastparticiple": {
+      "word": "frozen",
+      "phonetic": "/'frəʊzn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11017,
+    "word_id": 681,
+    "word": "give",
+    "phonetic": "/gɪv/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "gave",
+      "phonetic": "/geɪv/"
+    },
+    "pastparticiple": {
+      "word": "given",
+      "phonetic": "/'gɪvn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11018,
+    "word_id": 684,
+    "word": "go",
+    "phonetic": "/gəʊ/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "went",
+      "phonetic": "/went/"
+    },
+    "pastparticiple": {
+      "word": "gone",
+      "phonetic": "/gɒn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11019,
+    "word_id": 702,
+    "word": "grow",
+    "phonetic": "/grəʊ/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "grew",
+      "phonetic": "/gru:/"
+    },
+    "pastparticiple": {
+      "word": "grown",
+      "phonetic": "/grəʊn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11020,
+    "word_id": 746,
+    "word": "hide",
+    "phonetic": "/haɪd/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "hid",
+      "phonetic": "/hɪd/"
+    },
+    "pastparticiple": {
+      "word": "hidden",
+      "phonetic": "/'hɪdn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11021,
+    "word_id": 872,
+    "word": "know",
+    "phonetic": "/nəʊ/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "knew",
+      "phonetic": "/nju:/"
+    },
+    "pastparticiple": {
+      "word": "known",
+      "phonetic": "/nəʊn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11022,
+    "word_id": 904,
+    "word": "lie",
+    "phonetic": "/laɪ/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "lay",
+      "phonetic": "/leɪ/"
+    },
+    "pastparticiple": {
+      "word": "lain",
+      "phonetic": "/leɪn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11023,
+    "word_id": 996,
+    "word": "mistake",
+    "phonetic": "/mɪ'steɪk/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "mistook",
+      "phonetic": "/mɪ'stʊk/"
+    },
+    "pastparticiple": {
+      "word": "mistaken",
+      "phonetic": "/mɪ'steɪkən/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11024,
+    "word_id": 1326,
+    "word": "ride",
+    "phonetic": "/raɪd/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "rode",
+      "phonetic": "/rəʊd/"
+    },
+    "pastparticiple": {
+      "word": "ridden",
+      "phonetic": "/'rɪdn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11025,
+    "word_id": 1328,
+    "word": "ring",
+    "phonetic": "/rɪŋ/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "rang",
+      "phonetic": "/ræŋ/"
+    },
+    "pastparticiple": {
+      "word": "rung",
+      "phonetic": "/rʌŋ/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11026,
+    "word_id": 1329,
+    "word": "rise",
+    "phonetic": "/raɪz/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "rose",
+      "phonetic": "/rəʊz/"
+    },
+    "pastparticiple": {
+      "word": "risen",
+      "phonetic": "/'rɪzn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11027,
+    "word_id": 1385,
+    "word": "see",
+    "phonetic": "/si:/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "saw",
+      "phonetic": "/sɔ:/"
+    },
+    "pastparticiple": {
+      "word": "seen",
+      "phonetic": "/si:n/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11028,
+    "word_id": 1403,
+    "word": "shake",
+    "phonetic": "/ʃeɪk/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "shook",
+      "phonetic": "/ʃʊk/"
+    },
+    "pastparticiple": {
+      "word": "shaken",
+      "phonetic": "/'ʃeɪkən/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11029,
+    "word_id": 1418,
+    "word": "show",
+    "phonetic": "/ʃəʊ/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "showed",
+      "phonetic": "/ʃəʊd/"
+    },
+    "pastparticiple": {
+      "word": "shown",
+      "phonetic": "/ʃəʊn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11030,
+    "word_id": 1434,
+    "word": "sing",
+    "phonetic": "/sɪŋ/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "sang",
+      "phonetic": "/sæŋ/"
+    },
+    "pastparticiple": {
+      "word": "sung",
+      "phonetic": "/sʌŋ/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11031,
+    "word_id": 0,
+    "word": "sink",
+    "phonetic": "/sɪŋk/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "sank",
+      "phonetic": "/sæŋk/"
+    },
+    "pastparticiple": {
+      "word": "sunk",
+      "phonetic": "/sʌŋk/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11032,
+    "word_id": 1480,
+    "word": "speak",
+    "phonetic": "/spi:k/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "spoke",
+      "phonetic": "/spəʊk/"
+    },
+    "pastparticiple": {
+      "word": "spoken",
+      "phonetic": "/'spəʊkən/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11033,
+    "word_id": 1488,
+    "word": "spring",
+    "phonetic": "/sprɪŋ/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "sprang",
+      "phonetic": "/spræŋ/"
+    },
+    "pastparticiple": {
+      "word": "sprung",
+      "phonetic": "/sprʌŋ/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11034,
+    "word_id": 1499,
+    "word": "steal",
+    "phonetic": "/sti:l/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "stole",
+      "phonetic": "/stəʊl/"
+    },
+    "pastparticiple": {
+      "word": "stolen",
+      "phonetic": "/'stəʊlən/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11035,
+    "word_id": 1551,
+    "word": "swim",
+    "phonetic": "/swɪm/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "swam",
+      "phonetic": "/swæm/"
+    },
+    "pastparticiple": {
+      "word": "swum",
+      "phonetic": "/swʌm/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11036,
+    "word_id": 1555,
+    "word": "take",
+    "phonetic": "/teɪk/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "took",
+      "phonetic": "/tʊk/"
+    },
+    "pastparticiple": {
+      "word": "taken",
+      "phonetic": "/'teɪkən/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11037,
+    "word_id": 1599,
+    "word": "throw",
+    "phonetic": "/θrəʊ/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "threw",
+      "phonetic": "/θru:/"
+    },
+    "pastparticiple": {
+      "word": "thrown",
+      "phonetic": "/θrəʊn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11038,
+    "word_id": 1698,
+    "word": "wake",
+    "phonetic": "/weɪk/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "woke",
+      "phonetic": "/wəʊk/"
+    },
+    "pastparticiple": {
+      "word": "woken",
+      "phonetic": "/'wəʊkən/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11039,
+    "word_id": 1713,
+    "word": "wear",
+    "phonetic": "/weə(r)/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "wore",
+      "phonetic": "/wɔ:(r)/"
+    },
+    "pastparticiple": {
+      "word": "worn",
+      "phonetic": "/wɔ:n/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11040,
+    "word_id": 1775,
+    "word": "write",
+    "phonetic": "/raɪt/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "wrote",
+      "phonetic": "/rəʊt/"
+    },
+    "pastparticiple": {
+      "word": "written",
+      "phonetic": "/'rɪtn/"
+    },
+    "category": "abc"
+  },
+  {
+    "id": 11041,
+    "word_id": 0,
+    "word": "bleed",
+    "phonetic": "/bli:d/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "bled",
+      "phonetic": "/bled/"
+    },
+    "pastparticiple": {
+      "word": "bled",
+      "phonetic": "/bled/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11042,
+    "word_id": 207,
+    "word": "bring",
+    "phonetic": "/brɪŋ/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "brought",
+      "phonetic": "/brɔ:t/"
+    },
+    "pastparticiple": {
+      "word": "brought",
+      "phonetic": "/brɔ:t/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11043,
+    "word_id": 215,
+    "word": "build",
+    "phonetic": "/bɪld/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "built",
+      "phonetic": "/bɪlt/"
+    },
+    "pastparticiple": {
+      "word": "built",
+      "phonetic": "/bɪlt/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11044,
+    "word_id": 218,
+    "word": "burn",
+    "phonetic": "/b3:n/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "burnt & burned",
+      "phonetic": "/b3:nt/ & /b3:nd/"
+    },
+    "pastparticiple": {
+      "word": "burnt & burned",
+      "phonetic": "/b3:nt/ & /b3:nd/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11045,
+    "word_id": 227,
+    "word": "buy",
+    "phonetic": "/baɪ/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "bought",
+      "phonetic": "/bɔ:t/"
+    },
+    "pastparticiple": {
+      "word": "bought",
+      "phonetic": "/bɔ:t/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11046,
+    "word_id": 254,
+    "word": "catch",
+    "phonetic": "/kætʃ/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "caught",
+      "phonetic": "/kɔ:t/"
+    },
+    "pastparticiple": {
+      "word": "caught",
+      "phonetic": "/kɔ:t/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11047,
+    "word_id": 393,
+    "word": "deal",
+    "phonetic": "/di:l/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "dealt",
+      "phonetic": "/delt/"
+    },
+    "pastparticiple": {
+      "word": "dealt",
+      "phonetic": "/delt/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11048,
+    "word_id": 430,
+    "word": "dig",
+    "phonetic": "/dɪg/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "dug",
+      "phonetic": "/dʌg/"
+    },
+    "pastparticiple": {
+      "word": "dug",
+      "phonetic": "/dʌg/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11049,
+    "word_id": 460,
+    "word": "dream",
+    "phonetic": "/dri:m/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "dreamt & dreamed",
+      "phonetic": "/dremt/ & /dri:md/"
+    },
+    "pastparticiple": {
+      "word": "dreamt & dreamed",
+      "phonetic": "/dremt/ & /dri:md/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11050,
+    "word_id": 578,
+    "word": "feed",
+    "phonetic": "/fi:d/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "fed",
+      "phonetic": "/fed/"
+    },
+    "pastparticiple": {
+      "word": "fed",
+      "phonetic": "/fed/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11051,
+    "word_id": 579,
+    "word": "feel",
+    "phonetic": "/fi:l/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "felt",
+      "phonetic": "/felt/"
+    },
+    "pastparticiple": {
+      "word": "felt",
+      "phonetic": "/felt/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11052,
+    "word_id": 587,
+    "word": "fight",
+    "phonetic": "/faɪt/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "fought",
+      "phonetic": "/fɔ:t/"
+    },
+    "pastparticiple": {
+      "word": "fought",
+      "phonetic": "/fɔ:t/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11053,
+    "word_id": 593,
+    "word": "find",
+    "phonetic": "/faɪnd/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "found",
+      "phonetic": "/faʊnd/"
+    },
+    "pastparticiple": {
+      "word": "found",
+      "phonetic": "/faʊnd/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11054,
+    "word_id": 678,
+    "word": "get",
+    "phonetic": "/get/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "got",
+      "phonetic": "/gɒt/"
+    },
+    "pastparticiple": {
+      "word": "got & gotten",
+      "phonetic": "/gɒt/ & /'gɒtn/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11055,
+    "word_id": 714,
+    "word": "hang",
+    "phonetic": "/hæŋ/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "hung & hanged",
+      "phonetic": "/hʌŋ/ & /hænd/"
+    },
+    "pastparticiple": {
+      "word": "hung & hanged",
+      "phonetic": "/hʌŋ/ & /hænd/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11056,
+    "word_id": 726,
+    "word": "have",
+    "phonetic": "/hæv/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "had",
+      "phonetic": "/hæd/"
+    },
+    "pastparticiple": {
+      "word": "had",
+      "phonetic": "/hæd/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11057,
+    "word_id": 733,
+    "word": "hear",
+    "phonetic": "/hɪə(r)/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "heard",
+      "phonetic": "/h3:d/"
+    },
+    "pastparticiple": {
+      "word": "heard",
+      "phonetic": "/h3:d/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11058,
+    "word_id": 753,
+    "word": "hold",
+    "phonetic": "/həʊld/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "held",
+      "phonetic": "/held/"
+    },
+    "pastparticiple": {
+      "word": "held",
+      "phonetic": "/held/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11059,
+    "word_id": 856,
+    "word": "keep",
+    "phonetic": "/ki:p/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "kept",
+      "phonetic": "/kept/"
+    },
+    "pastparticiple": {
+      "word": "kept",
+      "phonetic": "/kept/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11060,
+    "word_id": 888,
+    "word": "lay",
+    "phonetic": "/leɪ/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "laid",
+      "phonetic": "/leɪd/"
+    },
+    "pastparticiple": {
+      "word": "laid",
+      "phonetic": "/leɪd/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11061,
+    "word_id": 890,
+    "word": "lead",
+    "phonetic": "/li:d/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "led",
+      "phonetic": "/led/"
+    },
+    "pastparticiple": {
+      "word": "led",
+      "phonetic": "/led/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11062,
+    "word_id": 0,
+    "word": "lean",
+    "phonetic": "/li:n/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "leant & leaned",
+      "phonetic": "/lent/ & /li:nd/"
+    },
+    "pastparticiple": {
+      "word": "leant & leaned",
+      "phonetic": "/lent/ & /li:nd/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11063,
+    "word_id": 891,
+    "word": "learn",
+    "phonetic": "/l3:n/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "learnt & learned",
+      "phonetic": "/l3:nt/ & /l3:nd/"
+    },
+    "pastparticiple": {
+      "word": "learnt & learned",
+      "phonetic": "/l3:nt/ & /l3:nd/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11064,
+    "word_id": 892,
+    "word": "leave",
+    "phonetic": "/li:v/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "left",
+      "phonetic": "/left/"
+    },
+    "pastparticiple": {
+      "word": "left",
+      "phonetic": "/left/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11065,
+    "word_id": 896,
+    "word": "lend",
+    "phonetic": "/lend/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "lent",
+      "phonetic": "/lent/"
+    },
+    "pastparticiple": {
+      "word": "lent",
+      "phonetic": "/lent/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11066,
+    "word_id": 907,
+    "word": "light",
+    "phonetic": "/laɪt/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "lit & lighted",
+      "phonetic": "/lɪt/ & /'laɪtɪd/"
+    },
+    "pastparticiple": {
+      "word": "lit & lighted",
+      "phonetic": "/lɪt/ & /'laɪtɪd/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11067,
+    "word_id": 929,
+    "word": "lose",
+    "phonetic": "/lu:z/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "lost",
+      "phonetic": "/lɒst/"
+    },
+    "pastparticiple": {
+      "word": "lost",
+      "phonetic": "/lɒst/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11068,
+    "word_id": 950,
+    "word": "make",
+    "phonetic": "/meɪk/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "made",
+      "phonetic": "/meɪd/"
+    },
+    "pastparticiple": {
+      "word": "made",
+      "phonetic": "/meɪd/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11069,
+    "word_id": 970,
+    "word": "mean",
+    "phonetic": "/mi:n/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "meant",
+      "phonetic": "/ment/"
+    },
+    "pastparticiple": {
+      "word": "meant",
+      "phonetic": "/ment/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11070,
+    "word_id": 976,
+    "word": "meet",
+    "phonetic": "/mi:t/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "met",
+      "phonetic": "/met/"
+    },
+    "pastparticiple": {
+      "word": "met",
+      "phonetic": "/met/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11071,
+    "word_id": 1138,
+    "word": "pay",
+    "phonetic": "/peɪ/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "paid",
+      "phonetic": "/peɪd/"
+    },
+    "pastparticiple": {
+      "word": "paid",
+      "phonetic": "/peɪd/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11072,
+    "word_id": 1277,
+    "word": "read",
+    "phonetic": "/ri:d/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "read",
+      "phonetic": "/red/"
+    },
+    "pastparticiple": {
+      "word": "read",
+      "phonetic": "/red/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11073,
+    "word_id": 1366,
+    "word": "say",
+    "phonetic": "/seɪ/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "said",
+      "phonetic": "/sed/"
+    },
+    "pastparticiple": {
+      "word": "said",
+      "phonetic": "/sed/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11074,
+    "word_id": 1390,
+    "word": "sell",
+    "phonetic": "/sel/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "sold",
+      "phonetic": "/səʊld/"
+    },
+    "pastparticiple": {
+      "word": "sold",
+      "phonetic": "/səʊld/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11075,
+    "word_id": 1391,
+    "word": "send",
+    "phonetic": "/send/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "sent",
+      "phonetic": "/sent/"
+    },
+    "pastparticiple": {
+      "word": "sent",
+      "phonetic": "/sent/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11076,
+    "word_id": 1410,
+    "word": "shine",
+    "phonetic": "/ʃaɪn/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "shone",
+      "phonetic": "/ʃɒn, ʃəʊn/"
+    },
+    "pastparticiple": {
+      "word": "shone",
+      "phonetic": "/ʃɒn, ʃəʊn/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11077,
+    "word_id": 0,
+    "word": "shoot",
+    "phonetic": "/ʃu:t/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "shot",
+      "phonetic": "/ʃɒt/"
+    },
+    "pastparticiple": {
+      "word": "shot",
+      "phonetic": "/ʃɒt/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11078,
+    "word_id": 1439,
+    "word": "sit",
+    "phonetic": "/sɪt/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "sat",
+      "phonetic": "/sæt/"
+    },
+    "pastparticiple": {
+      "word": "sat",
+      "phonetic": "/sæt/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11079,
+    "word_id": 1447,
+    "word": "sleep",
+    "phonetic": "/sli:p/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "slept",
+      "phonetic": "/slept/"
+    },
+    "pastparticiple": {
+      "word": "slept",
+      "phonetic": "/slept/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11080,
+    "word_id": 1452,
+    "word": "smell",
+    "phonetic": "/smel/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "smelt & smelled",
+      "phonetic": "/smelt/ & /smeld/"
+    },
+    "pastparticiple": {
+      "word": "smelt & smelled",
+      "phonetic": "/smelt/ & /smeld/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11081,
+    "word_id": 1483,
+    "word": "speed",
+    "phonetic": "/spi:d/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "sped & speeded",
+      "phonetic": "/sped/ & /'spi:dɪd/"
+    },
+    "pastparticiple": {
+      "word": "sped & speeded",
+      "phonetic": "/sped/ & /'spi:dɪd/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11082,
+    "word_id": 0,
+    "word": "spell",
+    "phonetic": "/spel/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "spelt & spelled",
+      "phonetic": "/spelt/ & /speld/"
+    },
+    "pastparticiple": {
+      "word": "spelt & spelled",
+      "phonetic": "/spelt/ & /speld/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11083,
+    "word_id": 1484,
+    "word": "spend",
+    "phonetic": "/spend/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "spent",
+      "phonetic": "/spent/"
+    },
+    "pastparticiple": {
+      "word": "spent",
+      "phonetic": "/spent/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11084,
+    "word_id": 0,
+    "word": "spill",
+    "phonetic": "/spɪl/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "spilt & spild",
+      "phonetic": "/spɪlt/ & /spɪld/"
+    },
+    "pastparticiple": {
+      "word": "spilt & spild",
+      "phonetic": "/spɪlt/ & /spɪld/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11085,
+    "word_id": 1492,
+    "word": "stand",
+    "phonetic": "/stænd/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "stood",
+      "phonetic": "/stʊd/"
+    },
+    "pastparticiple": {
+      "word": "stood",
+      "phonetic": "/stʊd/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11086,
+    "word_id": 1502,
+    "word": "stick",
+    "phonetic": "/stɪk/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "stuck",
+      "phonetic": "/stʌk/"
+    },
+    "pastparticiple": {
+      "word": "stuck",
+      "phonetic": "/stʌk/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11087,
+    "word_id": 1517,
+    "word": "strike",
+    "phonetic": "/straɪk/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "struck",
+      "phonetic": "/strʌk/"
+    },
+    "pastparticiple": {
+      "word": "stricken & struck",
+      "phonetic": "/'strɪkən/ & /strʌk/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11088,
+    "word_id": 1549,
+    "word": "sweep",
+    "phonetic": "/swi:p/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "swept",
+      "phonetic": "/swept/"
+    },
+    "pastparticiple": {
+      "word": "swept",
+      "phonetic": "/swept/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11089,
+    "word_id": 1565,
+    "word": "teach",
+    "phonetic": "/ti:tʃ/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "taught",
+      "phonetic": "/tɔ:t/"
+    },
+    "pastparticiple": {
+      "word": "taught",
+      "phonetic": "/tɔ:t/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11090,
+    "word_id": 1573,
+    "word": "tell",
+    "phonetic": "/tel/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "told",
+      "phonetic": "/təʊld/"
+    },
+    "pastparticiple": {
+      "word": "told",
+      "phonetic": "/təʊld/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11091,
+    "word_id": 1592,
+    "word": "think",
+    "phonetic": "/θɪŋk/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "thought",
+      "phonetic": "/θɔ:t/"
+    },
+    "pastparticiple": {
+      "word": "thought",
+      "phonetic": "/θɔ:t/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11092,
+    "word_id": 1659,
+    "word": "understand",
+    "phonetic": "/ˌʌndə'stænd/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "understood",
+      "phonetic": "/ˌʌndə'stʊd/"
+    },
+    "pastparticiple": {
+      "word": "understood",
+      "phonetic": "/ˌʌndə'stʊd/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11093,
+    "word_id": 1746,
+    "word": "win",
+    "phonetic": "/wɪn/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "won",
+      "phonetic": "/wʌn/"
+    },
+    "pastparticiple": {
+      "word": "won",
+      "phonetic": "/wʌn/"
+    },
+    "category": "abb"
+  },
+  {
+    "id": 11094,
+    "word_id": 144,
+    "word": "become",
+    "phonetic": "/bɪ'kʌm/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "became",
+      "phonetic": "/bɪ'keɪm/"
+    },
+    "pastparticiple": {
+      "word": "become",
+      "phonetic": "/bɪ'kʌm/"
+    },
+    "category": "aba"
+  },
+  {
+    "id": 11095,
+    "word_id": 322,
+    "word": "come",
+    "phonetic": "/kʌm/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "came",
+      "phonetic": "/keɪm/"
+    },
+    "pastparticiple": {
+      "word": "come",
+      "phonetic": "/kʌm/"
+    },
+    "category": "aba"
+  },
+  {
+    "id": 11096,
+    "word_id": 1347,
+    "word": "run",
+    "phonetic": "/rʌn/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "ran",
+      "phonetic": "/ræn/"
+    },
+    "pastparticiple": {
+      "word": "run",
+      "phonetic": "/rʌn/"
+    },
+    "category": "aba"
+  },
+  {
+    "id": 11097,
+    "word_id": 139,
+    "word": "beat",
+    "phonetic": "/bi:t/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "beat",
+      "phonetic": "/bi:t/"
+    },
+    "pastparticiple": {
+      "word": "beaten",
+      "phonetic": "/'bi:tn/"
+    },
+    "category": "aab"
+  },
+  {
+    "id": 11098,
+    "word_id": 0,
+    "word": "cast",
+    "phonetic": "/kɑ:st/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "cast",
+      "phonetic": "/kɑ:st/"
+    },
+    "pastparticiple": {
+      "word": "cast",
+      "phonetic": "/kɑ:st/"
+    },
+    "category": "aaa"
+  },
+  {
+    "id": 11099,
+    "word_id": 356,
+    "word": "cost",
+    "phonetic": "/kɒst/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "cost",
+      "phonetic": "/kɒst/"
+    },
+    "pastparticiple": {
+      "word": "cost",
+      "phonetic": "/kɒst/"
+    },
+    "category": "aaa"
+  },
+  {
+    "id": 11100,
+    "word_id": 377,
+    "word": "cut",
+    "phonetic": "/kʌt/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "cut",
+      "phonetic": "/kʌt/"
+    },
+    "pastparticiple": {
+      "word": "cut",
+      "phonetic": "/kʌt/"
+    },
+    "category": "aaa"
+  },
+  {
+    "id": 11101,
+    "word_id": 603,
+    "word": "fit",
+    "phonetic": "/fɪt/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "fit & fitted",
+      "phonetic": "/fɪt/ & /'fɪtɪd/"
+    },
+    "pastparticiple": {
+      "word": "fit & fitted",
+      "phonetic": "/fɪt/ & /'fɪtɪd/"
+    },
+    "category": "aaa"
+  },
+  {
+    "id": 11102,
+    "word_id": 751,
+    "word": "hit",
+    "phonetic": "/hɪt/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "hit",
+      "phonetic": "/hɪt/"
+    },
+    "pastparticiple": {
+      "word": "hit",
+      "phonetic": "/hɪt/"
+    },
+    "category": "aaa"
+  },
+  {
+    "id": 11103,
+    "word_id": 786,
+    "word": "hurt",
+    "phonetic": "/h3:t/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "hurt",
+      "phonetic": "/h3:t/"
+    },
+    "pastparticiple": {
+      "word": "hurt",
+      "phonetic": "/h3:t/"
+    },
+    "category": "aaa"
+  },
+  {
+    "id": 11104,
+    "word_id": 899,
+    "word": "let",
+    "phonetic": "/let/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "let",
+      "phonetic": "/let/"
+    },
+    "pastparticiple": {
+      "word": "let",
+      "phonetic": "/let/"
+    },
+    "category": "aaa"
+  },
+  {
+    "id": 11105,
+    "word_id": 1257,
+    "word": "put",
+    "phonetic": "/pʊt/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "put",
+      "phonetic": "/pʊt/"
+    },
+    "pastparticiple": {
+      "word": "put",
+      "phonetic": "/pʊt/"
+    },
+    "category": "aaa"
+  },
+  {
+    "id": 11106,
+    "word_id": 1400,
+    "word": "set",
+    "phonetic": "/set/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "set",
+      "phonetic": "/set/"
+    },
+    "pastparticiple": {
+      "word": "set",
+      "phonetic": "/set/"
+    },
+    "category": "aaa"
+  },
+  {
+    "id": 11107,
+    "word_id": 1420,
+    "word": "shut",
+    "phonetic": "/ʃʌt/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "shut",
+      "phonetic": "/ʃʌt/"
+    },
+    "pastparticiple": {
+      "word": "shut",
+      "phonetic": "/ʃʌt/"
+    },
+    "category": "aaa"
+  },
+  {
+    "id": 11108,
+    "word_id": 1487,
+    "word": "spread",
+    "phonetic": "/spred/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "spread",
+      "phonetic": "/spred/"
+    },
+    "pastparticiple": {
+      "word": "spread",
+      "phonetic": "/spred/"
+    },
+    "category": "aaa"
+  },
+  {
+    "id": 11109,
+    "word_id": 237,
+    "word": "can",
+    "phonetic": "/kæn/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "could",
+      "phonetic": "/kʊd/"
+    },
+    "category": "qjdc"
+  },
+  {
+    "id": 11110,
+    "word_id": 967,
+    "word": "may",
+    "phonetic": "/meɪ/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "might",
+      "phonetic": "/maɪt/"
+    },
+    "category": "qjdc"
+  },
+  {
+    "id": 11111,
+    "word_id": 1026,
+    "word": "must",
+    "phonetic": "/mʌst/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "must",
+      "phonetic": "/mʌst/"
+    },
+    "category": "qjdc"
+  },
+  {
+    "id": 11112,
+    "word_id": 1404,
+    "word": "shall",
+    "phonetic": "/ʃæl/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "should",
+      "phonetic": "/ʃʊd/"
+    },
+    "category": "zhdc"
+  },
+  {
+    "id": 11113,
+    "word_id": 1745,
+    "word": "will",
+    "phonetic": "/wɪl/",
+    "type": "infinitive",
+    "pasttense": {
+      "word": "would",
+      "phonetic": "/wʊd/"
+    },
+    "category": "zhdc"
+  }
+]

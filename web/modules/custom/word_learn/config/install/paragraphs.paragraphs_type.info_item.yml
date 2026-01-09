@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: info_item
+label: '知识点'
+icon_uuid: null
+icon_default: null
+description: '额外知识点说明'
+behavior_plugins: {  }

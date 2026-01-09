@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: example
+label: '例句'
+icon_uuid: null
+icon_default: null
+description: '英文例句和中文翻译'
+behavior_plugins: {  }

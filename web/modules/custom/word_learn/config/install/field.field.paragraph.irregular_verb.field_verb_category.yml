@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_verb_category
+    - paragraphs.paragraphs_type.irregular_verb
+  module:
+    - options
+    - paragraphs
+id: paragraph.irregular_verb.field_verb_category
+field_name: field_verb_category
+entity_type: paragraph
+bundle: irregular_verb
+label: '变化类型'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

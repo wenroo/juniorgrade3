@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_info_body
+    - node.type.word
+  module:
+    - node
+    - text
+id: node.word.field_info_body
+field_name: field_info_body
+entity_type: node
+bundle: word
+label: '额外说明'
+description: '关于此单词的额外知识说明'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

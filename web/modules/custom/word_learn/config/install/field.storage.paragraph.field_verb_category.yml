@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - paragraphs
+id: paragraph.field_verb_category
+field_name: field_verb_category
+entity_type: paragraph
+type: list_string
+settings:
+  allowed_values:
+    - { value: 'abc', label: 'ABC型 (三种形式各不同)' }
+    - { value: 'abb', label: 'ABB型 (过去式=过去分词)' }
+    - { value: 'aba', label: 'ABA型 (原形=过去分词)' }
+    - { value: 'aab', label: 'AAB型 (原形=过去式)' }
+    - { value: 'aaa', label: 'AAA型 (三种形式相同)' }
+    - { value: 'qjdc', label: '情态动词' }
+    - { value: 'zhdc', label: '助动词' }
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,92 @@
+type Query {
+  """
+  Get a single word by ID
+  """
+  word(id: ID!): Word
+
+  """
+  Search word by name (exact match)
+  """
+  wordByName(name: String!): Word
+
+  """
+  Search words by keyword (fuzzy match)
+  """
+  searchWords(keyword: String!, limit: Int = 20): [Word!]!
+
+  """
+  Get a list of words
+  """
+  words(limit: Int = 20, offset: Int = 0, important: Boolean): [Word!]!
+
+  """
+  Get random words for practice
+  """
+  randomWords(count: Int = 10): [Word!]!
+
+  """
+  Get total count of words
+  """
+  wordsCount(important: Boolean): Int!
+}
+
+"""
+A vocabulary word
+"""
+type Word {
+  id: ID!
+  word: String!
+  phonetic: String
+  important: Boolean
+  antonym: String
+  expand: [String!]
+  infoBody: String
+  translations: [Translation!]!
+  examples: [Example!]
+  phrases: [Phrase!]
+  infoItems: [InfoItem!]
+  irregularVerb: IrregularVerb
+}
+
+"""
+Word translation with part of speech
+"""
+type Translation {
+  type: String!
+  translation: String!
+}
+
+"""
+Example sentence
+"""
+type Example {
+  en: String!
+  cn: String!
+}
+
+"""
+Common phrase
+"""
+type Phrase {
+  en: String!
+  cn: String!
+}
+
+"""
+Additional information item
+"""
+type InfoItem {
+  word: String
+  content: String
+}
+
+"""
+Irregular verb forms
+"""
+type IrregularVerb {
+  pastTense: String!
+  pastTensePhonetic: String
+  pastParticiple: String
+  pastParticiplePhonetic: String
+  category: String!
+}

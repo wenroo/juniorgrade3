@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_past_tense
+    - paragraphs.paragraphs_type.irregular_verb
+  module:
+    - paragraphs
+id: paragraph.irregular_verb.field_past_tense
+field_name: field_past_tense
+entity_type: paragraph
+bundle: irregular_verb
+label: '过去式'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

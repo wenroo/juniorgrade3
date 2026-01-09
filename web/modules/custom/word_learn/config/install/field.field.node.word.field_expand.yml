@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_expand
+    - node.type.word
+  module:
+    - node
+id: node.word.field_expand
+field_name: field_expand
+entity_type: node
+bundle: word
+label: '扩展词汇'
+description: '相关的派生词或同根词'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

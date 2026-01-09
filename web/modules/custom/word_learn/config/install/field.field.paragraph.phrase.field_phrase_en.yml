@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_phrase_en
+    - paragraphs.paragraphs_type.phrase
+  module:
+    - paragraphs
+id: paragraph.phrase.field_phrase_en
+field_name: field_phrase_en
+entity_type: paragraph
+bundle: phrase
+label: '英文短语'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

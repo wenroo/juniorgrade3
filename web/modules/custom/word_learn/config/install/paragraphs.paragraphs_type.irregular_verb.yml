@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: irregular_verb
+label: '不规则动词'
+icon_uuid: null
+icon_default: null
+description: '不规则动词的过去式和过去分词'
+behavior_plugins: {  }

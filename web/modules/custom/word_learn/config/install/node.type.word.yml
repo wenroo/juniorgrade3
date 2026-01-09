@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies: {  }
+name: '单词'
+type: word
+description: '英语单词，包含释义、例句、短语等'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_past_participle_phonetic
+    - paragraphs.paragraphs_type.irregular_verb
+  module:
+    - paragraphs
+id: paragraph.irregular_verb.field_past_participle_phonetic
+field_name: field_past_participle_phonetic
+entity_type: paragraph
+bundle: irregular_verb
+label: '过去分词音标'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

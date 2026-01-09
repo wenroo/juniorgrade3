@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_word_type
+    - paragraphs.paragraphs_type.translation
+  module:
+    - paragraphs
+id: paragraph.translation.field_word_type
+field_name: field_word_type
+entity_type: paragraph
+bundle: translation
+label: '词性'
+description: '如：n. / adj. / v. / adv.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
