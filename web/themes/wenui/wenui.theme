@@ -1,0 +1,146 @@
+<?php
+/**
+ * @file
+ * Functions to support theming in the inject theme.
+ */
+use Drupal\Core\Url;
+use Drupal\Component\Utility\UrlHelper;
+use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Language\LanguageManagerInterface;
+
+
+use Drupal\Core\Render\Attribute\RenderElement;
+use Drupal\Core\Template\Attribute;
+use Drupal\Core\Theme\Icon\IconDefinition;
+
+// Theme path
+$theme_path = \Drupal::service('extension.list.theme')->getPath('wenui');
+
+require_once $theme_path . '/core/theme.inc';
+
+// Auto-rebuild the theme registry during theme development.
+if (theme_get_setting('wenui_rebuild_registry') && !defined('MAINTENANCE_MODE')) {
+  // Rebuild .info.yml data and clear Twig cache.
+  $theme_handler = \Drupal::service('theme_handler');
+  $theme_handler->refreshInfo();
+
+  // Rebuild theme registry.
+  // @TODO Clear the theme registry.
+  $theme_registry = \Drupal::service('theme.registry');
+  $theme_registry->reset();
+  $theme_registry->get();
+}
+
+
+/**
+ * Implements HOOK_theme().
+ */
+function wenui_theme(&$existing, $type, $theme, $path) {
+
+ // Set rebuild status message
+ return _wencore_theme($existing, $type, $theme, $path);
+}
+
+
+/**
+ * Implements hook_preprocess_HOOK() for html.html.twig.
+ */
+function wenui_preprocess(&$variables, $hook){
+  $variables['base_path'] = base_path();
+}
+
+
+/**
+ * Implements hook_preprocess_HOOK() for html.html.twig.
+ */
+function wenui_preprocess_html(array &$variables) {
+
+  // 根据当前语言添加lang类
+  $language = \Drupal::languageManager()->getCurrentLanguage();
+  $variables['switch_lang'] = 'lang-' . $language->getId();
+
+  // 确保 HTML lang 属性设置为当前网站语言
+  $variables['html_attributes']['lang'] = $language->getId();
+
+  $route = \Drupal::routeMatch()->getRouteName();
+  if (in_array($route, ['page_manager.page_view_404_page_404_page-block_display-0', 'page_manager.page_view_403_page_403_page-block_display-0', 'system.404','system.403'])) {
+    $variables['attributes']['class'][] = 'page-error'; // Add your custom page error class
+  }
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function wenui_page_attachments_alter(array &$page) {
+  // Tell IE to use latest rendering engine (not to use compatibility mode).
+  $ie_edge = [
+    '#type' => 'html_tag',
+    '#tag' => 'meta',
+    '#attributes' => [
+    'http-equiv' => 'X-UA-Compatible',
+    'content' => 'IE=edge',
+    ],
+  ];
+  $page['#attached']['html_head'][] = [$ie_edge, 'ie_edge'];
+}
+
+
+/**
+ * Implements hook_preprocess_HOOK() for Block document templates.
+ */
+function wenui_preprocess_block(array &$variables) {
+  // Change Block template attributes.
+  $variables['attributes']['class'][] = 'block';
+  $variables['title_attributes']['class'][] = 'block-title';
+
+}
+
+/**
+ * Implements hook_preprocess_menu().
+ */
+function wenui_preprocess_menu(&$variables, $hook) {
+  if ($hook == 'menu__main') {
+    _wencore_menu_active_item($variables['items']);
+  }
+}
+
+/**
+ * Implements hook_preprocess_form_element().
+ */
+function wenui_preprocess_form_element(&$variables) {
+  $element = &$variables['element'];
+  if (!empty($element['#type']) && isset($variables['label'])) {
+    $variables['label']['#element_type'] = $element['#type'];
+  }
+}
+
+/**
+ * Implements hook_preprocess_form_element_label().
+ */
+function wenui_preprocess_form_element_label(&$variables) {
+  $element = $variables['element'];
+  if (isset($element['#element_type'])) {
+    $variables['element_type'] = $element['#element_type'];
+  }
+  else {
+    $variables['element_type'] = NULL;
+  }
+}
+
+/**
+ * Implements hook_preprocess_views_view_table().
+ */
+function wenui_preprocess_views_view_table(array &$variables) {
+  if (!empty($variables['header'])) {
+    foreach ($variables['header'] as &$header_cell) {
+      if (!empty($header_cell['url'])) {
+        $parsed_url = UrlHelper::parse($header_cell['url']);
+        $query = !empty($parsed_url['query']) ? $parsed_url['query'] : [];
+
+        if (isset($query['order']) && isset($query['sort'])) {
+          $header_cell['attributes']->addClass('sortable-heading');
+        }
+      }
+    }
+  }
+}

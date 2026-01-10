@@ -1,0 +1,47 @@
+@font-face {
+  font-family: "notosans";
+  src: url('../fonts/notosans-fonts/NotoSans-Regular.woff') format('truetype');
+}
+
+@font-face {
+  font-family: "notosans";
+  src: url('../fonts/notosans-fonts/NotoSans-Bold.woff') format('truetype');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "notosans";
+  src: url('../fonts/notosans-fonts/NotoSans-Medium.woff') format('truetype');
+  font-weight: 500;
+}
+
+
+/* sc */
+@font-face {
+  font-family: "notosanssc";
+  src: url('../fonts/notosans-fonts/NotoSansSC-Regular.woff') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "notosanssc";
+  src: url('../fonts/notosans-fonts/NotoSansSC-Bold.woff') format('truetype');
+  font-display: swap;
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "notosanssc";
+  src: url('../fonts/notosans-fonts/NotoSansSC-Medium.woff') format('truetype');
+  font-display: swap;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "wenicon";
+  /* Color fonts */
+  src: 
+       url('../fonts/icons/iconfont.woff2?t=1750746549362') format('woff2'),
+       url('../fonts/icons/iconfont.woff?t=1750746549362') format('woff'),
+       url('../fonts/icons/iconfont.ttf?t=1750746549362') format('truetype');
+}

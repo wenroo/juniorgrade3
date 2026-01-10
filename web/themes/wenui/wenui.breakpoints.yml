@@ -1,0 +1,34 @@
+wenui_breakpoint.default:
+  label: Default
+  mediaQuery: ""
+  weight: 0
+  multipliers:
+    - 1x
+
+wenui_breakpoint.sm:
+  label: Small
+  mediaQuery: "(min-width: 320px)"
+  weight: 1
+  multipliers:
+    - 1x
+
+wenui_breakpoint.md:
+  label: Middle
+  mediaQuery: "(min-width: 768px)"
+  weight: 2
+  multipliers:
+    - 1x
+
+wenui_breakpoint.lg:
+  label: Large
+  mediaQuery: "(min-width: 1024px)"
+  weight: 3
+  multipliers:
+    - 1x
+
+wenui_breakpoint.xl:
+  label: Extra Large
+  mediaQuery: "(min-width: 1280px)"
+  weight: 4
+  multipliers:
+    - 1x

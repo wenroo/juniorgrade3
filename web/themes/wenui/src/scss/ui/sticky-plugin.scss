@@ -1,0 +1,99 @@
+/* Sticky Plugin Styles */
+.sticky-plugin {
+  /* Ensure smooth transitions for all sticky animations */
+  transition: transform 0.3s ease-out;
+  
+  /* Prevent content jumping when element becomes sticky */
+  &.is-sticky {
+    /* Add shadow for visual feedback when sticky */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    
+    /* Ensure smooth transform animations */
+    will-change: transform;
+    
+    /* Backdrop blur effect for modern browsers (optional) */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  /* Hidden state animations */
+  &.is-hidden {
+    /* Additional styling when hidden (optional) */
+    pointer-events: none;
+  }
+  
+  /* Position-specific styles */
+  &[data-sticky-position="top"] {
+    &.is-sticky {
+      /* Top sticky specific styles */
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+  }
+  
+  &[data-sticky-position="bottom"] {
+    &.is-sticky {
+      /* Bottom sticky specific styles */
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+/* Performance optimizations */
+.sticky-plugin.is-sticky {
+  /* Hardware acceleration for smooth animations */
+  transform: translateZ(0);
+  
+  /* Optimize rendering */
+  contain: layout style paint;
+}
+
+/* Responsive considerations */
+@media (prefers-reduced-motion: reduce) {
+  .sticky-plugin {
+    /* Respect user preference for reduced motion */
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Support for different animation durations */
+.sticky-plugin {
+  &[data-sticky-duration="100"] { transition-duration: 0.1s; }
+  &[data-sticky-duration="200"] { transition-duration: 0.2s; }
+  &[data-sticky-duration="300"] { transition-duration: 0.3s; }
+  &[data-sticky-duration="400"] { transition-duration: 0.4s; }
+  &[data-sticky-duration="500"] { transition-duration: 0.5s; }
+}
+
+/* Example header sticky styles */
+.site-header {
+  /* Base header styles */
+  background: white;
+  padding: 1rem 0;
+  
+  &.sticky-plugin.is-sticky {
+    /* Compressed header when sticky */
+    padding: 0.5rem 0;
+    background: rgba(255, 255, 255, 0.95);
+    
+    /* Smooth size transition */
+    transition: 
+      transform 0.3s ease-out,
+      padding 0.3s ease-out,
+      background 0.3s ease-out;
+  }
+}
+
+/* Example footer sticky styles */
+.site-footer {
+  /* Base footer styles */
+  background: #333;
+  color: white;
+  padding: 1rem 0;
+  
+  &.sticky-plugin.is-sticky {
+    /* Footer sticky styles */
+    background: rgba(51, 51, 51, 0.95);
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+  }
+}

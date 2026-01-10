@@ -1,0 +1,64 @@
+/*
+* Others
+*/  
+  @utility black-mode{
+    -o-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);  
+      -webkit-filter: gray;
+    filter: gray;
+      -webkit-filter: progid:dximagetransform.microsoft.basicimage(grayscale=1);
+    filter: progid:dximagetransform.microsoft.basicimage(grayscale=1);
+  }
+
+  @utility scrollbar-xs {
+    @supports selector(::-webkit-scrollbar) {
+      @apply w-2 h-2 rounded bg-grey-100;
+    }
+    @supports selector(::-webkit-scrollbar-thumb) {
+      @apply bg-grey-200 w-2 h-2 rounded;
+    }
+  }
+ 
+/*
+* Media Fill
+*/  
+  @utility bg-fill{
+    @apply inset-0 absolute;
+    .video-popup-wrapper,
+    .video-popup{
+      @apply h-full w-full;
+    }
+    .video-wrapper{
+      @apply h-full;
+    }
+    .video-popup-wrapper{
+      .video-wrapper{
+        @apply h-fit;
+        video{
+          @apply relative;
+        }
+      }
+    }
+    video{
+      @apply absolute top-0 left-1/2 min-w-full min-h-full object-cover translate-x-[-50%];
+    }
+    img{
+      @apply absolute top-0 left-1/2 top-1/2 min-w-full min-h-full object-cover object-[50%_95%] translate-x-[-50%] translate-y-[-50%];
+    }
+  }
+
+
+  @utility bg-fill-clear{
+    @apply relative;
+    img, video{
+      @apply relative;
+    }
+  }
+
+
+  .drupal-icon{
+    @apply flex gap-1;
+  }

@@ -1,0 +1,49 @@
+name: WEN UI
+project: "Juniorgrade3"
+version: 2.11.0
+type: theme
+package: Core
+base theme: false
+core_version_requirement: ^11
+description: WENUI For Juniorgrade3
+logo: logo.png
+screenshot: screenshot.png
+
+
+# unset System & Modules Libraries
+# Override in src/drupal.scss
+libraries-override:
+  node/drupal.node.preview:
+    css:
+      theme:
+        css/node.preview.css: false
+  core/drupal.dropbutton:
+    css:
+      component:
+        misc/dropbutton/dropbutton.css: false
+  # ajax_big_pipe/ajax:
+  #   js:
+  #     misc/ajax_big_pipe.js: src/scripts/ajax_big_pipe.js
+
+# add Custom Libraries
+libraries:
+  # UI Base
+  - wenui/build
+  # UI Modules
+  - wenui/modules
+
+regions:
+  header: Header
+  content: Content
+  sidebar_first: Left sidebar
+  sidebar_second: Right sidebar
+  footer: Footer
+
+  # Add Custom Region
+  outside: Outside
+
+# name space @UI
+component-libraries:
+  wenui:
+    paths:
+      - templates

@@ -1,0 +1,416 @@
+@reference './index.scss';
+
+
+/*
+ * Drupal Classes
+**/
+
+/* Layout */
+.container-inline{
+  @apply flex flex-row place-items-center;
+  .node-preview-backlink{
+    @apply place-self-center btn-sm;
+    &:before{
+      content:'\e601';
+      @apply wenicon mr-1;
+    }
+  }
+  div, label{
+    @apply flex flex-row place-items-center gap-2;
+  }
+  label{
+    @apply whitespace-nowrap;
+  }
+}
+
+.views-element-container{
+  &:after{
+    display: table;
+    clear: both;
+    content: "";
+  }
+}
+
+/* Messages */
+/*
+  --color-error-primary:#CC1000;
+  --color-error-secondary:#FFE3E0;
+  --color-warning-primary:#9E5B06;
+  --color-warning-secondary:#FFF1D6;
+  --color-success-primary:#006936;
+  --color-success-secondary:#E2EFDA;
+  --color-info-primary:#084285;
+  --color-info-secondary:#D9EAFF;
+*/
+
+.alert{
+  @apply relative flex items-center p-4 bg-white text-info-primary;
+  .alert-close{
+    @apply ms-auto -mx-1.5 -my-1.5 text-info-primary rounded-lg p-1.5 inline-flex items-center justify-center h-8 w-8;
+  }
+  .alert-body{
+    @apply ms-3 text-sm font-medium;
+  }
+  &.warning{
+    @apply bg-warning-secondary text-warning-primary;
+    .alert-close{
+      @apply bg-warning-primary text-warning-secondary;
+    }
+  }
+  &.error{
+    @apply bg-error-secondary text-error-primary;
+    .alert-close{
+      @apply text-error-primary;
+    }
+  }
+  &.success,
+  &.status{
+    @apply bg-success-primary text-success-secondary;
+  }
+  &.notice{
+    @apply rounded-none text-sm py-0 px-0 transition-all duration-500 overflow-hidden;
+    .container{
+      @apply relative text-center py-2;
+      .alert-close{
+        @apply absolute right-5 top-1/2 -translate-y-1/2 mt-px text-xl leading-none  text-blue-500 cursor-pointer;
+        &:after{
+          @apply content-['\e664'] wenicon;
+        }
+      }
+      .inner{
+        @apply pr-6 text-center inline-flex;
+        .text{
+           @apply line-clamp-1 md:line-clamp-2;
+        }
+      }
+      .inner:before{
+        @apply text-xl leading-none content-['\e65a'] wenicon relative mr-1;
+      }
+      .inner:after{
+        @apply text-xl leading-none content-['\e66c'] wenicon;
+      }
+    }
+    &.notice-error{
+      .alert-close{
+        @apply hidden;
+      }
+    }
+    &.fade-out {
+      opacity: 0;
+      height: 0;
+    }
+    &.notice-hidden{
+      @apply hidden!;
+    }
+    &.system-notice{
+      .inner:before{
+        @apply hidden;
+      }
+      .inner:after{
+        @apply hidden;
+      }
+    }
+  }
+}
+
+.system-messages{
+  @apply relative flex items-center bg-warning-secondary text-warning-primary;
+}
+.messages{
+  .tabledrag-changed{
+    @apply text-3xl;
+    @apply no-underline;
+  }
+}
+
+
+.divider{
+  @apply h-px w-full overflow-hidden bg-white/20;
+}
+.mobile-divider{
+  @apply hidden max-md:block;
+}
+.desktop-divider{
+  @apply hidden md:block;
+}
+
+
+/*===== Badge Start =====*/
+.badge{
+  @apply inline-block bg-grey-200 text-grey-400 text-sm px-4 font-medium py-1.5 rounded-full;
+}
+.badge-success{
+  @apply bg-success-secondary text-success-primary;
+}
+.badge-warning{
+  @apply bg-warning-secondary text-warning-primary;
+}
+.badge-error{
+  @apply bg-error-secondary text-error-primary;
+}
+.badge-info{
+  @apply bg-info-secondary text-info-primary;
+}
+.badge-outline{
+  @apply border border-blue-500 text-blue-500 rounded bg-transparent px-2 mr-1 mb-2;
+}
+/*===== Badge End =====*/
+
+.is-active{
+  @apply text-secondary;
+}
+
+.button{
+  @apply btn;
+}
+
+.field-field-notice-text{
+  ul{
+    @apply list-disc list-outside ml-5 my-2;
+    li{
+      @apply my-2;
+    }
+  }
+}
+
+/* Table */
+a.tabledrag-handle .handle {
+  width: 20px;
+  height: 20px;
+  background-position: 3px 5px;
+}
+
+/* Form Elements */
+@utility form-text{
+  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-blue-500 focus:border-sky-blue-500 focus:outline-sky-blue-500 block p-2;
+}
+.form-text,
+.form-element,
+.form-number,
+.form-select{
+  @apply form-text;
+}
+.form-textarea{
+  @apply bg-gray-50 border text-gray-900 text-sm rounded focus:ring-blue-500;
+}
+
+.form-file{
+  @apply text-sm rounded;
+}
+
+.form-managed-file{
+  @apply inline-block bg-gray-50 border text-sm rounded;
+  a{
+    @apply px-8;
+  }
+  &.image-widget{
+    @apply rounded border-none p-4;
+    .form-item{
+      @apply mb-2;
+    }
+  }
+}
+
+.btn-choose{
+  @apply relative pl-7 cursor-pointer inline-flex items-center text-blue-500;
+  input[type="radio"] {
+    @apply sr-only;
+  }
+  &::before {
+    content: '';
+    @apply absolute left-0 top-1/2 w-6 h-6 rounded-full border-2 border-blue-500 transition-all duration-300 ease-in-out;
+    transform: translateY(-50%);
+  }
+  .btn-choose-mark {
+    @apply absolute left-[4.5px] top-1/2 w-0 h-0 bg-sky-blue-500  box-content rounded-full transition-all duration-300 ease-in-out;
+    transform: translateY(-50%);
+  }
+  input[type="radio"]:checked ~ .btn-choose-mark,
+  &.selected .btn-choose-mark {
+    @apply w-3.75 h-3.75;
+  }
+  &:hover::before {
+    @apply border-sky-blue-500;
+  }
+  &:has(input[type="radio"]:focus)::before {
+    @apply ring-0;
+  }
+  &:has(input[type="radio"]:checked)::before,
+  &.selected::before {
+    @apply border-sky-blue-500;
+  }
+}
+
+
+
+/* node preview */
+.node-preview-container {
+  @apply drop-shadow-md;
+  .node-preview-form-select{
+    @apply flex flex-row w-full justify-between py-4;
+  }
+}
+
+
+/* Drupal System */
+p{
+  img{
+    @apply inline-block;
+  }
+}
+
+table{
+  &.responsive-enabled{
+    @apply w-full;
+  }
+}
+#drupal-off-canvas{
+  table{
+    &.responsive-enabled{
+      @apply w-full;
+    }
+  }
+}
+.field-body{
+  .text-align-right{
+    @apply text-right;
+  }
+}
+
+
+.form-select{
+  @apply appearance-none bg-no-repeat pr-10 relative;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTExLjc4OCAxMy42MjI2TDE2LjI1MTMgOS4xNjg4NEMxNi4zNjI5IDkuMDUwODQgMTYuNDk0NyA4Ljk5NDQzIDE2LjY0NjUgOC45OTk1OUMxNi43OTg1IDkuMDA0NzYgMTYuOTMwMyA5LjA2NjM0IDE3LjA0MTggOS4xODQzNEMxNy4xNTk4IDkuMzAyMTggMTcuMjE4OCA5LjQzODAxIDE3LjIxODggOS41OTE4NEMxNy4yMTg4IDkuNzQ1NjggMTcuMTU5OCA5Ljg4MTU5IDE3LjA0MTggOS45OTk1OUwxMi4yOTM4IDE0Ljc0NzZDMTIuMjE2OCAxNC44MjQ2IDEyLjEzODIgMTQuODgxMyAxMi4wNTggMTQuOTE3OEMxMS45NzggMTQuOTU0MyAxMS44ODggMTQuOTcyNiAxMS43ODggMTQuOTcyNkMxMS42OTQzIDE0Ljk3MjYgMTEuNjA1OCAxNC45NTQzIDExLjUyMjUgMTQuOTE3OEMxMS40MzkyIDE0Ljg4MTMgMTEuMzU5IDE0LjgyNDYgMTEuMjgyIDE0Ljc0NzZMNi41MTg3NSA5Ljk4NDA5QzYuNDA3MDggOS44NzI1OSA2LjM1MjI1IDkuNzQwOTMgNi4zNTQyNSA5LjU4OTA5QzYuMzU2MjUgOS40MzcwOSA2LjQxNjE3IDkuMzAyMTggNi41MzQgOS4xODQzNEM2LjY1MiA5LjA2NjM0IDYuNzg3OTIgOS4wMDczNCA2Ljk0MTc1IDkuMDA3MzRDNy4wOTU1OCA5LjAwNzM0IDcuMjMxNSA5LjA2NjM0IDcuMzQ5NSA5LjE4NDM0TDExLjc4OCAxMy42MjI2WiIgZmlsbD0iIzNFNDE0QyIvPgo8L3N2Zz4K");
+  background-position: right 0.75rem center;
+  background-size: 1.25rem 1.25rem;
+}
+
+
+/* Block */
+.block{
+  @apply relative;
+}
+
+
+/* tabs */
+.vertical-tabs{
+  @apply  border-none;
+  .vertical-tabs__menu{
+    @apply space-y-4 border-none;
+    li{
+      @apply bg-transparent border-none;
+      a{
+        @apply  md:ml-4 rounded-lg  md:rounded-r-none items-center w-full pl-3 py-3 pr-8 hover:outline-none;
+      }
+      &.is-selected{
+        @apply bg-transparent border-none;
+        a{
+          @apply md:ml-0 md:pl-7;
+        }
+      }
+    }
+  }
+  .vertical-tabs__panes{
+    @apply max-w-full relative z-20 w-full  py-4 px-8 border-none;
+  }
+}
+
+
+/* tabledrag */
+#drupal-off-canvas{
+  .draggable{
+    .form-item{
+      @apply my-0;
+    }
+  }
+}
+
+
+/* Modal */
+.modal{
+  @apply fixed inset-0 bg-black/50 transition-ui duration-300 ease-in z-10;
+  .modal-dialog{
+    @apply max-w-full w-96 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-ui duration-300 ease-in;
+  }
+  .modal-dialog-title{
+    @apply text-sm md:text-base font-normal text-grey-600 text-center py-4;
+  }
+  .modal-dialog-content{
+    @apply w-full bg-white rounded-2xl px-4 pt-2 pb-4;
+  }
+  .modal-dialog-body{
+    @apply text-center;
+    .modal-option-btn{
+      @apply font-bold text-blue-500 md:text-xl w-40 md:w-42 my-2 mx-auto p-3 text-center rounded-full block transition-colors duration-300 cursor-pointer;
+      &:hover,
+      &.current{
+        @apply bg-sky-blue-500 text-white;
+      }
+    }
+  }
+  .modal-close-button{
+    @apply bg-white rounded-full drop-shadow-xl w-14 h-14 text-center text-white;
+    &:after{
+      @apply wenicon content-['\e664'] text-6xl text-grey-close;
+    }
+  }
+  .container{
+    @apply h-full;
+  }
+}
+
+.modal-tip-backdrop{
+  .modal-tip-content{
+    @apply pt-12 pb-10 px-4 relative;
+    .modal-close{
+      @apply absolute top-2 right-4;
+      &:after{
+        @apply wenicon content-['\e664'] text-6xl text-grey-close;
+      }
+    }
+  }
+}
+.modal-tip{
+  @apply relative;
+  .modal-tip-trigger{
+    @apply flex gap-1 items-center cursor-pointer h-full;
+    &:before{
+      @apply content-['\e67d'] wenicon font-normal text-2xl leading-none text-grey-400;
+    }
+    .field{
+      @apply underline text-sm font-normal text-blue-500;
+    }
+  }
+  @variant md {
+    .modal-tip-backdrop{
+      @apply w-96 absolute top-full mt-2 right-0 bg-transparent inset-auto z-3;
+      .modal-tip-dialog{
+        @apply w-full static translate-0 max-w-full opacity-0;
+        .modal-tip-content{
+          @apply shadow-dark-blue p-4 relative;
+          &::before {
+            content: '';
+            @apply absolute -top-2 right-2/12;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 8px solid theme('colors.white');
+          }
+          .modal-close{
+            @apply hidden;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+/* Forms */
+.user-login-form{
+  @apply max-w-sm mx-auto flex flex-col justify-around gap-4 py-6;
+}
+
+
