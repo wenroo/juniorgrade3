@@ -1,0 +1,3 @@
+access word learn:
+  title: '访问单词学习'
+  description: '允许用户访问单词学习页面和 GraphQL API'

@@ -4,4 +4,4 @@ word_learn.words_page:
     _controller: '\Drupal\word_learn\Controller\WordPageController::wordsPage'
     _title: '单词学习'
   requirements:
-    _permission: 'access content'
+    _permission: 'access word learn'
