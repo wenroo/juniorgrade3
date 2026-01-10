@@ -1,0 +1,81 @@
+.words-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.words-page__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.words-page__header h1 {
+  margin: 0;
+}
+
+.words-page__search input {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 250px;
+}
+
+.words-page__search input:focus {
+  outline: none;
+  border-color: #0073e6;
+}
+
+.word-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.word-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  transition: box-shadow 0.2s;
+}
+
+.word-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.word-card__title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.word-card__phonetic {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.word-card__translations {
+  margin-bottom: 10px;
+}
+
+.word-card__translation {
+  margin-bottom: 5px;
+}
+
+.word-card__type {
+  color: #0073e6;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.words-page__loading {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}

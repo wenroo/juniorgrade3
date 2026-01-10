@@ -1,0 +1,7 @@
+words_page:
+  version: 1.0
+  css:
+    theme:
+      css/words-page.css: {}
+  js:
+    js/words-page.js: {}
