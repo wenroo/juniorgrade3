@@ -15,9 +15,9 @@ type Query {
   searchWords(keyword: String!, limit: Int = 20): [Word!]!
 
   """
-  Get a list of words
+  Get a list of words. sortBy: id, title, created. sortOrder: ASC, DESC
   """
-  words(limit: Int = 20, offset: Int = 0, important: Boolean): [Word!]!
+  words(limit: Int = 20, offset: Int = 0, important: Boolean, sortBy: String = "title", sortOrder: String = "ASC"): [Word!]!
 
   """
   Get random words for practice

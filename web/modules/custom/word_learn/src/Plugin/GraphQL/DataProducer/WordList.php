@@ -29,6 +29,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *     "important" = @ContextDefinition("boolean",
  *       label = @Translation("Important only"),
  *       required = FALSE
+ *     ),
+ *     "sortBy" = @ContextDefinition("string",
+ *       label = @Translation("Sort by field"),
+ *       required = FALSE
+ *     ),
+ *     "sortOrder" = @ContextDefinition("string",
+ *       label = @Translation("Sort order"),
+ *       required = FALSE
  *     )
  *   }
  * )
@@ -54,12 +62,22 @@ class WordList extends DataProducerPluginBase implements ContainerFactoryPluginI
   /**
    * Resolve the word list.
    */
-  public function resolve($limit = 20, $offset = 0, $important = NULL) {
+  public function resolve($limit = 20, $offset = 0, $important = NULL, $sortBy = 'title', $sortOrder = 'ASC') {
+    // Map sortBy to actual field names.
+    $sortFields = [
+      'id' => 'nid',
+      'title' => 'title',
+      'created' => 'created',
+    ];
+
+    $sortField = $sortFields[$sortBy] ?? 'title';
+    $order = strtoupper($sortOrder) === 'DESC' ? 'DESC' : 'ASC';
+
     $query = $this->entityTypeManager->getStorage('node')->getQuery()
       ->condition('type', 'word')
       ->condition('status', 1)
       ->accessCheck(TRUE)
-      ->sort('title', 'ASC');
+      ->sort($sortField, $order);
 
     if ($important !== NULL) {
       $query->condition('field_important', $important ? 1 : 0);

@@ -56,12 +56,14 @@ class WordLearnSchema extends SdlSchemaPluginBase {
         ->map('limit', $builder->fromArgument('limit'))
     );
 
-    // words(limit: Int, offset: Int, important: Boolean): [Word!]!
+    // words(limit: Int, offset: Int, important: Boolean, sortBy: String, sortOrder: String): [Word!]!
     $registry->addFieldResolver('Query', 'words',
       $builder->produce('word_list')
         ->map('limit', $builder->fromArgument('limit'))
         ->map('offset', $builder->fromArgument('offset'))
         ->map('important', $builder->fromArgument('important'))
+        ->map('sortBy', $builder->fromArgument('sortBy'))
+        ->map('sortOrder', $builder->fromArgument('sortOrder'))
     );
 
     // randomWords(count: Int!): [Word!]!
