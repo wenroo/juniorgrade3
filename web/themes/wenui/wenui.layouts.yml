@@ -1,0 +1,11 @@
+# Flight Detail Layout
+flight_detail_layout:
+  label: "Flight Detail Layout"
+  description: "A layout with 4 and 6 column width regions for flight details."
+  category: "KAP"
+  template: templates/layouts/flight-detail-layout
+  regions:
+    first:
+      label: "First Column (4-width)"
+    second:
+      label: "Second Column (6-width)"

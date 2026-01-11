@@ -1,0 +1,31 @@
+@reference './index.scss';
+
+
+
+
+
+/* Loading state and empty */
+.is-loading{
+  @apply relative min-h-25;
+  &::after{
+    @apply content-[''] absolute z-2 inset-0 bg-white/60 pointer-events-none;
+  }
+  &::before{
+    @apply content-[''] z-3 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-25 w-25 bg-contain bg-no-repeat bg-center z-1;
+    background-image: url('/themes/custom/wenui/assets/loading.svg');
+    animation: wenui-spinner 0.8s linear infinite;
+  }
+}
+
+.is-empty{
+  background-image: url('/themes/custom/wenui/assets/list-empty.png');
+  @apply bg-no-repeat bg-top bg-size-[80px] pt-24 my-8 text-center text-grey-400;
+}
+
+
+/* Drupal Admin */
+.admin-toolbar-control-bar{
+  @variant max-md {
+    @apply hidden;
+  }
+}

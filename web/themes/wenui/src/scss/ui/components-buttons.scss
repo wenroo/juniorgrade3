@@ -1,0 +1,137 @@
+/* Buttons */
+@utility btn{
+  @apply inline-block text-base font-medium py-2 px-8 relative text-center rounded-full overflow-hidden backface-hidden transform-gpu cursor-pointer bg-blue-500 hover:bg-sky-blue-500 text-white hover:text-white transition-colors duration-300;
+}
+
+.btn{
+  @apply btn;
+  &.btn-normal{
+    @apply rounded-none;
+  }
+  &.btn-link{
+    @apply rounded-none p-0 bg-transparent;
+  }
+  &.icon{
+    @apply wenicon;
+    &.icon-after{
+      &:after{
+        content:'\e602';
+        @apply wenicon ml-1;
+      }
+    }
+    &.icon-before{
+      &:after{
+        content:'\e602';
+        @apply wenicon mr-1;
+      }
+    }
+  }
+}
+
+@utility btn-link{
+  @apply text-sky-blue-500 hover:text-blue-500;
+}
+
+@utility btn-sm{
+  @apply btn text-sm font-medium py-1.5;
+}
+
+@utility btn-switch{
+  @apply cursor-pointer hover:opacity-85;
+  .btn-choose-mark{
+    @apply visible shadow inline-block relative w-11 h-6 bg-sky-blue-50 rounded-full;
+    &:after{
+      @apply content-[''] absolute top-[2px] start-[2px] shadow bg-white border rounded-full w-5 h-5 transition-all;
+    }
+  }
+  .btn-choose-input{
+    @apply sr-only;
+    &:checked ~ .btn-choose-mark{
+      @apply bg-sky-blue-100;
+      &:after{
+        @apply translate-x-full bg-primary;
+      }
+    }
+  }
+}  
+
+
+.btn-default{
+  background-image: linear-gradient(to right, var(--color-sky-blue-500) 0%, var(--color-sky-blue-500) 50%, var(--color-blue-500) 50%, var(--color-blue-500) 100%);
+  @apply inline-flex items-center text-sm md:text-base leading-7 font-medium bg-size-[200%_100%] bg-position-[100%_0] bg-clip-text text-fill-transparent transition-all duration-400 ease-in-out  hover:bg-position-[0_0];
+  &:after{
+    @apply content-['\e66c'] wenicon text-4xl leading-7;
+  }
+}
+
+.btn-primary{
+  @apply inline-block text-base font-medium py-2 pl-8 pr-6 relative z-1 text-center text-white rounded-full overflow-hidden backface-hidden transform-gpu;
+  &:after{
+    @apply content-[''] block bg-clip-padding absolute bottom-0 left-px right-px top-px bottom-px  bg-blue-500 border border-blue-500 -z-2 rounded-full;
+  }
+  &:before{
+    @apply content-[''] block bg-clip-padding absolute bottom-0 left-0 w-[0] h-full bg-sky-blue-500 rounded-full -z-1 duration-300;
+  }
+  &:hover{
+    &:before{
+      @apply w-full;
+    }
+  }  
+  span{
+    @apply inline-flex relative z-3;
+    line-height: 2rem;
+    &:after{
+      @apply content-['\e66c'] wenicon text-3xl relative mt-[1.5px];
+      line-height: 2rem;
+    }
+  }
+  &.form-submit-primary{
+    @apply cursor-pointer relative min-h-11;
+    .form-submit{
+      @apply bg-transparent text-white border-none absolute left-0 top-0 w-full h-full opacity-0 z-4;
+    }
+  }
+  &.is-disabled{
+    @apply bg-grey-200 text-grey-300 cursor-not-allowed;
+    &:before,
+    &:after{
+      @apply hidden;
+    }
+  }
+}
+
+.btn-secondary{
+  @apply text-blue-500 bg-transparent;
+  &:after{
+    @apply bg-transparent;
+  }
+  &:before{
+    @apply bg-blue-500;
+  }
+  &:hover{
+    @apply text-white;
+  }
+}
+
+
+.btn-third{
+  @apply inline-flex items-center text-blue-500 border border-blue-500 rounded-full py-2 px-6;
+  span{
+    @apply text-base leading-none;
+    &:after{
+      @apply content-['\e60a'] wenicon text-xs font-normal leading-none -mt-1 relative;
+    }
+  }
+  &:after{
+    @apply content-['\e66c'] wenicon text-3xl font-normal leading-none;
+  }
+  &:hover{
+    @apply border-sky-blue-500 text-sky-blue-500;
+    span{
+      @apply text-sky-blue-500;
+    }
+    &:after{
+      @apply text-sky-blue-500;
+    }
+  }
+}

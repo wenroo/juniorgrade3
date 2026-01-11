@@ -1,0 +1,13 @@
+**/.git
+**/.svn
+**/.hg
+**/node_modules
+
+**/.vscode
+**/config
+
+**/build
+
+**/libraries
+
+_SUBTHEME
