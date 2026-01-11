@@ -49,6 +49,34 @@ function wenui_preprocess(&$variables, $hook){
   $variables['base_path'] = base_path();
 }
 
+// function wenui_page_attachments(array &$attachments) {
+//   $currentUser = \Drupal::currentUser();
+
+//   // 默认用户状态
+//   $userData = [
+//     'isLoggedIn' => false,
+//     'loginUrl' => Url::fromRoute('user.login')->toString(), // 获取 Drupal 标准登录链接
+//   ];
+
+//   // 如果用户已登录，填充详细信息
+//   if ($currentUser->isAuthenticated()) {
+//     $userEntity = \Drupal\user\Entity\User::load($currentUser->id());
+    
+//     $userData = [
+//       'isLoggedIn' => true,
+//       'uid' => $currentUser->id(),
+//       'displayName' => $currentUser->getDisplayName(),
+//       // 获取带 CSRF token 的安全登出链接
+//       'logoutUrl' => Url::fromRoute('user.logout')->toString(),
+//       // 你甚至可以注入用户头像 URL
+//       // 'avatar' => ... 
+//     ];
+//   }
+
+//   // 将数据合并到 drupalSettings 中
+//   // 在 Vue 中可以通过 window.drupalSettings.vueUser 访问
+//   $attachments['#attached']['drupalSettings']['vueUser'] = $userData;
+// }
 
 /**
  * Implements hook_preprocess_HOOK() for html.html.twig.
@@ -84,63 +112,3 @@ function wenui_page_attachments_alter(array &$page) {
   $page['#attached']['html_head'][] = [$ie_edge, 'ie_edge'];
 }
 
-
-/**
- * Implements hook_preprocess_HOOK() for Block document templates.
- */
-function wenui_preprocess_block(array &$variables) {
-  // Change Block template attributes.
-  $variables['attributes']['class'][] = 'block';
-  $variables['title_attributes']['class'][] = 'block-title';
-
-}
-
-/**
- * Implements hook_preprocess_menu().
- */
-function wenui_preprocess_menu(&$variables, $hook) {
-  if ($hook == 'menu__main') {
-    _wencore_menu_active_item($variables['items']);
-  }
-}
-
-/**
- * Implements hook_preprocess_form_element().
- */
-function wenui_preprocess_form_element(&$variables) {
-  $element = &$variables['element'];
-  if (!empty($element['#type']) && isset($variables['label'])) {
-    $variables['label']['#element_type'] = $element['#type'];
-  }
-}
-
-/**
- * Implements hook_preprocess_form_element_label().
- */
-function wenui_preprocess_form_element_label(&$variables) {
-  $element = $variables['element'];
-  if (isset($element['#element_type'])) {
-    $variables['element_type'] = $element['#element_type'];
-  }
-  else {
-    $variables['element_type'] = NULL;
-  }
-}
-
-/**
- * Implements hook_preprocess_views_view_table().
- */
-function wenui_preprocess_views_view_table(array &$variables) {
-  if (!empty($variables['header'])) {
-    foreach ($variables['header'] as &$header_cell) {
-      if (!empty($header_cell['url'])) {
-        $parsed_url = UrlHelper::parse($header_cell['url']);
-        $query = !empty($parsed_url['query']) ? $parsed_url['query'] : [];
-
-        if (isset($query['order']) && isset($query['sort'])) {
-          $header_cell['attributes']->addClass('sortable-heading');
-        }
-      }
-    }
-  }
-}

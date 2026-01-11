@@ -1,36 +1,5 @@
 @reference './index.scss';
 
-
-/*
- * Drupal Classes
-**/
-
-/* Layout */
-.container-inline{
-  @apply flex flex-row place-items-center;
-  .node-preview-backlink{
-    @apply place-self-center btn-sm;
-    &:before{
-      content:'\e601';
-      @apply wenicon mr-1;
-    }
-  }
-  div, label{
-    @apply flex flex-row place-items-center gap-2;
-  }
-  label{
-    @apply whitespace-nowrap;
-  }
-}
-
-.views-element-container{
-  &:after{
-    display: table;
-    clear: both;
-    content: "";
-  }
-}
-
 /* Messages */
 /*
   --color-error-primary:#CC1000;
@@ -113,16 +82,6 @@
   }
 }
 
-.system-messages{
-  @apply relative flex items-center bg-warning-secondary text-warning-primary;
-}
-.messages{
-  .tabledrag-changed{
-    @apply text-3xl;
-    @apply no-underline;
-  }
-}
-
 
 .divider{
   @apply h-px w-full overflow-hidden bg-white/20;
@@ -173,44 +132,6 @@
   }
 }
 
-/* Table */
-a.tabledrag-handle .handle {
-  width: 20px;
-  height: 20px;
-  background-position: 3px 5px;
-}
-
-/* Form Elements */
-@utility form-text{
-  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-blue-500 focus:border-sky-blue-500 focus:outline-sky-blue-500 block p-2;
-}
-.form-text,
-.form-element,
-.form-number,
-.form-select{
-  @apply form-text;
-}
-.form-textarea{
-  @apply bg-gray-50 border text-gray-900 text-sm rounded focus:ring-blue-500;
-}
-
-.form-file{
-  @apply text-sm rounded;
-}
-
-.form-managed-file{
-  @apply inline-block bg-gray-50 border text-sm rounded;
-  a{
-    @apply px-8;
-  }
-  &.image-widget{
-    @apply rounded border-none p-4;
-    .form-item{
-      @apply mb-2;
-    }
-  }
-}
-
 .btn-choose{
   @apply relative pl-7 cursor-pointer inline-flex items-center text-blue-500;
   input[type="radio"] {
@@ -243,15 +164,6 @@ a.tabledrag-handle .handle {
 
 
 
-/* node preview */
-.node-preview-container {
-  @apply drop-shadow-md;
-  .node-preview-form-select{
-    @apply flex flex-row w-full justify-between py-4;
-  }
-}
-
-
 /* Drupal System */
 p{
   img{
@@ -264,6 +176,7 @@ table{
     @apply w-full;
   }
 }
+
 #drupal-off-canvas{
   table{
     &.responsive-enabled{
@@ -312,16 +225,6 @@ table{
   }
   .vertical-tabs__panes{
     @apply max-w-full relative z-20 w-full  py-4 px-8 border-none;
-  }
-}
-
-
-/* tabledrag */
-#drupal-off-canvas{
-  .draggable{
-    .form-item{
-      @apply my-0;
-    }
   }
 }
 

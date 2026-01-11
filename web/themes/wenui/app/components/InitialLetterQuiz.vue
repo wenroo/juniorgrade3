@@ -1,0 +1,223 @@
+<template>
+  <div class="min-h-[400px]">
+    <!-- Quiz Screen -->
+    <div v-if="currentQuestion" class="space-y-4">
+      <!-- Progress -->
+      <div class="flex justify-between items-center text-lg font-semibold text-indigo-600 mb-4">
+        <span>已答题数: {{ totalAnswered }} / {{ questionsPerSession }}</span>
+        <span>得分: {{ score }}</span>
+      </div>
+
+      <!-- Question Card -->
+      <div class="">
+        <h3 class="text-lg font-semibold text-slate-600 mb-4">
+          Read the passage and fill in the blanks with proper words.<br>
+          <span class="text-lg text-neutral-400">在短文的空格内填入适当的词，使其内容通顺。每空格限填一词，首字母已给。</span>
+        </h3>
+
+        <!-- Question Content -->
+        <div class="bg-black/5 px-6 py-4 text-lg rounded-2xl mb-6 shadow-sm" v-html="currentQuestion.content"></div>
+
+        <!-- Blanks to fill -->
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+          <div
+            v-for="blank in currentQuestion.blanks"
+            :key="blank.blank_id"
+            class="flex items-center gap-3 pr-6 relative"
+          >
+            <label class="text-base font-semibold text-slate-700 min-w-6">{{ blank.blank_id }}:</label>
+            <input
+              v-model="userAnswers[blank.blank_id]"
+              type="text"
+              :placeholder="`首字母: ${blank.initial}`"
+              :disabled="answered"
+              class="w-full py-2 px-4 text-base border-2 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              :class="{
+                'border-green-500 bg-green-50': answered && isBlankCorrect(blank.blank_id),
+                'border-red-500 bg-red-50': answered && userAnswers[blank.blank_id] && !isBlankCorrect(blank.blank_id),
+                'border-slate-300': !answered
+              }"
+              @keyup.enter="submitAnswer"
+            />
+            <span v-if="answered" class="absolute right-0">
+              <span v-if="isBlankCorrect(blank.blank_id)" class="text-green-600 text-xl">✓</span>
+              <span v-else-if="userAnswers[blank.blank_id]" class="text-red-600 text-xl">✗</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div v-if="!answered" class="flex justify-center">
+          <button
+            class="py-3 px-8 text-lg font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            @click="submitAnswer"
+            :disabled="!allBlanksAnswered"
+          >
+            提交答案
+          </button>
+        </div>
+
+        <!-- Feedback -->
+        <div v-if="answered" class="mt-6 space-y-4">
+          <div :class="['text-xl font-bold text-center py-3 rounded-xl', allCorrect ? 'text-green-600 bg-green-50' : 'text-red-600 bg-red-50']">
+            {{ allCorrect ? '✓ 全部正确！' : `✗ 答对 ${correctCount} / ${currentQuestion.blanks.length} 个空格` }}
+          </div>
+
+          <div v-if="currentQuestion.info" class="bg-amber-50 border-2 border-amber-200 rounded-xl p-4">
+            <div class="text-sm text-amber-900 leading-relaxed" v-html="currentQuestion.info"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div v-if="shouldShowResults" class="text-center py-12">
+      <div class="mb-8">
+        <button
+          class="py-3 px-8 text-lg font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-xl shadow-lg transition-all transform hover:scale-105"
+          @click="restartQuiz"
+        >
+          重新开始
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed, onMounted } from 'vue'
+import { useWordService } from '@/services/wordService'
+
+const { loadFillingLibrary } = useWordService()
+
+const props = defineProps({
+  filters: {
+    type: Object,
+    default: () => ({})
+  }
+})
+
+const allQuestions = ref([])
+const currentQuestion = ref(null)
+const totalAnswered = ref(0)
+const score = ref(0)
+const answered = ref(false)
+const userAnswers = ref({})
+const questionsPerSession = ref(1)
+
+const shouldShowResults = computed(() => {
+  return totalAnswered.value >= questionsPerSession.value
+})
+
+const allBlanksAnswered = computed(() => {
+  if (!currentQuestion.value) return false
+  return currentQuestion.value.blanks.every(blank =>
+    userAnswers.value[blank.blank_id]?.trim()
+  )
+})
+
+const correctCount = computed(() => {
+  if (!currentQuestion.value || !answered.value) return 0
+  return currentQuestion.value.blanks.filter(blank =>
+    isBlankCorrect(blank.blank_id)
+  ).length
+})
+
+const allCorrect = computed(() => {
+  if (!currentQuestion.value) return false
+  return correctCount.value === currentQuestion.value.blanks.length
+})
+
+onMounted(async () => {
+  await loadQuestions()
+  await loadSettings()
+  loadRandomQuestion()
+})
+
+async function loadSettings() {
+  try {
+    const response = await fetch('http://localhost:3123/api/settings')
+    const data = await response.json()
+    if (data.quiz?.questionsPerSession) {
+      questionsPerSession.value = data.quiz.questionsPerSession
+    }
+  } catch (error) {
+    console.error('Failed to load settings:', error)
+  }
+}
+
+async function loadQuestions() {
+  try {
+    const data = await loadFillingLibrary()
+    // Filter fill type questions
+    allQuestions.value = data
+      .filter(q => q.question_type === 'fill')
+      .map(q => processFillingQuestion(q))
+  } catch (error) {
+    console.error('Failed to load questions:', error)
+  }
+}
+
+function processFillingQuestion(question) {
+  // Process all blanks, not just one
+  const content = question.content.replace(/<br>/g, ' ')
+
+  // Replace all blanks with placeholders
+  let displayContent = content
+  question.blanks.forEach(blank => {
+    const blankPattern = new RegExp(`___${blank.blank_id}___`, 'g')
+    displayContent = displayContent.replace(blankPattern, `<strong>[${blank.blank_id}]</strong>`)
+  })
+
+  return {
+    content: displayContent,
+    blanks: question.blanks.map(blank => ({
+      blank_id: blank.blank_id,
+      correctWords: blank.correct_word.map(w => w.toLowerCase()),
+      initial: blank.correct_word[0]?.charAt(0).toLowerCase() || ''
+    })),
+    info: question.info || '',
+    from: question.from || ''
+  }
+}
+
+function loadRandomQuestion() {
+  if (allQuestions.value.length === 0) return
+
+  const randomIndex = Math.floor(Math.random() * allQuestions.value.length)
+  currentQuestion.value = allQuestions.value[randomIndex]
+  answered.value = false
+  userAnswers.value = {}
+}
+
+function isBlankCorrect(blankId) {
+  if (!currentQuestion.value) return false
+  const blank = currentQuestion.value.blanks.find(b => b.blank_id === blankId)
+  if (!blank) return false
+
+  const userInput = userAnswers.value[blankId]?.trim().toLowerCase()
+  if (!userInput) return false
+
+  // Check if user input matches any of the correct words
+  return blank.correctWords.some(word => word === userInput)
+}
+
+function submitAnswer() {
+  if (!allBlanksAnswered.value || answered.value) return
+
+  answered.value = true
+
+  // Calculate score based on all correct answers
+  if (allCorrect.value) {
+    score.value++
+  }
+  totalAnswered.value++
+}
+
+async function restartQuiz() {
+  totalAnswered.value = 0
+  score.value = 0
+  loadRandomQuestion()
+}
+</script>
+

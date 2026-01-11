@@ -1,12 +1,24 @@
+# dotenv file
+.env
+docker-compose.yml
+**/*.json
+
+# Ignore configuration files that may contain sensitive information.
+docroot/sites/*/settings*.php
+docroot/sites/*/services*.yml
+
+# Ignore paths that contain user-generated content.
+docroot/sites/*/files
+docroot/sites/*/private
+
+# Ignore SimpleTest multi-site environment.
+docroot/sites/simpletest
 # some sql dump file
 *.sql
 *.sql.gz
 *.tgz
 *.tar.gz
 
-# dotenv file
-.env
-docker-compose.yml
 
 # backup files
 *.original
@@ -21,3 +33,6 @@ docker-compose.yml
 .lando.yml
 /tmp
 **/*.json
+**/node_modules
+.lingma
+CLAUDE.md

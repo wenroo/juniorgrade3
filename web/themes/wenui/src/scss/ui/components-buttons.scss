@@ -1,6 +1,6 @@
 /* Buttons */
 @utility btn{
-  @apply inline-block text-base font-medium py-2 px-8 relative text-center rounded-full overflow-hidden backface-hidden transform-gpu cursor-pointer bg-blue-500 hover:bg-sky-blue-500 text-white hover:text-white transition-colors duration-300;
+  @apply inline-flex text-base font-medium py-2 px-8 relative text-center rounded-full overflow-hidden backface-hidden transform-gpu cursor-pointer bg-blue-500 hover:bg-sky-blue-500 text-white hover:text-white transition-colors duration-300;
 }
 
 .btn{

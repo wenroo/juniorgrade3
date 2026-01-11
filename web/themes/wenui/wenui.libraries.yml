@@ -10,47 +10,23 @@ build:
   js:
     dist/js/index.bundle.js: {}
   dependencies:
-    - wenui/modal-dialog
-    - wenui/messages
-    - wenui/gsap
+    - wenui/webapp
     - core/jquery
     - core/drupal
     - core/internal.underscore
     - core/drupalSettings
     - core/once
 
-
-# GSAP Animation Framework
-gsap:
+# Web APP
+webapp:
+  version: 1.x
+  # css:
+  #   theme:
+  #     dist/css/app.bundle.css: {}
   js:
-    src/scripts/modules/gsap.min.js: { minified: true }
-    src/scripts/modules/ScrollToPlugin.min.js: { minified: true }
-    src/scripts/modules/ScrollTrigger.min.js: { minified: true }
-    src/scripts/modules/ScrollSmoother.min.js: { minified: true }
-    src/scripts/modules/CustomEase.min.js: { minified: true }
+    dist/js/app.bundle.js: 
+      attributes:
+        type: module
   dependencies:
-    - core/jquery
-
-# Modal Dialog Component
-modal-dialog:
-  js:
-    src/scripts/modules/smart-modal.js: {}
-  dependencies:
-    - core/jquery
     - core/drupal
-    - core/once
-
-
-modules:
-  css:
-    theme:
-      src/scss/ui/swiper-bundle.min.css: { minified: true }
-  js:
-    src/scripts/modules/swiper-bundle.min.js: {}
-  dependencies:
-    - core/jQuery
-    - core/once
-
-messages:
-  js:
-    src/scripts/messages.js: {}
+    - core/drupalSettings
